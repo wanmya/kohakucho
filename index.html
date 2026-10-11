@@ -241,6 +241,47 @@ input[type=range]{accent-color:var(--amber);width:100%}
 .z-desc{font-size:15px;line-height:1.8;margin:0}
 .minimap{max-width:220px;margin:0 auto}
 .note-small{font-size:11.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+.zk-top{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:stretch}
+.cmp-open{display:flex;align-items:center;gap:6px;border-radius:10px}
+.cmp-open em{font-style:normal;font-family:var(--mono);font-size:11px;background:var(--amber);color:var(--amber-ink);border-radius:999px;min-width:18px;height:18px;display:grid;place-items:center}
+.excard{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-align:left;width:100%;cursor:pointer}
+.excard .gl{width:40px;height:40px;border-radius:50%;border:1px solid rgba(0,0,0,.08);box-shadow:inset 0 -6px 0 rgba(0,0,0,.12)}
+.excard .info{display:grid;gap:2px;min-width:0}
+.ex-label{font-family:var(--display);font-weight:800;font-size:16px;line-height:1.3}
+.excard .right{text-align:right}
+.excard .price{display:block;font-family:var(--mono);font-size:14px;color:var(--amber);font-weight:500;white-space:nowrap}
+.excard .right i{font-style:normal;font-size:10.5px;color:var(--muted)}
+.cmp-head{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:stretch}
+.cmp-head .vs{align-self:center;font-family:var(--display);font-weight:800;font-size:14px;color:var(--muted);letter-spacing:.1em}
+.cmp-slot{display:grid;justify-items:center;align-content:start;gap:4px;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 8px;min-width:0}
+.cmp-slot .gl{width:44px;height:44px;border-radius:50%;border:1px solid rgba(0,0,0,.08);box-shadow:inset 0 -7px 0 rgba(0,0,0,.12)}
+.cmp-slot strong{font-family:var(--display);font-size:14.5px;line-height:1.3;overflow-wrap:anywhere}
+.cmp-slot:first-child{border-top:3px solid var(--amber)}
+.cmp-slot:last-child{border-top:3px solid var(--peat)}
+.cmp-slot.empty{border-style:dashed;cursor:pointer;color:var(--muted);align-content:center;min-height:130px}
+.cmp-slot .plus{font-size:24px;color:var(--amber)}
+.cmp-act{display:flex;gap:2px;flex-wrap:wrap;justify-content:center}
+.cmp-table{display:grid;grid-template-columns:4.5em 1fr 1fr;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--line);gap:1px}
+.cmp-table>div{background:var(--surface);padding:8px 10px;font-size:13.5px;min-width:0;overflow-wrap:anywhere}
+.cmp-k{font-size:11.5px!important;color:var(--muted)}
+.cmp-a.diff{color:var(--amber);font-weight:700}
+.cmp-b.diff{color:var(--peat);font-weight:700}
+.cmp-sim{display:flex;align-items:baseline;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.cmp-sim b{font-family:var(--mono);font-size:34px;color:var(--ink);font-weight:500}
+.cmp-sim b small{font-size:14px}
+.cmp-sim span{color:var(--muted);font-size:14px}
+.bfly{display:grid;gap:6px;margin-top:12px}
+.bf-row{display:grid;grid-template-columns:1.2em 1fr 5.6em 1fr 1.2em;gap:6px;align-items:center}
+.bf-n{font-style:normal;font-family:var(--mono);font-size:12px;color:var(--muted);text-align:center}
+.bf-l,.bf-r{height:10px;background:var(--line);border-radius:999px;overflow:hidden;display:flex}
+.bf-l{justify-content:flex-end}
+.bf-l i{background:var(--amber);border-radius:999px}
+.bf-r i{background:var(--peat);border-radius:999px}
+.bf-k{font-size:12px;text-align:center;color:var(--muted)}
+.bf-k.diff{color:var(--ink);font-weight:700}
+.cmp-tags{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+.cp-group{display:grid;gap:4px}
+.chip:disabled{opacity:.35}
 @media (prefers-reduced-motion:no-preference){.sheet{animation:up .22s ease-out}@keyframes up{from{transform:translateY(16px);opacity:.6}}}
 @media (max-width:380px){.row3{grid-template-columns:1fr 1fr}.bar{grid-template-columns:6em 1fr 3.2em}}
 </style>
@@ -280,7 +321,7 @@ input[type=range]{accent-color:var(--amber);width:100%}
 
 <script>
 (() => {
-const APP_VERSION = '2026.10.12b';
+const APP_VERSION = '2026.10.12d';
 
 const COLORS = [
   ['white','ホワイトワイン','#F6F0D6'],['straw','ペールストロー','#F1E2A0'],['gold','ゴールド','#E7C25A'],['oldgold','オールドゴールド','#D9A63A'],
@@ -434,7 +475,7 @@ function renderList(){
   if(!loaded) return;
   $('#sortbar').hidden = view!=='bottles';
   $('#toolbar').hidden = view==='zukan';
-  if(view==='zukan'){ $('#count').textContent=`図鑑 ${ZUKAN_ENTRIES.length}銘柄`; return renderZukan(list); }
+  if(view==='zukan'){ $('#count').textContent=`${ZUKAN_ENTRIES.length}銘柄`; return renderZukan(list); }
   return view==='bottles' ? renderBottles(list) : renderFeed(list);
 }
 function renderBottles(list){
@@ -766,11 +807,16 @@ function openTastingForm(bottle, existing, fromPicker){
 const ZK_TYPES = ['シングルモルト','ブレンデッド','ブレンデッドモルト','シングルグレーン','シングルポットスチル','バーボン','ライ'];
 const ZK_TAGS = ['ピート','スモーク','潮','ヨード','シェリー','ドライフルーツ','蜂蜜','バニラ','柑橘','青りんご','洋梨','トロピカル','花','ヘザー','チョコレート','キャラメル','黒胡椒','ナッツ'];
 const ZK_WORLD = ['scotland','japan','ireland','usa','canada','taiwan','india'];
-const zk = { mode:'region', region:null, axes:[], types:[], tags:[], q:'' };
+const zk = { mode:'region', region:null, axes:[], types:[], tags:[], prices:[], q:'' };
+const ZK_PRICES = [['p1','〜3,000円台',0,4000],['p2','4,000〜6,000円台',4000,7000],['p3','7,000〜9,000円台',7000,10000],['p4','1万円〜',10000,1e9]];
+const priceBand = v => !v ? '' : v>=10000 ? `${Math.floor(v/10000)}万円台` : `${Math.floor(v/1000).toLocaleString('ja-JP')},000円台`;
 const keyNorm = s => norm(s).replace(/^(ザ|the)/,'').replace(/(年|years?old|years?|yo)$/,'');
 const profArr = obj => AXES.map(a=>+(obj?.[a[0]]||0));
 const arrProf = arr => Object.fromEntries(AXES.map((a,i)=>[a[0],arr[i]]));
 const glassColor = k => (colorOf(k)||COLORS[3])[2];
+const zEntry = id => ZUKAN_ENTRIES.find(x=>x.id===id);
+const zDist = id => ZUKAN_DISTILLERIES.find(x=>x.id===id);
+const compare = { a:null, b:null };
 
 function zukanFor(b){
   const k = keyNorm(b.name);
@@ -795,8 +841,9 @@ function similarity(x,y){
   const jac = (A.size||B.size) ? inter.length/new Set([...A,...B]).size : 0;
   return { score: prof*0.8 + jac*0.2, shared: inter };
 }
+// 同じ蒸留所の銘柄は「似ている銘柄」から外し、別の蒸留所の候補を見せる
 function similarTo(item, n=5){
-  const pool=[...ZUKAN_ENTRIES, ...communityItems()].filter(o=>o.id!==item.id);
+  const pool=[...ZUKAN_ENTRIES, ...communityItems()].filter(o=>o.id!==item.id && (!item.distilleryId || o.distilleryId!==item.distilleryId));
   return pool.map(o=>({o, ...similarity(item,o)})).sort((a,b)=>b.score-a.score).slice(0,n);
 }
 function projXY(lon,lat){ const P=ZUKAN_MAP.proj; return [ (lon-P.lon0)*P.c*P.k, (P.lat1-lat)*P.k ]; }
@@ -806,9 +853,9 @@ function mapSVG({ sel=null, focus=null, interactive=true, cls='zmap' }={}){
   const clips = Object.entries(M.clips).map(([k,v])=>`<clipPath id="zc-${k}"><polygon points="${v}"/></clipPath>`).join('')
     + `<mask id="zm-high" maskUnits="userSpaceOnUse" x="0" y="0" width="${M.w}" height="${M.h}"><rect width="${M.w}" height="${M.h}" fill="#fff"/>${Object.values(M.clips).map(v=>`<polygon points="${v}" fill="#000"/>`).join('')}</mask>`;
   const rg = (key, d, clip, mask) => `<g class="rg${sel===key?' sel':''}" data-region="${key}"${interactive?` role="button" tabindex="0" aria-label="${ZUKAN_REGIONS[key].jp}"`:''}${clip?` clip-path="url(#zc-${clip})"`:''}${mask?` mask="url(#${mask})"`:''}><path d="${d}"/></g>`;
-  const dots = ZUKAN_ENTRIES.filter(z=>z.lat!=null).map(z=>{ const [x,y]=projXY(z.lon,z.lat);
-    const c = focus ? (z.id===focus?'dot focus':'dot') : (sel && z.region===sel ? 'dot on' : 'dot');
-    return (!focus || z.id===focus || true) ? `<circle class="${c}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${z.id===focus?4.5:2.3}"/>` : ''; }).join('');
+  const dots = ZUKAN_DISTILLERIES.filter(d=>d.lat!=null).map(d=>{ const [x,y]=projXY(d.lon,d.lat);
+    const c = focus ? (d.id===focus?'dot focus':'dot') : (sel && d.region===sel ? 'dot on' : 'dot');
+    return `<circle class="${c}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${d.id===focus?4.5:2.3}"/>`; }).join('');
   const labels = interactive ? Object.entries(ZUKAN_REGIONS).filter(([,r])=>r.scot).map(([k,r])=>{ const [x,y]=projXY(r.label[0],r.label[1]);
     return `<text class="lbl${sel===k?' sel':''}" x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="middle">${r.jp}</text>`; }).join('') : '';
   return `<svg class="${cls}${sel?' has-sel':''}" viewBox="0 0 ${M.w} ${M.h}" role="img" aria-label="スコットランドのウイスキー産地の地図">
@@ -820,17 +867,21 @@ function mapSVG({ sel=null, focus=null, interactive=true, cls='zmap' }={}){
     ${dots}${labels}</svg>`;
 }
 
-function zkResults(){
+/* 産地モード：蒸留所の一覧 ／ 味・香りモード：銘柄の一覧 */
+function zkDistilleries(){
+  const q = norm(zk.q);
+  let ds = ZUKAN_DISTILLERIES.slice();
+  if(q) ds = ds.filter(d=>norm([d.name,d.en,ZUKAN_REGIONS[d.region]?.jp,...d.ex.flatMap(x=>[x.name,x.en,x.label,...x.tags])].join(' ')).includes(q));
+  if(zk.region) ds = ds.filter(d=>d.region===zk.region);
+  else if(!q) return [];
+  return ds.sort((a,b)=>a.name.localeCompare(b.name,'ja'));
+}
+function zkFlavorResults(){
   const q = norm(zk.q);
   let items = [...ZUKAN_ENTRIES, ...communityItems()];
   if(q) items = items.filter(z=>norm([z.name,z.en,z.distillery,z.type,ZUKAN_REGIONS[z.region]?.jp,...z.tags].join(' ')).includes(q));
-  if(zk.mode==='region'){
-    if(zk.region) items = items.filter(z=>z.region===zk.region);
-    else if(!q) return { items:[], scored:false };
-    items.sort((a,b)=>((+!!a.community)-(+!!b.community)) || a.name.localeCompare(b.name,'ja'));
-    return { items:items.map(z=>({z})), scored:false };
-  }
   if(zk.types.length) items = items.filter(z=>zk.types.includes(z.type));
+  if(zk.prices.length) items = items.filter(z=>z.price && zk.prices.some(k=>{ const r=ZK_PRICES.find(x=>x[0]===k); return z.price>=r[2] && z.price<r[3]; }));
   const has = zk.axes.length || zk.tags.length;
   let rows = items.map(z=>{
     const ax = zk.axes.length ? zk.axes.reduce((s,k)=>s+z.p[AXES.findIndex(a=>a[0]===k)]/5,0)/zk.axes.length : 0;
@@ -839,14 +890,25 @@ function zkResults(){
     return { z, score };
   });
   if(zk.tags.length) rows = rows.filter(r=>zk.tags.some(t=>r.z.tags.includes(t)));
-  if(has) rows = rows.filter(r=>r.score>=0.45).sort((a,b)=>b.score-a.score);
+  if(has) rows = rows.filter(r=>r.score>=0.45).sort((a,b)=>b.score-a.score || (a.z.price||0)-(b.z.price||0));
   else rows.sort((a,b)=>a.z.name.localeCompare(b.z.name,'ja'));
   return { items:rows, scored:has };
+}
+const priceRange = d => { const ps=d.ex.map(x=>x.price).filter(Boolean); if(!ps.length) return '';
+  const lo=priceBand(Math.min(...ps)), hi=priceBand(Math.max(...ps)); return lo===hi ? lo : `${lo}〜${hi}`; };
+function dCard(d){
+  const tags=[...new Set(d.ex.flatMap(x=>x.tags))].slice(0,4);
+  const recorded = d.ex.some(x=>{ const b=bottleForZ(x); return b && aggs.get(b.id)?.n; });
+  return `<button class="zcard" data-d="${esc(d.id)}"><span class="gl" style="background:${glassColor(d.ex[0].color)}"></span>
+    <span class="info"><h3>${esc(d.name)}</h3><div class="en">${esc(d.en)}</div>
+      <div class="meta">${esc(ZUKAN_REGIONS[d.region]?.jp||'')} · 約${esc(priceRange(d))}${recorded?'<span class="badge peat">みんなの記録あり</span>':''}</div>
+      <div class="tagline">${tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div></span>
+    <span class="right"><b>${d.ex.length}</b><i>銘柄</i></span></button>`;
 }
 function zCard({z,score}, scored){
   const b = z.community ? bottles.find(x=>x.id===z.bottleId) : bottleForZ(z);
   const a = b ? aggs.get(b.id) : null;
-  const meta=[z.distillery, ZUKAN_REGIONS[z.region]?.jp, z.age?z.age+'年':'', z.abv?z.abv+'%':''].filter(Boolean).join(' · ');
+  const meta=[z.community?z.distillery:'', ZUKAN_REGIONS[z.region]?.jp, z.abv?z.abv+'%':'', z.price?'約'+priceBand(z.price):''].filter(Boolean).join(' · ');
   const right = scored ? `<b>${Math.round(score*100)}<small style="font-size:11px">%</small></b><i>一致</i>`
     : a?.n ? `<b>${a.n>1?fmt1(a.avg):a.avg}</b><i>みんな${a.people}人</i>` : '';
   return `<button class="zcard" data-z="${esc(z.id)}"><span class="gl" style="background:${glassColor(z.color)}"></span>
@@ -862,7 +924,7 @@ function renderZukan(list){
   const panel = zk.mode==='region' ? `
       <div class="mapcard"><span class="caption">SCOTLAND</span><span class="compass">N ↑</span>${mapSVG({sel:zk.region})}</div>
       <div class="world"><span class="lbl">スコットランド以外・ブレンド</span>${ZK_WORLD.map(k=>`<button class="chip" data-world="${k}" aria-pressed="${zk.region===k}">${ZUKAN_REGIONS[k].jp}</button>`).join('')}</div>
-      ${r?`<div class="rinfo"><h3>${r.jp}<small>${r.en}</small></h3><p>${esc(r.desc)}</p></div>`:`<p class="small" style="margin:0">地図の地域をタップすると、その産地の銘柄が表示されます。</p>`}`
+      ${r?`<div class="rinfo"><h3>${r.jp}<small>${r.en}</small></h3><p>${esc(r.desc)}</p></div>`:`<p class="small" style="margin:0">地図の地域をタップすると、その産地の蒸留所が表示されます。</p>`}`
     : `
       <div class="zk-filter">
         <div class="group-name">こんな味わい（複数選べます）</div>
@@ -871,22 +933,36 @@ function renderZukan(list){
         <div class="chips">${ZK_TAGS.map(t=>`<button class="chip" data-tag-pick="${esc(t)}" aria-pressed="${zk.tags.includes(t)}">${esc(t)}</button>`).join('')}</div>
         <div class="group-name">タイプ</div>
         <div class="chips">${ZK_TYPES.map(t=>`<button class="chip" data-type-pick="${esc(t)}" aria-pressed="${zk.types.includes(t)}">${esc(t)}</button>`).join('')}</div>
-        ${zk.axes.length||zk.tags.length||zk.types.length?`<div><button class="btn small ghost" data-act="zk-clear">条件をクリア</button></div>`:''}
+        <div class="group-name">価格帯（目安）</div>
+        <div class="chips">${ZK_PRICES.map(([k,l])=>`<button class="chip" data-price-pick="${k}" aria-pressed="${zk.prices.includes(k)}">${l}</button>`).join('')}</div>
+        ${zk.axes.length||zk.tags.length||zk.types.length||zk.prices.length?`<div><button class="btn small ghost" data-act="zk-clear">条件をクリア</button></div>`:''}
       </div>`;
   list.innerHTML = `<div class="zk">
-    <input class="search" id="zk-q" type="search" placeholder="図鑑を検索（銘柄・蒸留所・香り）" aria-label="図鑑を検索" value="${esc(zk.q)}">
-    <div class="zk-mode" role="group" aria-label="探し方"><button data-zmode="region" aria-pressed="${zk.mode==='region'}">産地で探す</button><button data-zmode="flavor" aria-pressed="${zk.mode==='flavor'}">味・香りで探す</button></div>
+    <input class="search" id="zk-q" type="search" placeholder="図鑑を検索（蒸留所・銘柄・香り）" aria-label="図鑑を検索" value="${esc(zk.q)}">
+    <div class="zk-top">
+      <div class="zk-mode" role="group" aria-label="探し方"><button data-zmode="region" aria-pressed="${zk.mode==='region'}">産地で探す</button><button data-zmode="flavor" aria-pressed="${zk.mode==='flavor'}">味・香りで探す</button></div>
+      <button class="btn cmp-open" data-act="cmp-open" aria-label="2つの銘柄を比較">比較${compare.a||compare.b?`<em>${[compare.a,compare.b].filter(Boolean).length}</em>`:''}</button>
+    </div>
     ${panel}
     <div id="zk-results"></div>
-    <p class="note-small">図鑑の味わいは、一般的に語られる傾向をもとにした目安です。度数や樽は代表的な仕様で、時期や市場によって異なる場合があります。</p>
+    <p class="note-small">図鑑の味わいは、一般的に語られる傾向をもとにした目安です。度数・樽・参考価格は代表的な仕様と国内のおおよその価格で、時期や店舗によって異なる場合があります。</p>
   </div>`;
   drawZkResults();
 }
 function drawZkResults(){
   const el=$('#zk-results'); if(!el) return;
-  const { items, scored } = zkResults();
-  if(zk.mode==='region' && !zk.region && !zk.q){ el.innerHTML=''; return; }
-  const title = zk.q ? `「${esc(zk.q)}」` : zk.mode==='region' ? esc(ZUKAN_REGIONS[zk.region]?.jp||'') : scored ? '条件に合う銘柄' : 'すべての銘柄';
+  if(zk.mode==='region'){
+    const ds = zkDistilleries();
+    if(!zk.region && !zk.q){ el.innerHTML=''; return; }
+    const title = zk.q ? `「${esc(zk.q)}」` : esc(ZUKAN_REGIONS[zk.region]?.jp||'');
+    const extra = zk.region ? communityItems().filter(c=>c.region===zk.region) : [];
+    el.innerHTML = `<div class="zk-head"><b>${title}</b><span>${ds.length}蒸留所・${ds.reduce((s,d)=>s+d.ex.length,0)}銘柄</span></div>
+      <div class="list" style="padding-top:8px">${ds.length?ds.map(dCard).join(''):`<div class="empty" style="padding:24px 8px"><p>該当する蒸留所がありません。</p></div>`}
+      ${extra.length?`<div class="zk-head" style="margin-top:6px"><b style="font-size:14px">みんなが記録した銘柄</b><span>${extra.length}銘柄</span></div>${extra.map(z=>zCard({z},false)).join('')}`:''}</div>`;
+    return;
+  }
+  const { items, scored } = zkFlavorResults();
+  const title = zk.q ? `「${esc(zk.q)}」` : scored ? '条件に合う銘柄' : 'すべての銘柄';
   el.innerHTML = `<div class="zk-head"><b>${title}</b><span>${items.length}銘柄</span></div>
     <div class="list" style="padding-top:8px">${items.length?items.map(it=>zCard(it,scored)).join(''):`<div class="empty" style="padding:24px 8px"><p>該当する銘柄がありません。条件を減らしてみてください。</p></div>`}</div>`;
 }
@@ -901,7 +977,10 @@ $('#list').addEventListener('click',e=>{
   const ax=t.closest('[data-axis-pick]'); if(ax){ tog(zk.axes,ax.dataset.axisPick); renderZukan($('#list')); return; }
   const tg=t.closest('[data-tag-pick]'); if(tg){ tog(zk.tags,tg.dataset.tagPick); renderZukan($('#list')); return; }
   const ty=t.closest('[data-type-pick]'); if(ty){ tog(zk.types,ty.dataset.typePick); renderZukan($('#list')); return; }
-  if(t.closest('[data-act="zk-clear"]')){ zk.axes=[]; zk.tags=[]; zk.types=[]; renderZukan($('#list')); return; }
+  const pr=t.closest('[data-price-pick]'); if(pr){ tog(zk.prices,pr.dataset.pricePick); renderZukan($('#list')); return; }
+  if(t.closest('[data-act="zk-clear"]')){ zk.axes=[]; zk.tags=[]; zk.types=[]; zk.prices=[]; renderZukan($('#list')); return; }
+  if(t.closest('[data-act="cmp-open"]')){ openCompare(); return; }
+  const d=t.closest('[data-d]'); if(d){ openDistillery(d.dataset.d); return; }
   const c=t.closest('[data-z]'); if(c) openZukanItem(c.dataset.z);
 });
 $('#list').addEventListener('keydown',e=>{ if(view==='zukan' && (e.key==='Enter'||e.key===' ') && e.target.closest?.('.rg')){ e.preventDefault(); e.target.closest('.rg').dispatchEvent(new MouseEvent('click',{bubbles:true})); } });
@@ -910,21 +989,62 @@ function openZukanItem(id){
   if(id.startsWith('b:')) return openBottle(id.slice(2));
   openZukan(id);
 }
-function openZukan(id){
-  const z = ZUKAN_ENTRIES.find(x=>x.id===id); if(!z) return;
+
+/* 蒸留所ページ */
+function openDistillery(id){
+  const d = zDist(id); if(!d) return;
   currentBottle=null;
+  const r = ZUKAN_REGIONS[d.region];
+  const exCards = d.ex.map(x=>{ const z=zEntry(x.id); const b=bottleForZ(z); const a=b?aggs.get(b.id):null;
+    const meta=[z.age?z.age+'年':'年数表記なし', z.abv?z.abv+'%':'', z.cask].filter(Boolean).join(' · ');
+    return `<button class="excard" data-zopen="${esc(z.id)}">
+      <span class="gl" style="background:${glassColor(z.color)}"></span>
+      <span class="info"><span class="ex-label">${esc(x.label)}</span><span class="meta">${esc(meta)}</span>
+        <span class="tagline">${z.tags.slice(0,3).map(t=>`<span>${esc(t)}</span>`).join('')}</span></span>
+      <span class="right"><b class="price">${z.price?esc(priceBand(z.price)):''}</b>${a?.n?`<i>みんな ${a.n>1?fmt1(a.avg):a.avg}点</i>`:'<i>参考価格</i>'}</span></button>`; }).join('');
+  mount(`<div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(d.name)}">
+    <div class="sheet-bar"><button class="btn ghost" data-act="close">‹ 図鑑</button><h2>${esc(d.name)}</h2><span style="width:60px"></span></div>
+    <div class="sheet-body">
+      <div class="z-hero"><span class="gl" style="background:${glassColor(d.ex[0].color)}"></span>
+        <div><div class="small">${esc(r?.jp||'')}${r?.en?` · ${esc(r.en)}`:''}</div><h1>${esc(d.name)}</h1><div class="en">${esc(d.en)}</div></div></div>
+      <p class="z-desc">${esc(d.desc)}</p>
+      <section class="sec"><h3>この蒸留所の銘柄<small>${d.ex.length} BOTTLINGS</small></h3>
+        <div class="list" style="padding-top:0">${exCards}</div>
+        ${d.ex.length>1?`<div style="margin-top:10px"><button class="btn" data-act="cmp-dist">この中の2本を比較する</button></div>`:''}
+      </section>
+      ${d.lat!=null?`<section class="sec"><h3>蒸留所の場所<small>MAP</small></h3><div class="minimap">${mapSVG({sel:d.region, focus:d.id, interactive:false})}</div></section>`:''}
+      <p class="note-small">味わいは一般的に語られる傾向をもとにした目安です。参考価格は国内のおおよその目安で、時期や店舗によって変わります。</p>
+    </div></div>`);
+  $('#sheet-root').onclick=e=>{
+    const el=e.target.closest('[data-act],[data-zopen]'); if(!el) return;
+    if(el.dataset.zopen) return openZukan(el.dataset.zopen);
+    if(el.dataset.act==='close') unmount();
+    if(el.dataset.act==='cmp-dist'){ compare.a=d.ex[0].id; compare.b=d.ex[1].id; openCompare(); }
+  };
+}
+
+/* 銘柄ページ */
+function openZukan(id){
+  const z = zEntry(id); if(!z) return;
+  currentBottle=null;
+  const d = zDist(z.distilleryId);
   const r = ZUKAN_REGIONS[z.region];
   const b = bottleForZ(z); const a = b ? aggs.get(b.id) : null;
-  const facts=[['蒸留所',z.distillery],['産地',r?.jp],['種類',z.type],['熟成',z.age?z.age+'年':'年数表記なし'],['度数',z.abv?z.abv+'%':''],['樽',z.cask]].filter(f=>f[1]);
+  const facts=[['参考価格',z.price?priceBand(z.price):''],['蒸留所',z.distillery],['産地',r?.jp],['種類',z.type],['熟成',z.age?z.age+'年':'年数表記なし'],['度数',z.abv?z.abv+'%':''],['樽',z.cask]].filter(f=>f[1]);
   const sims = similarTo(z,5);
+  const siblings = d ? d.ex.filter(x=>x.id!==z.id) : [];
   const community = a?.avgProfile ? profArr(a.avgProfile) : null;
   mount(`<div class="sheet" data-view="zukan" role="dialog" aria-modal="true" aria-label="${esc(z.name)}">
-    <div class="sheet-bar"><button class="btn ghost" data-act="close">‹ 図鑑</button><h2>${esc(z.name)}</h2><span style="width:60px"></span></div>
+    <div class="sheet-bar"><button class="btn ghost" data-act="back">‹ ${esc(d?d.name:'図鑑')}</button><h2></h2><button class="btn" data-act="cmp-add">比較</button></div>
     <div class="sheet-body">
       <div class="z-hero"><span class="gl" style="background:${glassColor(z.color)}"></span>
         <div><div class="small">${esc(r?.jp||'')}${r?.en?` · ${esc(r.en)}`:''}</div><h1>${esc(z.name)}</h1><div class="en">${esc(z.en)}</div></div></div>
       <p class="z-desc">${esc(z.desc)}</p>
       <dl class="facts">${facts.map(f=>`<div><dt>${f[0]}</dt><dd>${esc(f[1])}</dd></div>`).join('')}</dl>
+      ${z.price?`<p class="small" style="margin:-12px 0 0">参考価格は${z.priceNote?esc(z.priceNote)+'。':'国内の店頭価格（700ml前後）のおおよその目安です。時期や店舗によって変わります。'}</p>`:''}
+
+      ${siblings.length?`<section class="sec"><h3>同じ蒸留所のほかの銘柄<small>RANGE</small></h3>
+        <div class="chips">${siblings.map(x=>`<button class="chip" data-zopen="${esc(x.id)}">${esc(x.label)}</button>`).join('')}</div></section>`:''}
 
       <section class="sec"><h3>味わいの傾向<small>PROFILE</small></h3>
         <div class="radar-wrap">${radarSVG({ single:arrProf(z.p), mine: community ? arrProf(community) : null })}
@@ -933,12 +1053,10 @@ function openZukan(id){
       <section class="sec"><h3>よく語られる香りと味<small>NOTES</small></h3>
         <div class="chips">${z.tags.map(t=>`<span class="chip" aria-pressed="true">${esc(t)}</span>`).join('')}</div></section>
 
-      ${z.lat!=null?`<section class="sec"><h3>蒸留所の場所<small>MAP</small></h3><div class="minimap">${mapSVG({sel:z.region, focus:z.id, interactive:false})}</div></section>`:''}
-
       <section class="sec"><h3>似ている銘柄<small>SIMILAR</small></h3>
-        <p class="small" style="margin:0 0 8px">味わいの傾向と香りの重なりから選んでいます。</p>
+        <p class="small" style="margin:0 0 8px">ほかの蒸留所から、味わいの傾向と香りの重なりで選んでいます。</p>
         <div class="list" style="padding-top:0">${sims.map(s=>{
-          const o=s.o; const meta=[ZUKAN_REGIONS[o.region]?.jp, o.type].filter(Boolean).join(' · ');
+          const o=s.o; const meta=[o.community?'':o.distillery, ZUKAN_REGIONS[o.region]?.jp, o.price?'約'+priceBand(o.price):''].filter(Boolean).join(' · ');
           return `<button class="zcard" data-zopen="${esc(o.id)}"><span class="gl" style="background:${glassColor(o.color)}"></span>
             <span class="info"><h3>${esc(o.name)}${o.community?'<span class="badge peat">みんなの記録</span>':''}</h3><div class="meta">${esc(meta)}</div>
             ${s.shared.length?`<div class="tagline">${s.shared.slice(0,4).map(t=>`<span>${esc(t)}</span>`).join('')}</div>`:''}</span>
@@ -957,13 +1075,104 @@ function openZukan(id){
     const el=e.target.closest('[data-act],[data-zopen]'); if(!el) return;
     if(el.dataset.zopen) return openZukanItem(el.dataset.zopen);
     const act=el.dataset.act;
-    if(act==='close') unmount();
+    if(act==='back') d ? openDistillery(d.id) : unmount();
     if(act==='open-b' && b) openBottle(b.id);
+    if(act==='cmp-add'){
+      if(compare.a===z.id || compare.b===z.id){ openCompare(); return; }
+      if(!compare.a) compare.a=z.id; else if(!compare.b) compare.b=z.id; else compare.b=z.id;
+      openCompare();
+    }
     if(act==='taste-z'){
       const ex = bottleForZ(z);
       if(ex) return openTastingForm(ex, null);
       openBottleForm(null, { name:z.name, distillery:z.distillery, type:z.type, region:r?.pick||'', age:z.age, abv:z.abv, cask:z.cask }, nb=>openTastingForm(nb,null,true), ()=>openZukan(z.id));
     }
+  };
+}
+
+/* ---------- 2銘柄の比較 ---------- */
+function butterfly(A,B){
+  return `<div class="bfly">${AXES.map(([k,jp],i)=>{ const a=A.p[i], b=B.p[i];
+    return `<div class="bf-row"><em class="bf-n">${a}</em><div class="bf-l"><i style="width:${a*20}%"></i></div><span class="bf-k${a!==b?' diff':''}">${jp}</span><div class="bf-r"><i style="width:${b*20}%"></i></div><em class="bf-n">${b}</em></div>`; }).join('')}</div>`;
+}
+function openCompare(){
+  const A = compare.a ? zEntry(compare.a) : null, B = compare.b ? zEntry(compare.b) : null;
+  const slot = (z, key) => z
+    ? `<div class="cmp-slot"><span class="gl" style="background:${glassColor(z.color)}"></span><strong>${esc(z.name)}</strong><span class="small">${esc(ZUKAN_REGIONS[z.region]?.jp||'')}</span>
+        <div class="cmp-act"><button class="btn small ghost" data-pick="${key}">変更</button><button class="btn small ghost" data-open="${esc(z.id)}">詳細</button></div></div>`
+    : `<button class="cmp-slot empty" data-pick="${key}"><span class="plus">＋</span><span>銘柄を選ぶ</span></button>`;
+  let body = '';
+  if(A && B){
+    const sim = similarity(A,B);
+    const onlyA = A.tags.filter(t=>!B.tags.includes(t)), onlyB = B.tags.filter(t=>!A.tags.includes(t));
+    const rows = [['参考価格',A.price?priceBand(A.price):'—',B.price?priceBand(B.price):'—'],['蒸留所',A.distillery,B.distillery],['産地',ZUKAN_REGIONS[A.region]?.jp,ZUKAN_REGIONS[B.region]?.jp],
+      ['種類',A.type,B.type],['熟成',A.age?A.age+'年':'表記なし',B.age?B.age+'年':'表記なし'],['度数',A.abv?A.abv+'%':'—',B.abv?B.abv+'%':'—'],['樽',A.cask||'—',B.cask||'—']];
+    const ba=bottleForZ(A), bb=bottleForZ(B); const aa=ba?aggs.get(ba.id):null, ab=bb?aggs.get(bb.id):null;
+    body = `
+      <section class="sec"><h3>似ている度合い<small>SIMILARITY</small></h3>
+        <div class="cmp-sim"><b>${Math.round(sim.score*100)}<small>%</small></b><span>${sim.score>=0.75?'かなり近いタイプ':sim.score>=0.6?'共通点が多い':sim.score>=0.45?'ところどころ似ている':'まったく違うタイプ'}</span></div></section>
+      <section class="sec"><h3>基本情報<small>SPEC</small></h3>
+        <div class="cmp-table">${rows.map(([k,a,b])=>`<div class="cmp-k">${k}</div><div class="cmp-a${a!==b?' diff':''}">${esc(a||'—')}</div><div class="cmp-b${a!==b?' diff':''}">${esc(b||'—')}</div>`).join('')}</div></section>
+      <section class="sec"><h3>味わいの傾向<small>PROFILE</small></h3>
+        <div class="radar-wrap">${radarSVG({ single:arrProf(A.p), mine:arrProf(B.p) })}
+          <div class="legend"><span><i style="border-color:var(--amber)"></i>${esc(A.name)}</span><span><i style="border-color:var(--peat);border-top-style:dashed"></i>${esc(B.name)}</span></div></div>
+        ${butterfly(A,B)}
+      </section>
+      <section class="sec"><h3>香りと味<small>NOTES</small></h3>
+        ${sim.shared.length?`<div class="group-name">共通</div><div class="chips">${sim.shared.map(t=>`<span class="chip" aria-pressed="true">${esc(t)}</span>`).join('')}</div>`:''}
+        <div class="cmp-tags"><div><div class="group-name" style="color:var(--amber)">${esc(A.label||A.name)}だけ</div><div class="chips">${onlyA.map(t=>`<span class="chip">${esc(t)}</span>`).join('')||'<span class="small">—</span>'}</div></div>
+          <div><div class="group-name">${esc(B.label||B.name)}だけ</div><div class="chips">${onlyB.map(t=>`<span class="chip">${esc(t)}</span>`).join('')||'<span class="small">—</span>'}</div></div></div>
+      </section>
+      ${aa?.n||ab?.n?`<section class="sec"><h3>みんなの評価<small>TASTINGS</small></h3>
+        <div class="cmp-table"><div class="cmp-k">平均点</div><div class="cmp-a">${aa?.n?(aa.n>1?fmt1(aa.avg):aa.avg)+'点':'記録なし'}</div><div class="cmp-b">${ab?.n?(ab.n>1?fmt1(ab.avg):ab.avg)+'点':'記録なし'}</div>
+        <div class="cmp-k">記録した人</div><div class="cmp-a">${aa?.people||0}人</div><div class="cmp-b">${ab?.people||0}人</div></div></section>`:''}
+      <section class="sec"><h3>ひとことで<small>SUMMARY</small></h3><p class="small" style="margin:0 0 6px">${esc(A.name)}</p><p style="margin:0 0 12px">${esc(A.desc)}</p><p class="small" style="margin:0 0 6px">${esc(B.name)}</p><p style="margin:0">${esc(B.desc)}</p></section>`;
+  } else {
+    body = `<p class="hint">2つの銘柄を選ぶと、基本情報・味わいの傾向・香りの違いを並べて比べられます。図鑑の銘柄ページの「比較」ボタンからも追加できます。</p>`;
+  }
+  mount(`<div class="sheet" role="dialog" aria-modal="true" aria-label="銘柄を比較">
+    <div class="sheet-bar"><button class="btn ghost" data-act="close">‹ 閉じる</button><h2>2つの銘柄を比較</h2>${A||B?`<button class="btn ghost" data-act="cmp-reset">クリア</button>`:'<span style="width:60px"></span>'}</div>
+    <div class="sheet-body">
+      <div class="cmp-head">${slot(A,'a')}<span class="vs">VS</span>${slot(B,'b')}</div>
+      ${A&&B?`<div style="text-align:center"><button class="btn small ghost" data-act="swap">左右を入れ替え</button></div>`:''}
+      ${body}
+    </div></div>`);
+  $('#sheet-root').onclick=e=>{
+    const el=e.target.closest('[data-act],[data-pick],[data-open]'); if(!el) return;
+    if(el.dataset.pick) return openComparePicker(el.dataset.pick);
+    if(el.dataset.open) return openZukan(el.dataset.open);
+    const act=el.dataset.act;
+    if(act==='close'){ unmount(); if(view==='zukan') renderZukan($('#list')); }
+    if(act==='cmp-reset'){ compare.a=null; compare.b=null; openCompare(); }
+    if(act==='swap'){ [compare.a,compare.b]=[compare.b,compare.a]; openCompare(); }
+  };
+}
+function openComparePicker(slot){
+  const other = slot==='a' ? compare.b : compare.a;
+  const od = other ? zEntry(other)?.distilleryId : null;
+  mount(`<div class="sheet" role="dialog" aria-modal="true" aria-label="比較する銘柄を選ぶ">
+    <div class="sheet-bar"><button class="btn ghost" data-act="back">‹ 比較</button><h2>銘柄を選ぶ</h2><span style="width:60px"></span></div>
+    <div class="sheet-body">
+      <input class="search" id="cp-q" type="search" placeholder="蒸留所・銘柄名で探す" autocomplete="off">
+      <div id="cp-list" class="list" style="padding-top:0"></div>
+    </div></div>`);
+  const draw=()=>{
+    const q=norm($('#cp-q').value);
+    let ds=ZUKAN_DISTILLERIES;
+    if(q) ds=ds.filter(d=>norm([d.name,d.en,...d.ex.flatMap(x=>[x.name,x.en,x.label])].join(' ')).includes(q));
+    // 比較相手と同じ蒸留所を先頭に
+    if(od && !q) ds=[...ds].sort((a,b)=>(b.id===od)-(a.id===od));
+    $('#cp-list').innerHTML = ds.slice(0,40).map(d=>`<div class="cp-group"><div class="group-name">${esc(d.name)} <span class="small">${esc(ZUKAN_REGIONS[d.region]?.jp||'')}</span></div>
+      <div class="chips">${d.ex.map(x=>`<button class="chip" data-cp="${esc(x.id)}" ${x.id===other?'disabled':''}>${esc(x.label)}</button>`).join('')}</div></div>`).join('')
+      || '<p class="small">該当する銘柄がありません。</p>';
+  };
+  draw();
+  const root=$('#sheet-root');
+  root.oninput=e=>{ if(e.target.id==='cp-q') draw(); };
+  root.onclick=e=>{
+    const el=e.target.closest('[data-act],[data-cp]'); if(!el) return;
+    if(el.dataset.cp){ compare[slot]=el.dataset.cp; openCompare(); return; }
+    if(el.dataset.act==='back') openCompare();
   };
 }
 
