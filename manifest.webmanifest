@@ -1,0 +1,17 @@
+{
+  "name": "琥珀帳 ウイスキーノート",
+  "short_name": "琥珀帳",
+  "description": "ウイスキーのテイスティングを記録して仲間と共有するノート",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#15110D",
+  "theme_color": "#15110D",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
