@@ -18,12 +18,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
 <script src="config.js"></script>
+<script src="zukan-data.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.104.1/dist/umd/supabase.js"></script>
 <style>
 /* Layout: phone-first single column; sticky header, bottle list, full-screen sheets; amber = everyone's consensus, peat = "you" */
 :root{
   --bg:#F1EEE9; --surface:#FFFFFF; --ink:#1F1A15; --muted:#6D645A; --line:#DCD4C9;
-  --amber:#A9581A; --amber-ink:#FFFFFF; --amber-soft:#F2E2CD; --peat:#2F6B52; --peat-soft:#DCEBE2; --danger:#B33A2B;
+  --amber:#A9581A; --amber-ink:#FFFFFF; --amber-soft:#F2E2CD; --peat:#2F6B52; --peat-soft:#DCEBE2; --danger:#B33A2B; --land:#DDD3C5; --near:#E9E3DA;
   --display:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho",serif;
   --body:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
@@ -31,7 +32,7 @@
 }
 @media (prefers-color-scheme: dark){:root{
   --bg:#15110D; --surface:#201A14; --ink:#EFE6DA; --muted:#A79A8B; --line:#3A3027;
-  --amber:#E39A4E; --amber-ink:#1A120A; --amber-soft:#3A2817; --peat:#7FC4A2; --peat-soft:#1E3329; --danger:#E5735F; color-scheme:dark}}
+  --amber:#E39A4E; --amber-ink:#1A120A; --amber-soft:#3A2817; --peat:#7FC4A2; --peat-soft:#1E3329; --danger:#E5735F; --land:#2E261F; --near:#1D1813; color-scheme:dark}}
 *{box-sizing:border-box}
 html,body{background:var(--bg);margin:0}
 body{color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6;-webkit-tap-highlight-color:transparent;
@@ -48,7 +49,7 @@ input,select,textarea{font-size:16px}
 .brand h1{font-family:var(--display);font-weight:800;font-size:clamp(17px,5.2vw,24px);line-height:1.2;margin:0;letter-spacing:.06em;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .count{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .menu-btn{border:1px solid var(--line);background:var(--surface);border-radius:9px;width:36px;height:32px;cursor:pointer;font-size:16px;line-height:1;flex-shrink:0}
-.tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line);margin-bottom:-11px}
+.tabs{display:grid;grid-template-columns:1fr 1.3fr 1fr;border-bottom:1px solid var(--line);margin-bottom:-11px}
 .tabs button{border:0;background:none;padding:8px 0 9px;font-size:14px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent}
 .tabs button[aria-selected="true"]{color:var(--ink);font-weight:700;border-bottom-color:var(--amber)}
 .tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -184,6 +185,62 @@ input[type=range]{accent-color:var(--amber);width:100%}
 .steps{margin:6px 0 0;padding-left:1.3em;font-size:14px}
 .small{font-size:12px;color:var(--muted)}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:20;background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:13.5px;max-width:calc(100% - 32px)}
+/* 図鑑 */
+.zk{display:grid;gap:14px;padding-top:14px}
+.zk-mode{display:grid;grid-template-columns:1fr 1fr;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:3px}
+.zk-mode button{border:0;background:none;padding:8px;border-radius:7px;cursor:pointer;color:var(--muted);font-size:14px}
+.zk-mode button[aria-pressed="true"]{background:var(--amber-soft);color:var(--ink);font-weight:700}
+.mapcard{background:var(--near);border:1px solid var(--line);border-radius:16px;padding:10px 6px 6px;position:relative;overflow:hidden}
+.mapcard .compass{position:absolute;right:14px;top:10px;font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--muted)}
+.mapcard .caption{position:absolute;left:14px;top:10px;font-family:var(--display);font-size:13px;letter-spacing:.12em;color:var(--muted)}
+.zmap{width:100%;height:auto;display:block;max-height:62vh}
+.zmap .near{fill:var(--land);opacity:.45}
+.zmap .land{fill:var(--land)}
+.zmap .other{fill:var(--land)}
+.zmap .rg{cursor:pointer}
+.zmap .rg path{fill:var(--amber);stroke:var(--near);stroke-width:.7;transition:fill-opacity .2s}
+.zmap .rg[data-region="highland"] path{fill-opacity:.16}
+.zmap .rg[data-region="speyside"] path{fill-opacity:.42}
+.zmap .rg[data-region="lowland"] path{fill-opacity:.28}
+.zmap .rg[data-region="campbeltown"] path{fill-opacity:.5}
+.zmap .rg[data-region="islay"] path{fill-opacity:.55}
+.zmap .rg[data-region="islands"] path{fill-opacity:.32}
+.zmap .rg.sel path{fill-opacity:.95}
+.zmap.has-sel .rg:not(.sel) path{fill-opacity:.1}
+.zmap .lbl{font-family:var(--body);font-size:10.5px;font-weight:700;fill:var(--ink);paint-order:stroke;stroke:var(--near);stroke-width:3px;stroke-linejoin:round;pointer-events:none;letter-spacing:.04em}
+.zmap .lbl.sel{fill:var(--amber-ink);stroke:var(--amber)}
+.zmap .dot{fill:var(--ink);fill-opacity:.55;pointer-events:none}
+.zmap .dot.on{fill:var(--bg);fill-opacity:1;stroke:var(--ink);stroke-width:.8}
+.zmap .dot.focus{fill:var(--amber-ink);stroke:var(--amber);stroke-width:2.5}
+.zmap .rg:focus-visible path{stroke:var(--ink);stroke-width:1.5}
+.world{display:flex;flex-wrap:wrap;gap:6px}
+.world .lbl{width:100%;font-size:11.5px;color:var(--muted);letter-spacing:.06em}
+.rinfo{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:4px}
+.rinfo h3{margin:0;font-family:var(--display);font-size:20px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.rinfo h3 small{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--muted);font-weight:500}
+.rinfo p{margin:0;font-size:14px}
+.zk-filter{display:grid;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
+.zk-filter .group-name{margin:0}
+.zk-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted)}
+.zk-head b{font-family:var(--display);font-size:16px;color:var(--ink)}
+.zcard{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 12px;text-align:left;width:100%;cursor:pointer}
+.zcard .gl{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(0,0,0,.08);box-shadow:inset 0 -8px 0 rgba(0,0,0,.12)}
+.zcard h3{font-family:var(--display);font-weight:800;font-size:16px;line-height:1.3;margin:0;overflow-wrap:anywhere}
+.zcard .en{font-size:11.5px;color:var(--muted);letter-spacing:.02em}
+.zcard .right{text-align:right;min-width:3.4em}
+.zcard .right b{display:block;font-family:var(--mono);font-size:20px;line-height:1.1;color:var(--amber);font-variant-numeric:tabular-nums}
+.zcard .right i{font-style:normal;font-size:10.5px;color:var(--muted);display:block}
+.badge{display:inline-block;font-size:10.5px;border-radius:999px;padding:0 7px;background:var(--amber-soft);color:var(--ink);margin-left:6px;vertical-align:2px}
+.badge.peat{background:var(--peat-soft);color:var(--peat)}
+.matchbar{height:4px;border-radius:999px;background:var(--line);overflow:hidden;margin-top:6px;max-width:160px}
+.matchbar i{display:block;height:100%;background:var(--amber)}
+.z-hero{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+.z-hero .gl{width:64px;height:64px;border-radius:50%;border:1px solid rgba(0,0,0,.08);box-shadow:inset 0 -10px 0 rgba(0,0,0,.14)}
+.z-hero h1{font-family:var(--display);font-weight:800;font-size:24px;line-height:1.25;margin:0;overflow-wrap:anywhere}
+.z-hero .en{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.04em}
+.z-desc{font-size:15px;line-height:1.8;margin:0}
+.minimap{max-width:220px;margin:0 auto}
+.note-small{font-size:11.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
 @media (prefers-reduced-motion:no-preference){.sheet{animation:up .22s ease-out}@keyframes up{from{transform:translateY(16px);opacity:.6}}}
 @media (max-width:380px){.row3{grid-template-columns:1fr 1fr}.bar{grid-template-columns:6em 1fr 3.2em}}
 </style>
@@ -193,7 +250,7 @@ input[type=range]{accent-color:var(--amber);width:100%}
   <header class="top">
     <div class="brand"><h1>HIDEOUT CARTER</h1><span class="count" id="count"></span>
       <button class="menu-btn" id="menu" aria-label="メニュー">⋯</button></div>
-    <div class="tools">
+    <div class="tools" id="toolbar">
       <input class="search" id="q" type="search" placeholder="銘柄・蒸留所・香りで検索" aria-label="検索">
       <div class="seg" role="group" aria-label="表示">
         <button id="f-all" aria-pressed="true">みんな</button>
@@ -210,6 +267,7 @@ input[type=range]{accent-color:var(--amber);width:100%}
     <div class="tabs" role="tablist">
       <button role="tab" id="t-bottles" aria-selected="true">銘柄</button>
       <button role="tab" id="t-feed" aria-selected="false">みんなの記録</button>
+      <button role="tab" id="t-zukan" aria-selected="false">図鑑</button>
     </div>
   </header>
   <main id="list" class="list" aria-live="polite">
@@ -222,7 +280,7 @@ input[type=range]{accent-color:var(--amber);width:100%}
 
 <script>
 (() => {
-const APP_VERSION = '2026.10.12';
+const APP_VERSION = '2026.10.12b';
 
 const COLORS = [
   ['white','ホワイトワイン','#F6F0D6'],['straw','ペールストロー','#F1E2A0'],['gold','ゴールド','#E7C25A'],['oldgold','オールドゴールド','#D9A63A'],
@@ -375,6 +433,8 @@ function renderList(){
   }
   if(!loaded) return;
   $('#sortbar').hidden = view!=='bottles';
+  $('#toolbar').hidden = view==='zukan';
+  if(view==='zukan'){ $('#count').textContent=`図鑑 ${ZUKAN_ENTRIES.length}銘柄`; return renderZukan(list); }
   return view==='bottles' ? renderBottles(list) : renderFeed(list);
 }
 function renderBottles(list){
@@ -478,6 +538,7 @@ function openBottle(id, keepScroll){
       ${colorVotes}
 
       ${a.n?`<section class="sec"><h3>一人ひとりの記録<small>TASTINGS</small></h3><div style="display:grid;gap:10px">${tastingCards}</div></section>`:''}
+      ${zukanFor(b)?`<section class="sec"><h3>図鑑<small>GUIDE</small></h3><p class="small" style="margin:0 0 8px">この銘柄の一般的な情報と、似ている銘柄を見られます。</p><button class="btn" data-act="zukan">図鑑で見る</button></section>`:''}
       ${canDeleteBottle?`<div class="t-actions" id="delbottle"><button class="btn small danger" data-act="askdel-b">この銘柄を削除</button></div>`:''}
     </div>
     ${myId?`<div class="cta"><button class="btn primary" data-act="taste">${a.mine.length?'もう一度テイスティングを記録':'この銘柄をテイスティング'}</button></div>`:''}
@@ -489,6 +550,7 @@ function openBottle(id, keepScroll){
     const tid=el.closest('[data-tid]')?.dataset.tid;
     if(act==='close'){ currentBottle=null; unmount(); }
     if(act==='taste') openTastingForm(b, null);
+    if(act==='zukan'){ const z=zukanFor(b); if(z) openZukan(z.id); }
     if(act==='edit-b') openBottleForm(b, null, ()=>openBottle(b.id));
     if(act==='edit-t'){ const t=tastings.find(x=>x.id===tid); if(t) openTastingForm(b,t); }
     if(act==='askdel-t'){ el.parentElement.innerHTML=`<span>この記録を削除しますか？</span><button class="btn small" data-act="nodel-t">やめる</button><button class="btn small danger" data-act="del-t">削除する</button>`; }
@@ -542,8 +604,9 @@ function openPicker(){
   setTimeout(()=>$('#pk-q')?.focus(),50);
 }
 
-function openBottleForm(existing, prefillName, onDone){
-  const f = existing ? {...existing} : {name:prefillName||'',distillery:'',type:'シングルモルト',region:'',age:'',abv:'',cask:'',photo:''};
+function openBottleForm(existing, prefill, onDone, onCancel){
+  const base = {name:'',distillery:'',type:'シングルモルト',region:'',age:'',abv:'',cask:'',photo:''};
+  const f = existing ? {...existing} : typeof prefill==='object' && prefill ? {...base, ...prefill} : {...base, name:prefill||''};
   let newPhoto=null, previewUrl=f.photo?photoUrl(f.photo):'', saving=false; const oldPhoto=f.photo||'';
   const opt=(list,v)=>`<option value="">—</option>`+list.map(o=>`<option ${o===v?'selected':''}>${o}</option>`).join('');
   mount(`<div class="sheet" role="dialog" aria-modal="true" aria-label="銘柄の情報">
@@ -578,7 +641,7 @@ function openBottleForm(existing, prefillName, onDone){
   root.onclick=async e=>{
     const el=e.target.closest('button'); if(!el) return;
     if(el.dataset.use){ const b=bottles.find(x=>x.id===el.dataset.use); if(b) openTastingForm(b,null,true); return; }
-    if(el.dataset.act==='cancel') existing ? onDone?.() : openPicker();
+    if(el.dataset.act==='cancel') existing ? onDone?.() : onCancel ? onCancel() : openPicker();
     if(el.dataset.act!=='save' || saving) return;
     const err=$('#err');
     const data={ name:$('#b-name').value.trim(), distillery:$('#b-dist').value.trim(), type:$('#b-type').value, region:$('#b-region').value,
@@ -699,6 +762,211 @@ function openTastingForm(bottle, existing, fromPicker){
   }
 }
 
+/* ---------- 図鑑 ---------- */
+const ZK_TYPES = ['シングルモルト','ブレンデッド','ブレンデッドモルト','シングルグレーン','シングルポットスチル','バーボン','ライ'];
+const ZK_TAGS = ['ピート','スモーク','潮','ヨード','シェリー','ドライフルーツ','蜂蜜','バニラ','柑橘','青りんご','洋梨','トロピカル','花','ヘザー','チョコレート','キャラメル','黒胡椒','ナッツ'];
+const ZK_WORLD = ['scotland','japan','ireland','usa','canada','taiwan','india'];
+const zk = { mode:'region', region:null, axes:[], types:[], tags:[], q:'' };
+const keyNorm = s => norm(s).replace(/^(ザ|the)/,'').replace(/(年|years?old|years?|yo)$/,'');
+const profArr = obj => AXES.map(a=>+(obj?.[a[0]]||0));
+const arrProf = arr => Object.fromEntries(AXES.map((a,i)=>[a[0],arr[i]]));
+const glassColor = k => (colorOf(k)||COLORS[3])[2];
+
+function zukanFor(b){
+  const k = keyNorm(b.name);
+  return ZUKAN_ENTRIES.find(z => keyNorm(z.name)===k || keyNorm(z.en)===k) || null;
+}
+function bottleForZ(z){
+  const a=keyNorm(z.name), e=keyNorm(z.en);
+  return bottles.find(b=>{ const k=keyNorm(b.name); return k===a || k===e; }) || null;
+}
+// みんなの記録だけにある銘柄（図鑑にないもの）も、似ている銘柄・検索の対象にする
+function communityItems(){
+  return bottles.filter(b=>!zukanFor(b)).map(b=>{ const a=aggs.get(b.id); if(!a?.avgProfile) return null;
+    const regionKey = Object.keys(ZUKAN_REGIONS).find(k=>ZUKAN_REGIONS[k].pick && ZUKAN_REGIONS[k].pick===b.region) || null;
+    return { id:'b:'+b.id, bottleId:b.id, name:b.name, en:'', distillery:b.distillery, region:regionKey, type:b.type, age:b.age, abv:b.abv,
+      color:(Object.entries(a.colors).sort((x,y)=>y[1]-x[1])[0]||[])[0]||'', p:profArr(a.avgProfile), tags:topTags(a,6).map(t=>t[0]), community:true, people:a.people };
+  }).filter(Boolean);
+}
+function similarity(x,y){
+  const d=Math.sqrt(x.p.reduce((s,v,i)=>s+(v-y.p[i])**2,0));
+  const prof=Math.max(0,1-d/9);
+  const A=new Set(x.tags), B=new Set(y.tags); const inter=[...A].filter(t=>B.has(t));
+  const jac = (A.size||B.size) ? inter.length/new Set([...A,...B]).size : 0;
+  return { score: prof*0.8 + jac*0.2, shared: inter };
+}
+function similarTo(item, n=5){
+  const pool=[...ZUKAN_ENTRIES, ...communityItems()].filter(o=>o.id!==item.id);
+  return pool.map(o=>({o, ...similarity(item,o)})).sort((a,b)=>b.score-a.score).slice(0,n);
+}
+function projXY(lon,lat){ const P=ZUKAN_MAP.proj; return [ (lon-P.lon0)*P.c*P.k, (P.lat1-lat)*P.k ]; }
+
+function mapSVG({ sel=null, focus=null, interactive=true, cls='zmap' }={}){
+  const M=ZUKAN_MAP;
+  const clips = Object.entries(M.clips).map(([k,v])=>`<clipPath id="zc-${k}"><polygon points="${v}"/></clipPath>`).join('')
+    + `<mask id="zm-high" maskUnits="userSpaceOnUse" x="0" y="0" width="${M.w}" height="${M.h}"><rect width="${M.w}" height="${M.h}" fill="#fff"/>${Object.values(M.clips).map(v=>`<polygon points="${v}" fill="#000"/>`).join('')}</mask>`;
+  const rg = (key, d, clip, mask) => `<g class="rg${sel===key?' sel':''}" data-region="${key}"${interactive?` role="button" tabindex="0" aria-label="${ZUKAN_REGIONS[key].jp}"`:''}${clip?` clip-path="url(#zc-${clip})"`:''}${mask?` mask="url(#${mask})"`:''}><path d="${d}"/></g>`;
+  const dots = ZUKAN_ENTRIES.filter(z=>z.lat!=null).map(z=>{ const [x,y]=projXY(z.lon,z.lat);
+    const c = focus ? (z.id===focus?'dot focus':'dot') : (sel && z.region===sel ? 'dot on' : 'dot');
+    return (!focus || z.id===focus || true) ? `<circle class="${c}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${z.id===focus?4.5:2.3}"/>` : ''; }).join('');
+  const labels = interactive ? Object.entries(ZUKAN_REGIONS).filter(([,r])=>r.scot).map(([k,r])=>{ const [x,y]=projXY(r.label[0],r.label[1]);
+    return `<text class="lbl${sel===k?' sel':''}" x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="middle">${r.jp}</text>`; }).join('') : '';
+  return `<svg class="${cls}${sel?' has-sel':''}" viewBox="0 0 ${M.w} ${M.h}" role="img" aria-label="スコットランドのウイスキー産地の地図">
+    <defs>${clips}</defs>
+    <path class="near" d="${M.near}"/>
+    <path class="land" d="${M.mainland}"/><path class="land" d="${M.islay}${M.islands}"/><path class="other" d="${M.other}"/>
+    ${rg('highland',M.mainland,null,'zm-high')}${rg('lowland',M.mainland,'lowland')}${rg('speyside',M.mainland,'speyside')}${rg('campbeltown',M.mainland,'campbeltown')}
+    ${rg('islay',M.islay)}${rg('islands',M.islands)}
+    ${dots}${labels}</svg>`;
+}
+
+function zkResults(){
+  const q = norm(zk.q);
+  let items = [...ZUKAN_ENTRIES, ...communityItems()];
+  if(q) items = items.filter(z=>norm([z.name,z.en,z.distillery,z.type,ZUKAN_REGIONS[z.region]?.jp,...z.tags].join(' ')).includes(q));
+  if(zk.mode==='region'){
+    if(zk.region) items = items.filter(z=>z.region===zk.region);
+    else if(!q) return { items:[], scored:false };
+    items.sort((a,b)=>((+!!a.community)-(+!!b.community)) || a.name.localeCompare(b.name,'ja'));
+    return { items:items.map(z=>({z})), scored:false };
+  }
+  if(zk.types.length) items = items.filter(z=>zk.types.includes(z.type));
+  const has = zk.axes.length || zk.tags.length;
+  let rows = items.map(z=>{
+    const ax = zk.axes.length ? zk.axes.reduce((s,k)=>s+z.p[AXES.findIndex(a=>a[0]===k)]/5,0)/zk.axes.length : 0;
+    const tg = zk.tags.length ? zk.tags.filter(t=>z.tags.includes(t)).length/zk.tags.length : 0;
+    const score = zk.axes.length && zk.tags.length ? ax*0.65+tg*0.35 : zk.axes.length ? ax : tg;
+    return { z, score };
+  });
+  if(zk.tags.length) rows = rows.filter(r=>zk.tags.some(t=>r.z.tags.includes(t)));
+  if(has) rows = rows.filter(r=>r.score>=0.45).sort((a,b)=>b.score-a.score);
+  else rows.sort((a,b)=>a.z.name.localeCompare(b.z.name,'ja'));
+  return { items:rows, scored:has };
+}
+function zCard({z,score}, scored){
+  const b = z.community ? bottles.find(x=>x.id===z.bottleId) : bottleForZ(z);
+  const a = b ? aggs.get(b.id) : null;
+  const meta=[z.distillery, ZUKAN_REGIONS[z.region]?.jp, z.age?z.age+'年':'', z.abv?z.abv+'%':''].filter(Boolean).join(' · ');
+  const right = scored ? `<b>${Math.round(score*100)}<small style="font-size:11px">%</small></b><i>一致</i>`
+    : a?.n ? `<b>${a.n>1?fmt1(a.avg):a.avg}</b><i>みんな${a.people}人</i>` : '';
+  return `<button class="zcard" data-z="${esc(z.id)}"><span class="gl" style="background:${glassColor(z.color)}"></span>
+    <span class="info"><h3>${esc(z.name)}${z.community?'<span class="badge peat">みんなの記録</span>':''}</h3>${z.en?`<div class="en">${esc(z.en)}</div>`:''}
+      <div class="meta">${esc(meta||z.type||'')}</div>
+      ${z.tags.length?`<div class="tagline">${z.tags.slice(0,4).map(t=>`<span>${esc(t)}</span>`).join('')}</div>`:''}
+      ${scored?`<div class="matchbar"><i style="width:${Math.round(score*100)}%"></i></div>`:''}</span>
+    <span class="right">${right}</span></button>`;
+}
+
+function renderZukan(list){
+  const r = zk.region && ZUKAN_REGIONS[zk.region];
+  const panel = zk.mode==='region' ? `
+      <div class="mapcard"><span class="caption">SCOTLAND</span><span class="compass">N ↑</span>${mapSVG({sel:zk.region})}</div>
+      <div class="world"><span class="lbl">スコットランド以外・ブレンド</span>${ZK_WORLD.map(k=>`<button class="chip" data-world="${k}" aria-pressed="${zk.region===k}">${ZUKAN_REGIONS[k].jp}</button>`).join('')}</div>
+      ${r?`<div class="rinfo"><h3>${r.jp}<small>${r.en}</small></h3><p>${esc(r.desc)}</p></div>`:`<p class="small" style="margin:0">地図の地域をタップすると、その産地の銘柄が表示されます。</p>`}`
+    : `
+      <div class="zk-filter">
+        <div class="group-name">こんな味わい（複数選べます）</div>
+        <div class="chips">${AXES.map(([k,jp])=>`<button class="chip" data-axis-pick="${k}" aria-pressed="${zk.axes.includes(k)}">${jp}</button>`).join('')}</div>
+        <div class="group-name">香り・味のキーワード</div>
+        <div class="chips">${ZK_TAGS.map(t=>`<button class="chip" data-tag-pick="${esc(t)}" aria-pressed="${zk.tags.includes(t)}">${esc(t)}</button>`).join('')}</div>
+        <div class="group-name">タイプ</div>
+        <div class="chips">${ZK_TYPES.map(t=>`<button class="chip" data-type-pick="${esc(t)}" aria-pressed="${zk.types.includes(t)}">${esc(t)}</button>`).join('')}</div>
+        ${zk.axes.length||zk.tags.length||zk.types.length?`<div><button class="btn small ghost" data-act="zk-clear">条件をクリア</button></div>`:''}
+      </div>`;
+  list.innerHTML = `<div class="zk">
+    <input class="search" id="zk-q" type="search" placeholder="図鑑を検索（銘柄・蒸留所・香り）" aria-label="図鑑を検索" value="${esc(zk.q)}">
+    <div class="zk-mode" role="group" aria-label="探し方"><button data-zmode="region" aria-pressed="${zk.mode==='region'}">産地で探す</button><button data-zmode="flavor" aria-pressed="${zk.mode==='flavor'}">味・香りで探す</button></div>
+    ${panel}
+    <div id="zk-results"></div>
+    <p class="note-small">図鑑の味わいは、一般的に語られる傾向をもとにした目安です。度数や樽は代表的な仕様で、時期や市場によって異なる場合があります。</p>
+  </div>`;
+  drawZkResults();
+}
+function drawZkResults(){
+  const el=$('#zk-results'); if(!el) return;
+  const { items, scored } = zkResults();
+  if(zk.mode==='region' && !zk.region && !zk.q){ el.innerHTML=''; return; }
+  const title = zk.q ? `「${esc(zk.q)}」` : zk.mode==='region' ? esc(ZUKAN_REGIONS[zk.region]?.jp||'') : scored ? '条件に合う銘柄' : 'すべての銘柄';
+  el.innerHTML = `<div class="zk-head"><b>${title}</b><span>${items.length}銘柄</span></div>
+    <div class="list" style="padding-top:8px">${items.length?items.map(it=>zCard(it,scored)).join(''):`<div class="empty" style="padding:24px 8px"><p>該当する銘柄がありません。条件を減らしてみてください。</p></div>`}</div>`;
+}
+document.addEventListener('input',e=>{ if(e.target.id==='zk-q'){ zk.q=e.target.value.trim(); drawZkResults(); } });
+$('#list').addEventListener('click',e=>{
+  if(view!=='zukan') return;
+  const t=e.target;
+  const rg=t.closest('.rg'); if(rg){ const k=rg.dataset.region; zk.region = zk.region===k?null:k; renderZukan($('#list')); if(zk.region) setTimeout(()=>$('#zk-results')?.scrollIntoView({behavior:'smooth',block:'start'}),50); return; }
+  const w=t.closest('[data-world]'); if(w){ const k=w.dataset.world; zk.region = zk.region===k?null:k; renderZukan($('#list')); return; }
+  const m=t.closest('[data-zmode]'); if(m){ zk.mode=m.dataset.zmode; renderZukan($('#list')); return; }
+  const tog=(arr,v)=>{ const i=arr.indexOf(v); i<0?arr.push(v):arr.splice(i,1); };
+  const ax=t.closest('[data-axis-pick]'); if(ax){ tog(zk.axes,ax.dataset.axisPick); renderZukan($('#list')); return; }
+  const tg=t.closest('[data-tag-pick]'); if(tg){ tog(zk.tags,tg.dataset.tagPick); renderZukan($('#list')); return; }
+  const ty=t.closest('[data-type-pick]'); if(ty){ tog(zk.types,ty.dataset.typePick); renderZukan($('#list')); return; }
+  if(t.closest('[data-act="zk-clear"]')){ zk.axes=[]; zk.tags=[]; zk.types=[]; renderZukan($('#list')); return; }
+  const c=t.closest('[data-z]'); if(c) openZukanItem(c.dataset.z);
+});
+$('#list').addEventListener('keydown',e=>{ if(view==='zukan' && (e.key==='Enter'||e.key===' ') && e.target.closest?.('.rg')){ e.preventDefault(); e.target.closest('.rg').dispatchEvent(new MouseEvent('click',{bubbles:true})); } });
+
+function openZukanItem(id){
+  if(id.startsWith('b:')) return openBottle(id.slice(2));
+  openZukan(id);
+}
+function openZukan(id){
+  const z = ZUKAN_ENTRIES.find(x=>x.id===id); if(!z) return;
+  currentBottle=null;
+  const r = ZUKAN_REGIONS[z.region];
+  const b = bottleForZ(z); const a = b ? aggs.get(b.id) : null;
+  const facts=[['蒸留所',z.distillery],['産地',r?.jp],['種類',z.type],['熟成',z.age?z.age+'年':'年数表記なし'],['度数',z.abv?z.abv+'%':''],['樽',z.cask]].filter(f=>f[1]);
+  const sims = similarTo(z,5);
+  const community = a?.avgProfile ? profArr(a.avgProfile) : null;
+  mount(`<div class="sheet" data-view="zukan" role="dialog" aria-modal="true" aria-label="${esc(z.name)}">
+    <div class="sheet-bar"><button class="btn ghost" data-act="close">‹ 図鑑</button><h2>${esc(z.name)}</h2><span style="width:60px"></span></div>
+    <div class="sheet-body">
+      <div class="z-hero"><span class="gl" style="background:${glassColor(z.color)}"></span>
+        <div><div class="small">${esc(r?.jp||'')}${r?.en?` · ${esc(r.en)}`:''}</div><h1>${esc(z.name)}</h1><div class="en">${esc(z.en)}</div></div></div>
+      <p class="z-desc">${esc(z.desc)}</p>
+      <dl class="facts">${facts.map(f=>`<div><dt>${f[0]}</dt><dd>${esc(f[1])}</dd></div>`).join('')}</dl>
+
+      <section class="sec"><h3>味わいの傾向<small>PROFILE</small></h3>
+        <div class="radar-wrap">${radarSVG({ single:arrProf(z.p), mine: community ? arrProf(community) : null })}
+          <div class="legend"><span><i style="border-color:var(--amber)"></i>一般的な傾向</span>${community?`<span><i style="border-color:var(--peat);border-top-style:dashed"></i>みんなの感じ方（${a.profs.length}件）</span>`:''}</div></div>
+      </section>
+      <section class="sec"><h3>よく語られる香りと味<small>NOTES</small></h3>
+        <div class="chips">${z.tags.map(t=>`<span class="chip" aria-pressed="true">${esc(t)}</span>`).join('')}</div></section>
+
+      ${z.lat!=null?`<section class="sec"><h3>蒸留所の場所<small>MAP</small></h3><div class="minimap">${mapSVG({sel:z.region, focus:z.id, interactive:false})}</div></section>`:''}
+
+      <section class="sec"><h3>似ている銘柄<small>SIMILAR</small></h3>
+        <p class="small" style="margin:0 0 8px">味わいの傾向と香りの重なりから選んでいます。</p>
+        <div class="list" style="padding-top:0">${sims.map(s=>{
+          const o=s.o; const meta=[ZUKAN_REGIONS[o.region]?.jp, o.type].filter(Boolean).join(' · ');
+          return `<button class="zcard" data-zopen="${esc(o.id)}"><span class="gl" style="background:${glassColor(o.color)}"></span>
+            <span class="info"><h3>${esc(o.name)}${o.community?'<span class="badge peat">みんなの記録</span>':''}</h3><div class="meta">${esc(meta)}</div>
+            ${s.shared.length?`<div class="tagline">${s.shared.slice(0,4).map(t=>`<span>${esc(t)}</span>`).join('')}</div>`:''}</span>
+            <span class="right"><b>${Math.round(s.score*100)}<small style="font-size:11px">%</small></b><i>似ている</i></span></button>`; }).join('')}</div>
+      </section>
+
+      <section class="sec"><h3>みんなの記録<small>TASTINGS</small></h3>
+        ${a?.n ? `<p style="margin:0 0 8px">${a.people}人が記録しています。平均 <b style="font-family:var(--mono);color:var(--amber)">${a.n>1?fmt1(a.avg):a.avg}</b> 点</p><button class="btn" data-act="open-b">みんなの記録を見る</button>`
+          : `<p class="small" style="margin:0">まだ誰も記録していません。飲んだら最初の記録を残しましょう。</p>`}
+      </section>
+      <p class="note-small">味わいは一般的に語られる傾向をもとにした目安です。実際に飲んだ感想は「みんなの記録」に集まっていきます。</p>
+    </div>
+    ${myId?`<div class="cta"><button class="btn primary" data-act="taste-z">この銘柄をテイスティング</button></div>`:''}
+  </div>`);
+  $('#sheet-root').onclick=e=>{
+    const el=e.target.closest('[data-act],[data-zopen]'); if(!el) return;
+    if(el.dataset.zopen) return openZukanItem(el.dataset.zopen);
+    const act=el.dataset.act;
+    if(act==='close') unmount();
+    if(act==='open-b' && b) openBottle(b.id);
+    if(act==='taste-z'){
+      const ex = bottleForZ(z);
+      if(ex) return openTastingForm(ex, null);
+      openBottleForm(null, { name:z.name, distillery:z.distillery, type:z.type, region:r?.pick||'', age:z.age, abv:z.abv, cask:z.cask }, nb=>openTastingForm(nb,null,true), ()=>openZukan(z.id));
+    }
+  };
+}
+
 /* 写真を長辺1600pxのJPEGに縮小 */
 function shrink(file){
   return new Promise((res,rej)=>{
@@ -750,8 +1018,8 @@ const seg=(a,b,set)=>{ $(a).onclick=()=>{set(0);$(a).setAttribute('aria-pressed'
 seg('#f-all','#f-mine',v=>filter=v?'mine':'all');
 $('#sortbar').addEventListener('click',e=>{ const b=e.target.closest('[data-sort]'); if(!b) return; sort=b.dataset.sort;
   $('#sortbar').querySelectorAll('[data-sort]').forEach(x=>x.setAttribute('aria-pressed',x===b)); renderList(); });
-const tab=v=>{ view=v; $('#t-bottles').setAttribute('aria-selected',v==='bottles'); $('#t-feed').setAttribute('aria-selected',v==='feed'); renderList(); };
-$('#t-bottles').onclick=()=>tab('bottles'); $('#t-feed').onclick=()=>tab('feed');
+const tab=v=>{ view=v; ['bottles','feed','zukan'].forEach(k=>$('#t-'+k).setAttribute('aria-selected',v===k)); renderList(); window.scrollTo(0,0); };
+$('#t-bottles').onclick=()=>tab('bottles'); $('#t-feed').onclick=()=>tab('feed'); $('#t-zukan').onclick=()=>tab('zukan');
 $('#add').onclick=openPicker;
 $('#menu').onclick=openMenu;
 
