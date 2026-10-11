@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>琥珀帳</title>
-<meta name="description" content="ウイスキーのテイスティングを記録して仲間と共有するノート">
+<title>HIDEOUT CARTER</title>
+<meta name="description" content="ウイスキーのテイスティングを持ち寄り、銘柄ごとにみんなの感じ方を集めるノート">
 <meta name="theme-color" content="#F1EEE9" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#15110D" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="琥珀帳">
+<meta name="apple-mobile-web-app-title" content="HIDEOUT CARTER">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,10 +20,10 @@
 <script src="config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.104.1/dist/umd/supabase.js"></script>
 <style>
-/* Layout: phone-first single column; sticky header, card list, full-screen sheets for detail and form; amber is the one bold note */
+/* Layout: phone-first single column; sticky header, bottle list, full-screen sheets; amber = everyone's consensus, peat = "you" */
 :root{
   --bg:#F1EEE9; --surface:#FFFFFF; --ink:#1F1A15; --muted:#6D645A; --line:#DCD4C9;
-  --amber:#A9581A; --amber-ink:#FFFFFF; --amber-soft:#F2E2CD; --peat:#3D5A4A; --danger:#B33A2B;
+  --amber:#A9581A; --amber-ink:#FFFFFF; --amber-soft:#F2E2CD; --peat:#2F6B52; --peat-soft:#DCEBE2; --danger:#B33A2B;
   --display:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho",serif;
   --body:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
@@ -31,7 +31,7 @@
 }
 @media (prefers-color-scheme: dark){:root{
   --bg:#15110D; --surface:#201A14; --ink:#EFE6DA; --muted:#A79A8B; --line:#3A3027;
-  --amber:#E39A4E; --amber-ink:#1A120A; --amber-soft:#3A2817; --peat:#8EB19C; --danger:#E5735F; color-scheme:dark}}
+  --amber:#E39A4E; --amber-ink:#1A120A; --amber-soft:#3A2817; --peat:#7FC4A2; --peat-soft:#1E3329; --danger:#E5735F; color-scheme:dark}}
 *{box-sizing:border-box}
 html,body{background:var(--bg);margin:0}
 body{color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6;-webkit-tap-highlight-color:transparent;
@@ -39,16 +39,18 @@ body{color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6;-we
 [hidden]{display:none!important}
 img{max-width:100%}
 button,input,select,textarea{font:inherit;color:inherit}
-input,select,textarea{font-size:16px} /* iOSのズーム防止 */
+input,select,textarea{font-size:16px}
 :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 .wrap{max-width:640px;margin:0 auto;padding-inline:16px;padding-block:0 120px}
 
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:14px 10px;border-bottom:1px solid var(--line);display:grid;gap:10px}
-.brand{display:flex;align-items:baseline;gap:10px}
-.brand h1{font-family:var(--display);font-weight:800;font-size:28px;margin:0;letter-spacing:.04em}
-.brand small{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.count{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
-.menu-btn{border:1px solid var(--line);background:var(--surface);border-radius:9px;width:36px;height:32px;cursor:pointer;font-size:16px;line-height:1;align-self:center}
+.brand{display:flex;align-items:center;gap:10px}
+.brand h1{font-family:var(--display);font-weight:800;font-size:clamp(17px,5.2vw,24px);line-height:1.2;margin:0;letter-spacing:.06em;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.count{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.menu-btn{border:1px solid var(--line);background:var(--surface);border-radius:9px;width:36px;height:32px;cursor:pointer;font-size:16px;line-height:1;flex-shrink:0}
+.tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line);margin-bottom:-11px}
+.tabs button{border:0;background:none;padding:8px 0 9px;font-size:14px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent}
+.tabs button[aria-selected="true"]{color:var(--ink);font-weight:700;border-bottom-color:var(--amber)}
 .tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .search{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
 .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:3px;flex-shrink:0}
@@ -59,32 +61,38 @@ input,select,textarea{font-size:16px} /* iOSのズーム防止 */
 .card{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px;text-align:left;width:100%;cursor:pointer}
 .thumb{width:76px;height:96px;border-radius:9px;object-fit:cover;background:var(--amber-soft);display:grid;place-items:center;overflow:hidden}
 .thumb .glass{width:34px;height:34px;border-radius:50%;box-shadow:inset 0 -6px 0 rgba(0,0,0,.12)}
-.card .info{min-width:0}
-.card h3{font-family:var(--display);font-weight:800;font-size:17px;line-height:1.3;margin:0;text-wrap:balance;overflow-wrap:anywhere}
+.info{min-width:0}
+.card h3{font-family:var(--display);font-weight:800;font-size:17px;line-height:1.3;margin:0;text-wrap:pretty;overflow-wrap:anywhere}
 .meta{font-size:12.5px;color:var(--muted);margin-top:2px}
 .tagline{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
 .tagline span{font-size:11.5px;background:var(--bg);border-radius:999px;padding:1px 8px;color:var(--muted)}
-.score{text-align:center;padding-right:4px}
+.tagline span b{font-family:var(--mono);font-weight:500;color:var(--amber);margin-left:3px}
+.score{text-align:center;padding-right:4px;min-width:3.4em}
 .score b{display:block;font-family:var(--mono);font-size:26px;line-height:1;color:var(--amber);font-variant-numeric:tabular-nums}
-.score i{font-style:normal;font-size:10.5px;color:var(--muted);letter-spacing:.08em}
+.score i{font-style:normal;font-size:10.5px;color:var(--muted);letter-spacing:.04em;display:block;margin-top:3px}
 .by{font-size:11.5px;color:var(--muted);margin-top:4px}
+.people{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;color:var(--muted);margin-top:4px}
+.mine-dot{display:inline-block;font-size:10.5px;color:var(--peat);background:var(--peat-soft);border-radius:999px;padding:0 7px;margin-left:6px}
+.feed-card{grid-template-columns:1fr auto}
 
 .empty{padding:48px 8px;text-align:center;color:var(--muted)}
 .empty h2{font-family:var(--display);color:var(--ink);font-size:20px;margin:0 0 6px}
 .notice{padding:12px 14px;border-radius:10px;background:var(--amber-soft);font-size:13.5px}
 .notice code{font-family:var(--mono);font-size:12px}
-
 .fab{position:fixed;right:16px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:6;background:var(--amber);color:var(--amber-ink);border:0;border-radius:999px;padding:14px 22px;font-weight:700;font-size:15px;box-shadow:0 6px 20px rgba(80,40,10,.28);cursor:pointer}
 
 .sheet{position:fixed;inset:0;z-index:10;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch}
 .sheet-bar{position:sticky;top:0;z-index:2;background:var(--bg);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:calc(10px + env(safe-area-inset-top,0px)) 16px 10px}
-.sheet-bar h2{font-size:15px;margin:0;flex:1;text-align:center;font-weight:700}
-.btn{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:8px 14px;font-size:14px;cursor:pointer}
+.sheet-bar h2{font-size:15px;margin:0;flex:1;text-align:center;font-weight:700;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:8px 14px;font-size:14px;cursor:pointer;white-space:nowrap}
 .btn.primary{background:var(--amber);border-color:var(--amber);color:var(--amber-ink);font-weight:700}
 .btn.ghost{background:none;border-color:transparent;color:var(--muted)}
 .btn.danger{color:var(--danger);border-color:var(--danger);background:none}
+.btn.small{padding:5px 10px;font-size:13px}
 .btn:disabled{opacity:.5}
-.sheet-body{max-width:640px;margin:0 auto;padding-inline:16px;padding-block:16px calc(60px + env(safe-area-inset-bottom,0px));display:grid;gap:22px}
+.sheet-body{max-width:640px;margin:0 auto;padding-inline:16px;padding-block:16px calc(110px + env(safe-area-inset-bottom,0px));display:grid;gap:22px}
+.cta{position:fixed;left:0;right:0;bottom:0;z-index:3;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:linear-gradient(transparent,var(--bg) 30%)}
+.cta .btn{width:100%;max-width:608px;display:block;margin:0 auto;padding:13px;font-size:15px;border-radius:12px}
 
 fieldset{border:0;margin:0;padding:0;display:grid;gap:12px;min-width:0}
 legend{font-family:var(--display);font-weight:800;font-size:18px;padding:0;margin-bottom:10px}
@@ -105,6 +113,9 @@ legend{font-family:var(--display);font-weight:800;font-size:18px;padding:0;margi
 .sw{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 4px;font-size:11px;display:grid;justify-items:center;gap:4px;cursor:pointer;color:var(--muted)}
 .sw i{width:26px;height:26px;border-radius:50%;border:1px solid rgba(0,0,0,.08)}
 .sw[aria-pressed="true"]{border-color:var(--amber);color:var(--ink);font-weight:700;box-shadow:0 0 0 1px var(--amber)}
+.sw b{font-family:var(--mono);font-weight:500;font-size:12px;color:var(--amber)}
+.sw.vote{cursor:default}
+.sw.vote.zero{opacity:.35}
 .phase{display:grid;grid-template-columns:repeat(3,1fr);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:3px}
 .phase button{border:0;background:none;padding:8px;border-radius:7px;cursor:pointer;color:var(--muted);font-size:14px}
 .phase button[aria-pressed="true"]{background:var(--amber-soft);color:var(--ink);font-weight:700}
@@ -115,31 +126,58 @@ legend{font-family:var(--display);font-weight:800;font-size:18px;padding:0;margi
 .sl{display:grid;grid-template-columns:5.5em 1fr 1.5em;gap:10px;align-items:center;font-size:13.5px}
 .sl output{font-family:var(--mono);text-align:right;color:var(--amber);font-variant-numeric:tabular-nums}
 input[type=range]{accent-color:var(--amber);width:100%}
-.radar-wrap{display:grid;place-items:center}
+.radar-wrap{display:grid;place-items:center;gap:6px}
 .radar{width:100%;max-width:300px;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:16px;height:0;border-top:3px solid;vertical-align:middle;margin-right:5px}
 .scorebox{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
 .scorebox output{font-family:var(--mono);font-size:40px;line-height:1;color:var(--amber);font-variant-numeric:tabular-nums}
 .scorebox .word{font-size:13px;color:var(--muted)}
 .err{color:var(--danger);font-size:13px}
+.hint{font-size:13px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
 
 .hero{border-radius:14px;overflow:hidden;background:var(--amber-soft)}
-.hero img{width:100%;max-height:420px;object-fit:cover;display:block}
+.hero img{width:100%;max-height:380px;object-fit:cover;display:block}
 .d-head{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start}
 .d-head h1{font-family:var(--display);font-weight:800;font-size:26px;line-height:1.25;margin:0;text-wrap:balance;overflow-wrap:anywhere}
 .d-score{text-align:right}
 .d-score b{font-family:var(--mono);font-size:44px;line-height:1;color:var(--amber);font-variant-numeric:tabular-nums}
 .d-score div{font-size:12px;color:var(--muted)}
-.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:0}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:0}
 .facts div{background:var(--surface);padding:9px 10px;min-width:0}
 .facts dt{font-size:10.5px;color:var(--muted);letter-spacing:.08em}
 .facts dd{margin:0;font-size:14px;font-weight:500;overflow-wrap:anywhere}
-.colorline{display:flex;align-items:center;gap:10px;font-size:14px}
-.colorline i{width:22px;height:22px;border-radius:50%;border:1px solid rgba(0,0,0,.1)}
-.note h3{font-family:var(--display);font-size:17px;margin:0 0 6px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
-.note h3 small{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.14em;font-weight:500}
-.note p{margin:6px 0 0;white-space:pre-wrap}
-.d-foot{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padding-top:12px}
-.confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.facts div:last-child:nth-child(odd){grid-column:span 2}
+.sec h3{font-family:var(--display);font-size:17px;margin:0 0 8px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.sec h3 small{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.14em;font-weight:500}
+.sec p{margin:6px 0 0}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px;min-width:0}
+.stat dt{font-size:11px;color:var(--muted)}
+.stat dd{margin:2px 0 0;font-family:var(--mono);font-size:20px;font-variant-numeric:tabular-nums}
+.stat dd small{font-family:var(--body);font-size:11px;color:var(--muted);margin-left:2px}
+.agree{display:inline-block;font-size:12px;padding:2px 10px;border-radius:999px;background:var(--amber-soft)}
+.strip{width:100%;height:auto;display:block}
+.bars{display:grid;gap:6px}
+.bar{display:grid;grid-template-columns:7.5em 1fr 3.4em;gap:8px;align-items:center;font-size:13.5px}
+.bar span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .track{height:8px;border-radius:999px;background:var(--line);overflow:hidden}
+.bar .fill{height:100%;background:var(--amber);border-radius:999px}
+.bar .fill.mine{background:var(--peat)}
+.bar em{font-style:normal;font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.tasting{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:8px}
+.tasting.me{border-color:var(--peat)}
+.t-head{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.t-head strong{font-size:14px}
+.t-head .s{margin-left:auto;font-family:var(--mono);font-size:20px;color:var(--amber)}
+.t-phase{font-size:13.5px}
+.t-phase b{font-size:11.5px;color:var(--muted);font-weight:500;margin-right:6px;letter-spacing:.06em}
+.t-note{white-space:pre-wrap;font-size:14px}
+.t-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;align-items:center;font-size:13px}
+.pick{display:grid;gap:8px}
+.pick button{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;width:100%}
+.pick button.new{border-style:dashed;color:var(--amber);font-weight:700}
+.pick small{color:var(--muted);font-size:12px}
 .menu-list{display:grid;gap:12px}
 .menu-list h3{font-family:var(--display);font-size:17px;margin:0 0 4px}
 .menu-list p{margin:0;font-size:14px}
@@ -147,13 +185,13 @@ input[type=range]{accent-color:var(--amber);width:100%}
 .small{font-size:12px;color:var(--muted)}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:20;background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:13.5px;max-width:calc(100% - 32px)}
 @media (prefers-reduced-motion:no-preference){.sheet{animation:up .22s ease-out}@keyframes up{from{transform:translateY(16px);opacity:.6}}}
-@media (max-width:380px){.row3{grid-template-columns:1fr 1fr}.facts{grid-template-columns:1fr 1fr}}
+@media (max-width:380px){.row3{grid-template-columns:1fr 1fr}.bar{grid-template-columns:6em 1fr 3.2em}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
-    <div class="brand"><h1>琥珀帳</h1><small>Whisky Notes</small><span class="count" id="count"></span>
+    <div class="brand"><h1>HIDEOUT CARTER</h1><span class="count" id="count"></span>
       <button class="menu-btn" id="menu" aria-label="メニュー">⋯</button></div>
     <div class="tools">
       <input class="search" id="q" type="search" placeholder="銘柄・蒸留所・香りで検索" aria-label="検索">
@@ -162,24 +200,29 @@ input[type=range]{accent-color:var(--amber);width:100%}
         <button id="f-mine" aria-pressed="false">自分</button>
       </div>
     </div>
-    <div class="tools">
+    <div class="tools" id="sortbar">
       <div class="seg" role="group" aria-label="並び順">
-        <button id="s-new" aria-pressed="true">新しい順</button>
-        <button id="s-score" aria-pressed="false">評価順</button>
+        <button data-sort="recent" aria-pressed="true">最近</button>
+        <button data-sort="score" aria-pressed="false">評価</button>
+        <button data-sort="count" aria-pressed="false">記録数</button>
       </div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button role="tab" id="t-bottles" aria-selected="true">銘柄</button>
+      <button role="tab" id="t-feed" aria-selected="false">みんなの記録</button>
     </div>
   </header>
   <main id="list" class="list" aria-live="polite">
     <div class="empty"><h2>読み込み中…</h2></div>
   </main>
 </div>
-<button class="fab" id="add" hidden>＋ テイスティングを記録</button>
+<button class="fab" id="add" hidden>＋ テイスティング</button>
 <div id="sheet-root"></div>
 <div class="toast" id="toast" hidden></div>
 
 <script>
 (() => {
-const APP_VERSION = '2026.10.11';
+const APP_VERSION = '2026.10.12';
 
 const COLORS = [
   ['white','ホワイトワイン','#F6F0D6'],['straw','ペールストロー','#F1E2A0'],['gold','ゴールド','#E7C25A'],['oldgold','オールドゴールド','#D9A63A'],
@@ -208,31 +251,67 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt
 const scoreWord = n => n>=95?'傑出':n>=90?'秀逸':n>=85?'とても良い':n>=80?'良い':n>=75?'ふつう':'いまいち';
 const colorOf = k => COLORS.find(c => c[0]===k);
 const fmtDate = t => { const d=new Date(t); return isNaN(d)?'':`${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`; };
+const norm = s => String(s||'').normalize('NFKC').toLowerCase().replace(/[\s・·\-_'’"”.。、,]/g,'');
+const fmt1 = n => (Math.round(n*10)/10).toFixed(1);
 const store = { get(k){ try{return localStorage.getItem(k)}catch(e){return null} }, set(k,v){ try{localStorage.setItem(k,v)}catch(e){} } };
 
-let sb=null, myId=null, reviews=[], loaded=false, setupError='';
-let filter='all', sort='new', query='';
-let installEvt=null;
+let sb=null, myId=null, bottles=[], tastings=[], aggs=new Map(), loaded=false, setupError='';
+let view='bottles', filter='all', sort='recent', query='';
+let installEvt=null, currentBottle=null;
 
 function toast(msg){ const t=$('#toast'); t.textContent=msg; t.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>t.hidden=true,2400); }
 const photoUrl = path => (!path||!sb) ? '' : sb.storage.from('photos').getPublicUrl(path).data.publicUrl;
 
-/* ---------- データ層（Supabase） ---------- */
-const rowToReview = r => ({ ...(r.data||{}), id:r.id, author:r.user_id, authorName:r.author_name||'', score:r.score ?? r.data?.score,
-  createdAt:Date.parse(r.created_at), updatedAt:Date.parse(r.updated_at) });
+/* ---------- データ ---------- */
+const rowToTasting = r => ({ ...(r.data||{}), id:r.id, bottleId:r.bottle_id, author:r.user_id, authorName:r.author_name||'',
+  score:r.score ?? r.data?.score, createdAt:Date.parse(r.created_at), updatedAt:Date.parse(r.updated_at) });
+const rowToBottle = b => ({ id:b.id, name:b.name, distillery:b.distillery||'', type:b.type||'', region:b.region||'', age:b.age||'', abv:b.abv||'',
+  cask:b.cask||'', photo:b.photo||'', createdBy:b.created_by, createdAt:Date.parse(b.created_at) });
 
-async function loadReviews(){
-  const { data, error } = await sb.from('reviews').select('*').order('created_at',{ascending:false}).limit(1000);
+function buildAggs(){
+  aggs = new Map();
+  bottles.forEach(b => aggs.set(b.id, aggregate(b.id)));
+}
+function aggregate(bid){
+  const list = tastings.filter(t=>t.bottleId===bid).sort((a,b)=>b.createdAt-a.createdAt);
+  const people = new Set(list.map(t=>t.author));
+  const scores = list.map(t=>t.score).filter(s=>typeof s==='number');
+  const avg = scores.length ? scores.reduce((a,b)=>a+b,0)/scores.length : null;
+  const sd = scores.length>1 ? Math.sqrt(scores.reduce((a,s)=>a+(s-avg)**2,0)/scores.length) : 0;
+  const profs = list.map(t=>t.profile).filter(p=>p && AXES.some(a=>p[a[0]]>0));
+  const avgProfile = profs.length ? Object.fromEntries(AXES.map(a=>[a[0], profs.reduce((s,p)=>s+(+p[a[0]]||0),0)/profs.length])) : null;
+  const profSd = profs.length>1 ? AXES.reduce((acc,a)=>{ const m=avgProfile[a[0]]; return acc+Math.sqrt(profs.reduce((s,p)=>s+((+p[a[0]]||0)-m)**2,0)/profs.length); },0)/AXES.length : null;
+  // タグ：何人がそう感じたか（同じ人の複数回は1人として数える）
+  const tagPeople = {}; PHASES.forEach(([k])=>tagPeople[k]=new Map());
+  list.forEach(t=>PHASES.forEach(([k])=>(t[k]?.tags||[]).forEach(tag=>{ const m=tagPeople[k]; if(!m.has(tag)) m.set(tag,new Set()); m.get(tag).add(t.author); })));
+  const allTags = new Map();
+  PHASES.forEach(([k])=>tagPeople[k].forEach((set,tag)=>{ if(!allTags.has(tag)) allTags.set(tag,new Set()); set.forEach(a=>allTags.get(tag).add(a)); }));
+  const vote = key => { const m={}; list.forEach(t=>{ if(t[key]) m[t[key]]=(m[t[key]]||0)+1; }); return m; };
+  return { list, n:list.length, people:people.size, avg, sd, min:scores.length?Math.min(...scores):null, max:scores.length?Math.max(...scores):null,
+    avgProfile, profs, profSd, tagPeople, allTags, colors:vote('color'), finLen:vote('finishLength'), serves:vote('serve'),
+    lastAt: list[0]?.createdAt || 0, mine: list.filter(t=>t.author===myId) };
+}
+const topTags = (a, k=3) => [...a.allTags.entries()].sort((x,y)=>y[1].size-x[1].size || x[0].localeCompare(y[0],'ja')).slice(0,k);
+
+async function loadAll(){
+  const [b, r] = await Promise.all([
+    sb.from('bottles').select('*').order('created_at',{ascending:false}).limit(2000),
+    sb.from('reviews').select('*').order('created_at',{ascending:false}).limit(5000)
+  ]);
+  const error = b.error || r.error;
   if(error){ setupError = error.message; loaded=true; renderList(); return; }
-  reviews = data.map(rowToReview); loaded=true; setupError=''; renderList();
+  bottles = b.data.map(rowToBottle);
+  tastings = r.data.map(rowToTasting).filter(t=>t.bottleId);
+  buildAggs(); loaded=true; setupError=''; renderList();
+  if(currentBottle && $('#sheet-root [data-view="bottle"]')) openBottle(currentBottle, true);
 }
 let reloadTimer=null;
-const scheduleReload = () => { clearTimeout(reloadTimer); reloadTimer=setTimeout(loadReviews,300); };
+const scheduleReload = () => { clearTimeout(reloadTimer); reloadTimer=setTimeout(loadAll,300); };
 
 async function boot(){
   const cfg = window.KOHAKU_CONFIG || {};
   if(!window.supabase || !cfg.SUPABASE_URL || /xxxx/.test(cfg.SUPABASE_URL) || !cfg.SUPABASE_ANON_KEY || /ここに/.test(cfg.SUPABASE_ANON_KEY)){
-    setupError = 'config'; loaded=true; renderList(); return;
+    setupError='config'; loaded=true; renderList(); return;
   }
   sb = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY, { auth:{ persistSession:true, autoRefreshToken:true } });
   try{
@@ -241,167 +320,327 @@ async function boot(){
     myId = session?.user?.id || null;
   }catch(e){ console.warn(e); toast('ログインできませんでした。閲覧のみで開いています。'); }
   $('#add').hidden = !myId;
-  await loadReviews();
-  sb.channel('reviews-live').on('postgres_changes',{event:'*',schema:'public',table:'reviews'},scheduleReload).subscribe();
+  await loadAll();
+  sb.channel('live').on('postgres_changes',{event:'*',schema:'public',table:'reviews'},scheduleReload)
+    .on('postgres_changes',{event:'*',schema:'public',table:'bottles'},scheduleReload).subscribe();
   document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') scheduleReload(); });
 }
 
-/* ---------- レーダー ---------- */
-function radarSVG(p, size=280){
-  const c=size/2, R=size/2-46, n=AXES.length;
+/* ---------- 図 ---------- */
+function radarSVG({ avg=null, others=[], mine=null, single=null }, size=280){
+  const c=size/2, R=size/2-56, n=AXES.length;
   const pt=(i,v)=>{ const a=-Math.PI/2+i*2*Math.PI/n; return [c+Math.cos(a)*R*v/5, c+Math.sin(a)*R*v/5]; };
+  const poly = p => AXES.map((a,i)=>pt(i,+(p?.[a[0]]||0)).join(',')).join(' ');
   let g='';
-  for(let r=1;r<=5;r++){ g+=`<polygon points="${AXES.map((_,i)=>pt(i,r).join(',')).join(' ')}" fill="none" stroke="var(--line)" stroke-width="${r===5?1.2:.8}"/>`; }
+  for(let r=1;r<=5;r++) g+=`<polygon points="${AXES.map((_,i)=>pt(i,r).join(',')).join(' ')}" fill="none" stroke="var(--line)" stroke-width="${r===5?1.2:.8}"/>`;
   AXES.forEach((a,i)=>{ const [x,y]=pt(i,5); g+=`<line x1="${c}" y1="${c}" x2="${x}" y2="${y}" stroke="var(--line)" stroke-width=".8"/>`;
-    const [lx,ly]=pt(i,6.4); g+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" font-size="11.5" fill="var(--muted)" font-family="var(--body)">${a[1]}</text>`; });
-  const vals=AXES.map(a=>+(p?.[a[0]]||0));
-  g+=`<polygon points="${vals.map((v,i)=>pt(i,v).join(',')).join(' ')}" fill="var(--amber)" fill-opacity=".28" stroke="var(--amber)" stroke-width="2" stroke-linejoin="round"/>`;
-  vals.forEach((v,i)=>{ if(v>0){ const [x,y]=pt(i,v); g+=`<circle cx="${x}" cy="${y}" r="3" fill="var(--amber)"/>`; }});
+    const [lx,ly]=pt(i,6.3); g+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" font-size="11.5" fill="var(--muted)" font-family="var(--body)">${a[1]}</text>`; });
+  others.forEach(p=>{ g+=`<polygon points="${poly(p)}" fill="none" stroke="var(--muted)" stroke-opacity=".45" stroke-width="1"/>`; });
+  const main = avg || single;
+  if(main){ g+=`<polygon points="${poly(main)}" fill="var(--amber)" fill-opacity=".26" stroke="var(--amber)" stroke-width="2.2" stroke-linejoin="round"/>`;
+    AXES.forEach((a,i)=>{ const v=+(main[a[0]]||0); if(v>0){ const [x,y]=pt(i,v); g+=`<circle cx="${x}" cy="${y}" r="3" fill="var(--amber)"/>`; }}); }
+  if(mine) g+=`<polygon points="${poly(mine)}" fill="none" stroke="var(--peat)" stroke-width="2" stroke-dasharray="5 3" stroke-linejoin="round"/>`;
   return `<svg class="radar" viewBox="0 0 ${size} ${size}" role="img" aria-label="フレーバープロファイル">${g}</svg>`;
 }
+function scoreStrip(a){
+  const W=320,H=58,L=14,Rt=W-14, x=s=>L+(Math.max(50,Math.min(100,s))-50)/50*(Rt-L);
+  let g=`<line x1="${L}" y1="26" x2="${Rt}" y2="26" stroke="var(--line)" stroke-width="2"/>`;
+  [50,60,70,80,90,100].forEach(v=>{ g+=`<line x1="${x(v)}" y1="21" x2="${x(v)}" y2="31" stroke="var(--line)"/><text x="${x(v)}" y="50" text-anchor="middle" font-size="10.5" fill="var(--muted)" font-family="var(--mono)">${v}</text>`; });
+  if(a.min!=null && a.max>a.min) g+=`<rect x="${x(a.min)}" y="22" width="${x(a.max)-x(a.min)}" height="8" rx="4" fill="var(--amber)" fill-opacity=".18"/>`;
+  const seen={};
+  a.list.forEach(t=>{ if(typeof t.score!=='number') return; const k=t.score; seen[k]=(seen[k]||0)+1; const dy=(seen[k]-1)*-7;
+    g+=`<circle cx="${x(t.score)}" cy="${26+dy}" r="5" fill="${t.author===myId?'var(--peat)':'var(--surface)'}" stroke="${t.author===myId?'var(--peat)':'var(--amber)'}" stroke-width="2"/>`; });
+  if(a.avg!=null) g+=`<line x1="${x(a.avg)}" y1="8" x2="${x(a.avg)}" y2="36" stroke="var(--amber)" stroke-width="2"/><text x="${x(a.avg)}" y="6" text-anchor="middle" font-size="10" fill="var(--amber)" font-family="var(--mono)" dominant-baseline="hanging" dy="-6">avg</text>`;
+  return `<svg class="strip" viewBox="0 -4 ${W} ${H+4}" role="img" aria-label="各記録の点数の分布">${g}</svg>`;
+}
+const agreementLabel = a => {
+  if(a.people<2 || a.profSd==null) return '';
+  return a.profSd<0.8 ? '感じ方がよく一致' : a.profSd<1.4 ? '感じ方はおおむね一致' : '感じ方が分かれている';
+};
 
 /* ---------- 一覧 ---------- */
-function visible(){
-  let r = reviews.slice();
-  if(filter==='mine') r = r.filter(x=>x.author && x.author===myId);
-  if(query){ const q=query.toLowerCase();
-    r = r.filter(x=>[x.name,x.distillery,x.region,x.type,x.cask,x.comment,x.authorName,...['nose','palate','finish'].flatMap(k=>x[k]?.tags||[])].join(' ').toLowerCase().includes(q)); }
-  r.sort(sort==='score' ? (a,b)=>(b.score||0)-(a.score||0) : (a,b)=>(b.createdAt||0)-(a.createdAt||0));
-  return r;
+function bottleMatches(b, a, q){
+  if(!q) return true;
+  const hay = norm([b.name,b.distillery,b.region,b.type,b.cask,...a.allTags.keys(),...a.list.map(t=>t.authorName)].join(' '));
+  return hay.includes(norm(q));
 }
-const nameOf = x => x.author && x.author===myId ? 'あなた' : (x.authorName || 'メンバー');
-
 function renderList(){
   const list=$('#list');
-  $('#count').textContent = loaded && !setupError ? `${reviews.length} 本` : '';
-  if(setupError==='config'){
-    list.innerHTML = `<div class="empty"><h2>初期設定が必要です</h2></div><div class="notice"><code>config.js</code> に Supabase の URL と anon キーを書き込んで、GitHub にアップロードしてください。手順は同梱の <code>README.md</code> にあります。</div>`;
-    return;
-  }
+  $('#count').textContent = loaded && !setupError ? `${bottles.length}銘柄・${tastings.length}件` : '';
+  if(setupError==='config'){ list.innerHTML=`<div class="empty"><h2>初期設定が必要です</h2></div><div class="notice"><code>config.js</code> に Supabase の URL とキーを書き込んでアップロードしてください。</div>`; return; }
   if(setupError){
-    list.innerHTML = `<div class="empty"><h2>記録を読み込めませんでした</h2><p>通信状態を確認して開き直してください。</p></div><div class="notice">詳細：${esc(setupError)}<br>はじめて使う場合は、<code>supabase-setup.sql</code> を Supabase で実行したか確認してください。</div>`;
+    const needsMigration = /bottles|bottle_id/.test(setupError);
+    list.innerHTML = `<div class="empty"><h2>${needsMigration?'データベースの更新が必要です':'記録を読み込めませんでした'}</h2></div><div class="notice">${needsMigration?'Supabase の SQL Editor で <code>update-2-bottles.sql</code> を実行してください。':'通信状態を確認して開き直してください。'}<br><span class="small">詳細：${esc(setupError)}</span></div>`;
     return;
   }
   if(!loaded) return;
-  const r=visible();
-  if(!reviews.length){
-    list.innerHTML = `<div class="empty"><h2>まだ一本もありません</h2><p>右下の「テイスティングを記録」から、最初のボトルを登録しましょう。<br>銘柄・写真・色・香りと味・評価を残せます。</p></div>`;
-    return;
-  }
-  if(!r.length){ list.innerHTML = `<div class="empty"><h2>該当する記録がありません</h2><p>検索語や表示の切り替えを変えてみてください。</p></div>`; return; }
-  list.innerHTML = r.map(x=>{
-    const col=colorOf(x.color);
-    const thumb = x.photo ? `<img class="thumb" src="${esc(photoUrl(x.photo))}" alt="" loading="lazy">`
-      : `<div class="thumb"><div class="glass" style="background:${col?col[2]:'var(--line)'}"></div></div>`;
-    const tags=[...(x.nose?.tags||[]),...(x.palate?.tags||[])].filter((t,i,a)=>a.indexOf(t)===i).slice(0,4);
-    const meta=[x.distillery,x.age?x.age+'年':'',x.abv?x.abv+'%':''].filter(Boolean).join(' · ');
-    return `<button class="card" data-id="${esc(x.id)}">
-      ${thumb}
-      <div class="info"><h3>${esc(x.name)}</h3><div class="meta">${esc(meta||x.type||'')}</div>
-        ${tags.length?`<div class="tagline">${tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div>`:''}
-        <div class="by">${esc(nameOf(x))}・${fmtDate(x.createdAt)}</div></div>
-      <div class="score"><b>${x.score??'–'}</b><i>${x.score?esc(scoreWord(x.score)):''}</i></div>
-    </button>`;
+  $('#sortbar').hidden = view!=='bottles';
+  return view==='bottles' ? renderBottles(list) : renderFeed(list);
+}
+function renderBottles(list){
+  let rows = bottles.map(b=>({b,a:aggs.get(b.id)}));
+  if(filter==='mine') rows = rows.filter(r=>r.a.mine.length);
+  rows = rows.filter(r=>bottleMatches(r.b,r.a,query));
+  const key = { recent:r=>r.a.lastAt||r.b.createdAt, score:r=>r.a.avg??-1, count:r=>r.a.people*1000+r.a.n }[sort];
+  rows.sort((x,y)=>key(y)-key(x));
+  if(!bottles.length){ list.innerHTML=`<div class="empty"><h2>まだ一本もありません</h2><p>右下の「テイスティング」から、最初のボトルを登録しましょう。<br>同じ銘柄に何人もの記録が集まるほど、その一本の姿がはっきりしていきます。</p></div>`; return; }
+  if(!rows.length){ list.innerHTML=`<div class="empty"><h2>該当する銘柄がありません</h2><p>検索語や表示の切り替えを変えてみてください。</p></div>`; return; }
+  list.innerHTML = rows.map(({b,a})=>{
+    const tags = topTags(a,3);
+    const top = Object.entries(a.colors).sort((x,y)=>y[1]-x[1])[0]; const col = top && colorOf(top[0]);
+    const thumb = b.photo ? `<img class="thumb" src="${esc(photoUrl(b.photo))}" alt="" loading="lazy">` : `<div class="thumb"><div class="glass" style="background:${col?col[2]:'var(--line)'}"></div></div>`;
+    const meta=[b.distillery,b.age?b.age+'年':'',b.abv?b.abv+'%':''].filter(Boolean).join(' · ');
+    return `<button class="card" data-bottle="${esc(b.id)}">${thumb}
+      <div class="info"><h3>${esc(b.name)}</h3><div class="meta">${esc(meta||b.type||b.region||'')}</div>
+        ${tags.length?`<div class="tagline">${tags.map(([t,s])=>`<span>${esc(t)}${a.people>1?`<b>${s.size}</b>`:''}</span>`).join('')}</div>`:''}
+        <div class="people">${a.people?`${a.people}人・${a.n}件の記録`:'記録はまだありません'}${a.mine.length?'<span class="mine-dot">記録済み</span>':''}</div></div>
+      <div class="score"><b>${a.avg==null?'–':a.n>1?fmt1(a.avg):a.avg}</b><i>${a.n>1?'平均':a.n?'1件のみ':''}</i></div></button>`;
   }).join('');
 }
+function renderFeed(list){
+  let rows = tastings.slice();
+  if(filter==='mine') rows = rows.filter(t=>t.author===myId);
+  if(query){ const q=norm(query); rows = rows.filter(t=>{ const b=bottles.find(x=>x.id===t.bottleId); return norm([b?.name,b?.distillery,t.authorName,t.comment,...PHASES.flatMap(([k])=>t[k]?.tags||[])].join(' ')).includes(q); }); }
+  rows.sort((a,b)=>b.createdAt-a.createdAt);
+  if(!rows.length){ list.innerHTML=`<div class="empty"><h2>記録がありません</h2></div>`; return; }
+  list.innerHTML = rows.slice(0,200).map(t=>{
+    const b=bottles.find(x=>x.id===t.bottleId); if(!b) return '';
+    const tags=[...(t.nose?.tags||[]),...(t.palate?.tags||[])].filter((x,i,arr)=>arr.indexOf(x)===i).slice(0,4);
+    return `<button class="card feed-card" data-bottle="${esc(b.id)}">
+      <div class="info"><h3>${esc(b.name)}</h3><div class="by">${esc(nameOf(t))}・${fmtDate(t.createdAt)}${t.serve?'・'+esc(t.serve):''}</div>
+        ${tags.length?`<div class="tagline">${tags.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}
+        ${t.comment?`<div class="meta" style="margin-top:6px">${esc(t.comment.length>60?t.comment.slice(0,60)+'…':t.comment)}</div>`:''}</div>
+      <div class="score"><b>${t.score??'–'}</b><i>${t.score?esc(scoreWord(t.score)):''}</i></div></button>`;
+  }).join('');
+}
+const nameOf = t => t.author && t.author===myId ? 'あなた' : (t.authorName || 'メンバー');
 
-/* ---------- 詳細 ---------- */
-function openDetail(id){
-  const x=reviews.find(r=>r.id===id); if(!x) return;
-  const col=colorOf(x.color);
-  const mine = x.author && x.author===myId;
-  const facts=[['種類',x.type],['産地',x.region],['熟成',x.age?x.age+'年':''],['度数',x.abv?x.abv+'%':''],['樽',x.cask],['飲み方',x.serve]].filter(f=>f[1]);
-  const hasProfile = AXES.some(a=>x.profile?.[a[0]]>0);
-  const phase = k => { const p=x[k]||{}; const P=PHASES.find(q=>q[0]===k);
-    if(!(p.tags?.length||p.note||(k==='finish'&&x.finishLength))) return '';
-    return `<section class="note"><h3>${P[1]}<small>${P[2]}</small>${k==='finish'&&x.finishLength?`<small>余韻 ${esc(x.finishLength)}</small>`:''}</h3>
-      ${p.tags?.length?`<div class="chips">${p.tags.map(t=>`<span class="chip" aria-pressed="true">${esc(t)}</span>`).join('')}</div>`:''}
-      ${p.note?`<p>${esc(p.note)}</p>`:''}</section>`; };
-  mount(`<div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(x.name)}">
-    <div class="sheet-bar"><button class="btn ghost" data-act="close">‹ 一覧</button><h2></h2>${mine?`<button class="btn" data-act="edit">編集</button>`:'<span style="width:60px"></span>'}</div>
+/* ---------- 銘柄ページ ---------- */
+function openBottle(id, keepScroll){
+  const b=bottles.find(x=>x.id===id); if(!b){ unmount(); return; }
+  currentBottle=id;
+  const a=aggs.get(id) || aggregate(id);
+  const prevScroll = keepScroll ? $('#sheet-root .sheet')?.scrollTop : 0;
+  const facts=[['種類',b.type],['産地',b.region],['熟成',b.age?b.age+'年':''],['度数',b.abv?b.abv+'%':''],['樽',b.cask],['蒸留所',b.distillery]].filter(f=>f[1]);
+  const myLatest = a.mine[0];
+  const myProfile = myLatest?.profile && AXES.some(x=>myLatest.profile[x[0]]>0) ? myLatest.profile : null;
+  const others = a.people>1 ? a.profs : [];
+  const label = agreementLabel(a);
+
+  const tagSection = PHASES.map(([k,jp,en])=>{
+    const entries=[...a.tagPeople[k].entries()].sort((x,y)=>y[1].size-x[1].size).slice(0,10);
+    if(!entries.length) return '';
+    return `<div><div class="group-name">${jp}</div><div class="bars">${entries.map(([tag,set])=>{
+      const mine=set.has(myId); const pct=Math.round(set.size/Math.max(1,a.people)*100);
+      return `<div class="bar"><span>${esc(tag)}</span><div class="track"><div class="fill${mine?' mine':''}" style="width:${pct}%"></div></div><em>${set.size}/${a.people}人</em></div>`; }).join('')}</div></div>`;
+  }).join('');
+
+  const colorVotes = Object.keys(a.colors).length ? `<section class="sec"><h3>色<small>COLOUR</small></h3><div class="swatches">${COLORS.map(c=>{ const v=a.colors[c[0]]||0; return `<div class="sw vote${v?'':' zero'}"><i style="background:${c[2]}"></i>${c[1]}${v?`<b>${v}</b>`:''}</div>`; }).join('')}</div></section>` : '';
+  const finVotes = Object.keys(a.finLen).length ? `<p class="small" style="margin-top:10px">余韻の長さ：${FINLEN.filter(l=>a.finLen[l]).map(l=>`${l} ${a.finLen[l]}件`).join('・')}</p>` : '';
+
+  const tastingCards = a.list.map(t=>{
+    const me=t.author===myId;
+    const phases=PHASES.map(([k,jp])=>{ const p=t[k]||{}; if(!(p.tags?.length||p.note)) return '';
+      return `<div class="t-phase"><b>${jp}</b>${esc((p.tags||[]).join('・'))}${p.note?`<div class="t-note">${esc(p.note)}</div>`:''}</div>`; }).join('');
+    return `<article class="tasting${me?' me':''}">
+      <div class="t-head"><strong>${esc(nameOf(t))}</strong><span class="small">${fmtDate(t.createdAt)}${t.serve?'・'+esc(t.serve):''}${t.finishLength?'・余韻 '+esc(t.finishLength):''}</span><span class="s">${t.score??'–'}</span></div>
+      ${phases}
+      ${t.comment?`<div class="t-note">${esc(t.comment)}</div>`:''}
+      ${me?`<div class="t-actions" data-tid="${esc(t.id)}"><button class="btn small" data-act="edit-t">編集</button><button class="btn small danger" data-act="askdel-t">削除</button></div>`:''}
+    </article>`;
+  }).join('');
+
+  const canDeleteBottle = b.createdBy===myId && a.n===0;
+
+  mount(`<div class="sheet" data-view="bottle" role="dialog" aria-modal="true" aria-label="${esc(b.name)}">
+    <div class="sheet-bar"><button class="btn ghost" data-act="close">‹ 一覧</button><h2>${esc(b.name)}</h2>${myId?`<button class="btn" data-act="edit-b">情報を編集</button>`:'<span style="width:60px"></span>'}</div>
     <div class="sheet-body">
-      ${x.photo?`<div class="hero"><img src="${esc(photoUrl(x.photo))}" alt="${esc(x.name)}のボトル写真"></div>`:''}
-      <div class="d-head"><div><h1>${esc(x.name)}</h1><div class="meta">${esc(x.distillery||'')}</div></div>
-        <div class="d-score"><b>${x.score??'–'}</b><div>${x.score?esc(scoreWord(x.score))+' / 100':''}</div></div></div>
+      ${b.photo?`<div class="hero"><img src="${esc(photoUrl(b.photo))}" alt="${esc(b.name)}のボトル写真"></div>`:''}
+      <div class="d-head"><div><h1>${esc(b.name)}</h1><div class="meta">${esc(b.distillery||'')}</div></div>
+        <div class="d-score"><b>${a.avg==null?'–':a.n>1?fmt1(a.avg):a.avg}</b><div>${a.n>1?'みんなの平均':a.n?'1件の記録':''}</div></div></div>
       ${facts.length?`<dl class="facts">${facts.map(f=>`<div><dt>${f[0]}</dt><dd>${esc(f[1])}</dd></div>`).join('')}</dl>`:''}
-      ${col?`<div class="colorline"><i style="background:${col[2]}"></i>色：${col[1]}</div>`:''}
-      ${hasProfile?`<div class="radar-wrap">${radarSVG(x.profile)}</div>`:''}
-      ${PHASES.map(p=>phase(p[0])).join('')}
-      ${x.comment?`<section class="note"><h3>ひとこと<small>VERDICT</small></h3><p>${esc(x.comment)}</p></section>`:''}
-      <div class="d-foot"><span>${esc(nameOf(x))}・${fmtDate(x.createdAt)}${x.updatedAt-x.createdAt>60000?'（編集済み）':''}</span>
-        ${mine?`<span class="confirm" id="delbox"><button class="btn danger" data-act="askdel">削除</button></span>`:''}</div>
-    </div></div>`);
+
+      ${a.n===0?`<div class="notice">まだ誰も記録していません。最初の一杯を記録しましょう。</div>`:''}
+      ${a.n>0?`<section class="sec"><h3>みんなの評価<small>CONSENSUS</small>${label?`<span class="agree">${label}</span>`:''}</h3>
+        <dl class="stat-row">
+          <div class="stat"><dt>記録</dt><dd>${a.people}<small>人</small> ${a.n>a.people?`<small>(${a.n}件)</small>`:''}</dd></div>
+          <div class="stat"><dt>点数の幅</dt><dd>${a.min===a.max?a.min:`${a.min}–${a.max}`}</dd></div>
+          <div class="stat"><dt>ばらつき</dt><dd>${a.n>1?'±'+fmt1(a.sd):'–'}</dd></div>
+        </dl>
+        ${scoreStrip(a)}
+        ${a.people<3?`<p class="small">${a.people===1?'まだ1人の記録です。':'まだ2人の記録です。'}記録が増えるほど、この銘柄の味わいがはっきりしてきます。</p>`:''}
+      </section>`:''}
+
+      ${a.avgProfile?`<section class="sec"><h3>フレーバープロファイル<small>PROFILE</small></h3><div class="radar-wrap">${radarSVG({avg:a.avgProfile, others, mine:myProfile})}
+        <div class="legend"><span><i style="border-color:var(--amber)"></i>${a.profs.length>1?'みんなの平均':'記録'}</span>${others.length?`<span><i style="border-color:var(--muted)"></i>一人ひとり</span>`:''}${myProfile?`<span><i style="border-color:var(--peat);border-top-style:dashed"></i>あなた</span>`:''}</div></div></section>`:''}
+
+      ${tagSection?`<section class="sec"><h3>みんなが感じた香りと味<small>NOTES</small></h3><p class="small" style="margin:0 0 8px">何人が同じ表現を選んだか${myId&&a.mine.length?'（緑はあなたも選んだもの）':''}</p><div style="display:grid;gap:10px">${tagSection}</div>${finVotes}</section>`:''}
+      ${colorVotes}
+
+      ${a.n?`<section class="sec"><h3>一人ひとりの記録<small>TASTINGS</small></h3><div style="display:grid;gap:10px">${tastingCards}</div></section>`:''}
+      ${canDeleteBottle?`<div class="t-actions" id="delbottle"><button class="btn small danger" data-act="askdel-b">この銘柄を削除</button></div>`:''}
+    </div>
+    ${myId?`<div class="cta"><button class="btn primary" data-act="taste">${a.mine.length?'もう一度テイスティングを記録':'この銘柄をテイスティング'}</button></div>`:''}
+  </div>`);
+  if(prevScroll) $('#sheet-root .sheet').scrollTop=prevScroll;
+
   $('#sheet-root').onclick=async e=>{
-    const a=e.target.closest('[data-act]')?.dataset.act; if(!a) return;
-    if(a==='close') unmount();
-    if(a==='edit') openForm(x);
-    if(a==='askdel') $('#delbox').innerHTML=`<span>本当に削除しますか？</span><button class="btn" data-act="nodel">やめる</button><button class="btn danger" data-act="del">削除する</button>`;
-    if(a==='nodel') $('#delbox').innerHTML=`<button class="btn danger" data-act="askdel">削除</button>`;
-    if(a==='del'){
-      const { error } = await sb.from('reviews').delete().eq('id',x.id);
+    const el=e.target.closest('[data-act]'); if(!el) return; const act=el.dataset.act;
+    const tid=el.closest('[data-tid]')?.dataset.tid;
+    if(act==='close'){ currentBottle=null; unmount(); }
+    if(act==='taste') openTastingForm(b, null);
+    if(act==='edit-b') openBottleForm(b, null, ()=>openBottle(b.id));
+    if(act==='edit-t'){ const t=tastings.find(x=>x.id===tid); if(t) openTastingForm(b,t); }
+    if(act==='askdel-t'){ el.parentElement.innerHTML=`<span>この記録を削除しますか？</span><button class="btn small" data-act="nodel-t">やめる</button><button class="btn small danger" data-act="del-t">削除する</button>`; }
+    if(act==='nodel-t'){ el.parentElement.innerHTML=`<button class="btn small" data-act="edit-t">編集</button><button class="btn small danger" data-act="askdel-t">削除</button>`; }
+    if(act==='del-t'){
+      const { error } = await sb.from('reviews').delete().eq('id',tid);
       if(error){ toast('削除できませんでした：'+error.message); return; }
-      if(x.photo) sb.storage.from('photos').remove([x.photo]).catch(()=>{});
-      reviews=reviews.filter(r=>r.id!==x.id); unmount(); renderList(); toast('削除しました');
+      tastings=tastings.filter(t=>t.id!==tid); buildAggs(); renderList(); openBottle(b.id,true); toast('記録を削除しました');
+    }
+    if(act==='askdel-b'){ $('#delbottle').innerHTML=`<span>銘柄を削除しますか？</span><button class="btn small" data-act="nodel-b">やめる</button><button class="btn small danger" data-act="del-b">削除する</button>`; }
+    if(act==='nodel-b'){ $('#delbottle').innerHTML=`<button class="btn small danger" data-act="askdel-b">この銘柄を削除</button>`; }
+    if(act==='del-b'){
+      const { error } = await sb.from('bottles').delete().eq('id',b.id);
+      if(error){ toast('削除できませんでした：'+error.message); return; }
+      if(b.photo) sb.storage.from('photos').remove([b.photo]).catch(()=>{});
+      bottles=bottles.filter(x=>x.id!==b.id); buildAggs(); currentBottle=null; unmount(); renderList(); toast('銘柄を削除しました');
     }
   };
 }
 
-/* ---------- 入力フォーム ---------- */
-function blank(){ return {name:'',distillery:'',type:'シングルモルト',region:'',age:'',abv:'',cask:'',serve:'ストレート',color:'',
-  nose:{tags:[],note:''},palate:{tags:[],note:''},finish:{tags:[],note:''},finishLength:'',profile:Object.fromEntries(AXES.map(a=>[a[0],0])),score:85,comment:'',photo:''}; }
+/* ---------- 投稿の流れ：銘柄を選ぶ → （新しければ登録）→ テイスティング ---------- */
+function openPicker(){
+  mount(`<div class="sheet" role="dialog" aria-modal="true" aria-label="銘柄を選ぶ">
+    <div class="sheet-bar"><button class="btn ghost" data-act="close">キャンセル</button><h2>どの銘柄を飲みましたか？</h2><span style="width:60px"></span></div>
+    <div class="sheet-body">
+      <div class="field"><label class="lbl" for="pk-q">銘柄名で探す</label><input id="pk-q" placeholder="例：ラガヴーリン 16" autocomplete="off"></div>
+      <p class="small" style="margin:-10px 0 0">すでに登録されている銘柄を選ぶと、みんなの記録と一緒に集計されます。</p>
+      <div class="pick" id="pk-list"></div>
+    </div></div>`);
+  const draw=()=>{
+    const q=$('#pk-q').value.trim(), nq=norm(q);
+    let rows=bottles.map(b=>({b,a:aggs.get(b.id)}));
+    if(nq) rows=rows.filter(({b})=>norm(b.name+b.distillery).includes(nq));
+    rows.sort((x,y)=>(y.a.lastAt||y.b.createdAt)-(x.a.lastAt||x.b.createdAt));
+    const exact = nq && bottles.some(b=>norm(b.name)===nq);
+    $('#pk-list').innerHTML =
+      (q && !exact ? `<button class="new" data-act="new">＋「${esc(q)}」を新しい銘柄として登録</button>` : '')
+      + rows.slice(0,40).map(({b,a})=>`<button data-pick="${esc(b.id)}"><span><strong>${esc(b.name)}</strong><br><small>${esc([b.distillery,b.age?b.age+'年':''].filter(Boolean).join(' · ')||'—')}</small></span><small>${a.people}人${a.mine.length?'・記録済み':''}</small></button>`).join('')
+      + (!q && !rows.length ? `<p class="small">まだ銘柄がありません。上に名前を入力して登録してください。</p>` : '')
+      + (!q && rows.length ? `<button class="new" data-act="new">＋ 新しい銘柄を登録</button>` : '');
+  };
+  draw();
+  const root=$('#sheet-root');
+  root.oninput=e=>{ if(e.target.id==='pk-q') draw(); };
+  root.onclick=e=>{
+    const el=e.target.closest('button'); if(!el) return;
+    if(el.dataset.act==='close') unmount();
+    if(el.dataset.pick){ const b=bottles.find(x=>x.id===el.dataset.pick); if(b) openTastingForm(b,null,true); }
+    if(el.dataset.act==='new') openBottleForm(null, $('#pk-q').value.trim(), b=>openTastingForm(b,null,true));
+  };
+  setTimeout(()=>$('#pk-q')?.focus(),50);
+}
 
-function openForm(existing){
-  const f = existing ? JSON.parse(JSON.stringify(existing)) : blank();
-  ['nose','palate','finish'].forEach(k=>{ f[k]=f[k]||{tags:[],note:''}; f[k].tags=f[k].tags||[]; });
-  f.profile = Object.assign(Object.fromEntries(AXES.map(a=>[a[0],0])), f.profile||{});
-  let phase='nose', newPhoto=null, previewUrl=f.photo?photoUrl(f.photo):'', saving=false;
-  const oldPhoto = f.photo || '';
+function openBottleForm(existing, prefillName, onDone){
+  const f = existing ? {...existing} : {name:prefillName||'',distillery:'',type:'シングルモルト',region:'',age:'',abv:'',cask:'',photo:''};
+  let newPhoto=null, previewUrl=f.photo?photoUrl(f.photo):'', saving=false; const oldPhoto=f.photo||'';
   const opt=(list,v)=>`<option value="">—</option>`+list.map(o=>`<option ${o===v?'selected':''}>${o}</option>`).join('');
-  const nick = existing?.authorName || store.get('kohaku.nickname') || '';
-
-  mount(`<div class="sheet" role="dialog" aria-modal="true" aria-label="テイスティングを記録">
-    <div class="sheet-bar"><button class="btn ghost" data-act="cancel">キャンセル</button><h2>${existing?'記録を編集':'新しい記録'}</h2><button class="btn primary" data-act="save" id="savebtn">保存</button></div>
-    <form class="sheet-body" id="form" novalidate>
+  mount(`<div class="sheet" role="dialog" aria-modal="true" aria-label="銘柄の情報">
+    <div class="sheet-bar"><button class="btn ghost" data-act="cancel">${existing?'キャンセル':'‹ 戻る'}</button><h2>${existing?'銘柄の情報を編集':'新しい銘柄を登録'}</h2><button class="btn primary" data-act="save" id="savebtn">${existing?'保存':'次へ'}</button></div>
+    <form class="sheet-body" novalidate>
+      ${existing?`<p class="hint">ボトル情報はみんなで共有しています。度数や樽の間違いに気づいたら、誰でも直せます。</p>`:''}
       <fieldset><legend>ボトル</legend>
-        <div class="field"><label class="lbl" for="f-name">銘柄名（必須）</label><input id="f-name" required value="${esc(f.name)}" placeholder="例：ラガヴーリン 16年" autocomplete="off"></div>
-        <div class="field"><label class="lbl" for="f-dist">蒸留所・ブランド</label><input id="f-dist" value="${esc(f.distillery)}" placeholder="例：ラガヴーリン蒸留所" autocomplete="off"></div>
+        <div class="field"><label class="lbl" for="b-name">銘柄名（必須）</label><input id="b-name" value="${esc(f.name)}" placeholder="例：ラガヴーリン 16年" autocomplete="off"></div>
+        <div class="field"><label class="lbl" for="b-dist">蒸留所・ブランド</label><input id="b-dist" value="${esc(f.distillery)}" placeholder="例：ラガヴーリン蒸留所" autocomplete="off"></div>
         <div class="row2">
-          <div class="field"><label class="lbl" for="f-type">種類</label><select id="f-type">${opt(TYPES,f.type)}</select></div>
-          <div class="field"><label class="lbl" for="f-region">産地</label><select id="f-region">${opt(REGIONS,f.region)}</select></div>
+          <div class="field"><label class="lbl" for="b-type">種類</label><select id="b-type">${opt(TYPES,f.type)}</select></div>
+          <div class="field"><label class="lbl" for="b-region">産地</label><select id="b-region">${opt(REGIONS,f.region)}</select></div>
         </div>
         <div class="row3">
-          <div class="field"><label class="lbl" for="f-age">熟成年数</label><input id="f-age" inputmode="numeric" value="${esc(f.age)}" placeholder="NAS"></div>
-          <div class="field"><label class="lbl" for="f-abv">度数 %</label><input id="f-abv" inputmode="decimal" value="${esc(f.abv)}" placeholder="43"></div>
-          <div class="field"><label class="lbl" for="f-cask">樽</label><input id="f-cask" value="${esc(f.cask)}" placeholder="シェリー樽"></div>
+          <div class="field"><label class="lbl" for="b-age">熟成年数</label><input id="b-age" inputmode="numeric" value="${esc(f.age)}" placeholder="NAS"></div>
+          <div class="field"><label class="lbl" for="b-abv">度数 %</label><input id="b-abv" inputmode="decimal" value="${esc(f.abv)}" placeholder="43"></div>
+          <div class="field"><label class="lbl" for="b-cask">樽</label><input id="b-cask" value="${esc(f.cask)}" placeholder="シェリー樽"></div>
         </div>
-        <div><span class="lbl">飲み方</span><div class="chips">${SERVES.map(s=>`<button type="button" class="chip" data-serve="${s}" aria-pressed="${f.serve===s}">${s}</button>`).join('')}</div></div>
       </fieldset>
-
-      <fieldset><legend>写真</legend>
+      <fieldset><legend>ボトルの写真</legend>
         <label class="photo-drop" id="pdrop">${previewUrl?`<img src="${esc(previewUrl)}" alt="">`:`<span>タップしてボトルを撮影<br>またはライブラリから選択</span>`}
-          <input type="file" id="f-photo" accept="image/*" aria-label="写真を選ぶ"></label>
-        <button type="button" class="btn ghost" data-act="rmphoto" id="rmphoto" ${previewUrl?'':'hidden'}>写真を外す</button>
+          <input type="file" id="b-photo" accept="image/*" aria-label="写真を選ぶ"></label>
       </fieldset>
+      <div class="err" id="err" hidden></div>
+    </form></div>`);
+  const root=$('#sheet-root');
+  root.onchange=async e=>{
+    if(e.target.id!=='b-photo') return; const file=e.target.files?.[0]; if(!file) return;
+    try{ newPhoto=await shrink(file); previewUrl=URL.createObjectURL(newPhoto); $('#pdrop').querySelector('img,span').outerHTML=`<img src="${esc(previewUrl)}" alt="">`; }
+    catch(err){ toast('この画像は読み込めませんでした'); }
+  };
+  root.onclick=async e=>{
+    const el=e.target.closest('button'); if(!el) return;
+    if(el.dataset.use){ const b=bottles.find(x=>x.id===el.dataset.use); if(b) openTastingForm(b,null,true); return; }
+    if(el.dataset.act==='cancel') existing ? onDone?.() : openPicker();
+    if(el.dataset.act!=='save' || saving) return;
+    const err=$('#err');
+    const data={ name:$('#b-name').value.trim(), distillery:$('#b-dist').value.trim(), type:$('#b-type').value, region:$('#b-region').value,
+      age:$('#b-age').value.trim(), abv:$('#b-abv').value.trim(), cask:$('#b-cask').value.trim() };
+    if(!data.name){ err.textContent='銘柄名を入力してください。'; err.hidden=false; $('#b-name').focus(); return; }
+    const dup = bottles.find(b=>norm(b.name)===norm(data.name) && b.id!==existing?.id);
+    if(dup){ err.innerHTML=`「${esc(dup.name)}」はすでに登録されています。<button type="button" class="btn small" data-use="${esc(dup.id)}">その銘柄で記録する</button>`; err.hidden=false; return; }
+    saving=true; el.disabled=true; el.textContent='保存中…'; err.hidden=true;
+    try{
+      if(newPhoto){
+        const path=`${myId}/${Date.now()}-${Math.random().toString(36).slice(2,8)}.jpg`;
+        const up=await sb.storage.from('photos').upload(path,newPhoto,{contentType:'image/jpeg',cacheControl:'31536000'});
+        if(up.error) throw new Error('写真のアップロードに失敗しました（'+up.error.message+'）');
+        data.photo=path;
+      }
+      let res;
+      if(existing) res=await sb.from('bottles').update({...data, updated_at:new Date().toISOString()}).eq('id',existing.id).select().single();
+      else res=await sb.from('bottles').insert(data).select().single();
+      if(res.error) throw new Error(res.error.code==='23505'?'同じ名前の銘柄がすでに登録されています。一覧を更新して選び直してください。':res.error.message);
+      if(newPhoto && oldPhoto) sb.storage.from('photos').remove([oldPhoto]).catch(()=>{});
+      const nb=rowToBottle(res.data);
+      bottles=[nb,...bottles.filter(b=>b.id!==nb.id)]; buildAggs(); renderList();
+      if(existing) toast('銘柄の情報を更新しました');
+      onDone?.(nb);
+    }catch(x){ saving=false; el.disabled=false; el.textContent=existing?'保存':'次へ'; err.textContent=x.message+' 通信状態を確認して、もう一度お試しください。'; err.hidden=false; }
+  };
+}
 
+function blankTasting(){ return {serve:'ストレート',color:'',nose:{tags:[],note:''},palate:{tags:[],note:''},finish:{tags:[],note:''},finishLength:'',
+  profile:Object.fromEntries(AXES.map(a=>[a[0],0])),score:85,comment:''}; }
+
+function openTastingForm(bottle, existing, fromPicker){
+  const f = existing ? JSON.parse(JSON.stringify(existing)) : blankTasting();
+  ['nose','palate','finish'].forEach(k=>{ f[k]=f[k]||{tags:[],note:''}; f[k].tags=f[k].tags||[]; });
+  f.profile = Object.assign(Object.fromEntries(AXES.map(a=>[a[0],0])), f.profile||{});
+  let phase='nose', saving=false;
+  const nick = existing?.authorName || store.get('kohaku.nickname') || '';
+  const back = () => fromPicker && !existing ? openPicker() : openBottle(bottle.id);
+
+  mount(`<div class="sheet" role="dialog" aria-modal="true" aria-label="テイスティングを記録">
+    <div class="sheet-bar"><button class="btn ghost" data-act="cancel">${fromPicker&&!existing?'‹ 戻る':'キャンセル'}</button><h2>${esc(bottle.name)}</h2><button class="btn primary" data-act="save" id="savebtn">保存</button></div>
+    <form class="sheet-body" novalidate>
+      <p class="hint">ほかの人の記録は見ずに、自分が感じたままを残してください。感じ方の違いも、この銘柄の大切な情報になります。</p>
+      <fieldset><legend>飲み方</legend>
+        <div class="chips">${SERVES.map(s=>`<button type="button" class="chip" data-serve="${s}" aria-pressed="${f.serve===s}">${s}</button>`).join('')}</div>
+      </fieldset>
       <fieldset><legend>色</legend>
         <div class="swatches">${COLORS.map(c=>`<button type="button" class="sw" data-color="${c[0]}" aria-pressed="${f.color===c[0]}"><i style="background:${c[2]}"></i>${c[1]}</button>`).join('')}</div>
       </fieldset>
-
       <fieldset><legend>香りと味</legend>
         <div class="phase" id="phase"></div>
         <div id="tagpanel"></div>
       </fieldset>
-
       <fieldset><legend>フレーバープロファイル</legend>
-        <div class="radar-wrap" id="radar">${radarSVG(f.profile)}</div>
+        <div class="radar-wrap" id="radar">${radarSVG({single:f.profile})}</div>
         <div class="sliders">${AXES.map(a=>`<label class="sl"><span>${a[1]}</span><input type="range" min="0" max="5" step="1" id="p-${a[0]}" data-axis="${a[0]}" value="${f.profile[a[0]]}"><output id="o-${a[0]}">${f.profile[a[0]]}</output></label>`).join('')}</div>
       </fieldset>
-
       <fieldset><legend>評価</legend>
         <div class="scorebox"><output id="o-score">${f.score}</output>
           <div><input type="range" id="f-score" min="50" max="100" step="1" value="${f.score}" aria-label="総合評価"><div class="word" id="w-score">${scoreWord(f.score)}</div></div></div>
-        <div class="field"><label class="lbl" for="f-comment">ひとこと</label><textarea id="f-comment" placeholder="例：潮とスモークの奥に熟したドライフルーツ。寝る前の一杯に。">${esc(f.comment)}</textarea></div>
-        <div class="field"><label class="lbl" for="f-nick">記録者の名前（一覧に表示されます）</label><input id="f-nick" value="${esc(nick)}" placeholder="例：南雲" autocomplete="nickname"></div>
+        <div class="field"><label class="lbl" for="f-comment">ひとこと</label><textarea id="f-comment" placeholder="例：潮とスモークの奥に熟したドライフルーツ。">${esc(f.comment)}</textarea></div>
+        <div class="field"><label class="lbl" for="f-nick">記録者の名前（みんなに表示されます）</label><input id="f-nick" value="${esc(nick)}" placeholder="例：南雲" autocomplete="nickname"></div>
         <div class="err" id="err" hidden></div>
       </fieldset>
     </form></div>`);
@@ -419,21 +658,15 @@ function openForm(existing){
   drawPhase();
 
   const root=$('#sheet-root');
-  const setPreview = url => { $('#pdrop').querySelector('img,span').outerHTML = url ? `<img src="${esc(url)}" alt="">` : `<span>タップしてボトルを撮影<br>またはライブラリから選択</span>`; $('#rmphoto').hidden=!url; };
   root.oninput=e=>{
     const t=e.target;
-    if(t.dataset.axis){ f.profile[t.dataset.axis]=+t.value; $('#o-'+t.dataset.axis).textContent=t.value; $('#radar').innerHTML=radarSVG(f.profile); }
+    if(t.dataset.axis){ f.profile[t.dataset.axis]=+t.value; $('#o-'+t.dataset.axis).textContent=t.value; $('#radar').innerHTML=radarSVG({single:f.profile}); }
     if(t.id==='f-score'){ f.score=+t.value; $('#o-score').textContent=t.value; $('#w-score').textContent=scoreWord(+t.value); }
     if(t.id==='f-note') f[phase].note=t.value;
   };
-  root.onchange=async e=>{
-    if(e.target.id!=='f-photo') return;
-    const file=e.target.files?.[0]; if(!file) return;
-    try{ newPhoto=await shrink(file); previewUrl=URL.createObjectURL(newPhoto); setPreview(previewUrl); }
-    catch(err){ toast('この画像は読み込めませんでした'); }
-  };
   const addTag=()=>{ const v=$('#newtag').value.trim(); if(v&&!f[phase].tags.includes(v)) f[phase].tags.push(v); drawPhase(); $('#newtag')?.focus(); };
   root.onkeydown=e=>{ if(e.target.id==='newtag'&&e.key==='Enter'){ e.preventDefault(); addTag(); } };
+  root.onchange=null;
   root.onclick=async e=>{
     const b=e.target.closest('button'); if(!b) return;
     if(b.dataset.phase){ phase=b.dataset.phase; drawPhase(); return; }
@@ -443,43 +676,26 @@ function openForm(existing){
     if(b.dataset.color){ f.color = f.color===b.dataset.color?'':b.dataset.color; root.querySelectorAll('[data-color]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.color===f.color)); return; }
     const a=b.dataset.act;
     if(a==='addtag') addTag();
-    if(a==='rmphoto'){ f.photo=''; newPhoto=null; previewUrl=''; setPreview(''); }
-    if(a==='cancel') existing ? openDetail(existing.id) : unmount();
-    if(a==='save' && !saving) save();
+    if(a==='cancel') back();
+    if(a==='save' && !saving) save(b);
   };
 
-  async function save(){
-    f.name=$('#f-name').value.trim(); f.distillery=$('#f-dist').value.trim(); f.type=$('#f-type').value; f.region=$('#f-region').value;
-    f.age=$('#f-age').value.trim(); f.abv=$('#f-abv').value.trim(); f.cask=$('#f-cask').value.trim(); f.comment=$('#f-comment').value.trim();
-    const nickname=$('#f-nick').value.trim();
-    const err=$('#err');
-    if(!f.name){ err.textContent='銘柄名を入力してください。'; err.hidden=false; $('#f-name').focus(); return; }
+  async function save(btn){
+    f.comment=$('#f-comment').value.trim(); const nickname=$('#f-nick').value.trim(); const err=$('#err');
     if(!myId){ err.textContent='ログインできていないため保存できません。通信状態を確認してアプリを開き直してください。'; err.hidden=false; return; }
-    saving=true; const btn=$('#savebtn'); btn.disabled=true; btn.textContent='保存中…'; err.hidden=true;
+    saving=true; btn.disabled=true; btn.textContent='保存中…'; err.hidden=true;
     try{
-      if(newPhoto){
-        const path = `${myId}/${Date.now()}-${Math.random().toString(36).slice(2,8)}.jpg`;
-        const up = await sb.storage.from('photos').upload(path, newPhoto, { contentType:'image/jpeg', cacheControl:'31536000' });
-        if(up.error) throw new Error('写真のアップロードに失敗しました（'+up.error.message+'）');
-        f.photo = path;
-      }
-      if(nickname) store.set('kohaku.nickname', nickname);
-      const data={name:f.name,distillery:f.distillery,type:f.type,region:f.region,age:f.age,abv:f.abv,cask:f.cask,serve:f.serve,color:f.color,
-        nose:f.nose,palate:f.palate,finish:f.finish,finishLength:f.finishLength,profile:f.profile,score:f.score,comment:f.comment,photo:f.photo||''};
-      const row={ data, score:f.score, author_name:nickname || null };
-      let res;
-      if(existing) res = await sb.from('reviews').update({ ...row, updated_at:new Date().toISOString() }).eq('id',existing.id).select().single();
-      else res = await sb.from('reviews').insert(row).select().single();
+      if(nickname) store.set('kohaku.nickname',nickname);
+      const data={ serve:f.serve, color:f.color, nose:f.nose, palate:f.palate, finish:f.finish, finishLength:f.finishLength, profile:f.profile, score:f.score, comment:f.comment, name:bottle.name };
+      const row={ data, score:f.score, author_name:nickname||null, bottle_id:bottle.id };
+      const res = existing
+        ? await sb.from('reviews').update({...row, updated_at:new Date().toISOString()}).eq('id',existing.id).select().single()
+        : await sb.from('reviews').insert(row).select().single();
       if(res.error) throw new Error(res.error.message);
-      if(oldPhoto && oldPhoto!==f.photo) sb.storage.from('photos').remove([oldPhoto]).catch(()=>{});
-      const saved = rowToReview(res.data);
-      reviews = [saved, ...reviews.filter(r=>r.id!==saved.id)];
-      renderList(); openDetail(saved.id); toast(existing?'更新しました':'記録しました');
-    }catch(x){
-      saving=false; btn.disabled=false; btn.textContent='保存';
-      err.textContent = (x?.message||'保存できませんでした。') + ' 通信状態を確認して、もう一度保存してください。';
-      err.hidden=false;
-    }
+      const t=rowToTasting(res.data);
+      tastings=[t,...tastings.filter(x=>x.id!==t.id)]; buildAggs(); renderList();
+      openBottle(bottle.id); toast(existing?'記録を更新しました':'記録しました');
+    }catch(x){ saving=false; btn.disabled=false; btn.textContent='保存'; err.textContent=x.message+' 通信状態を確認して、もう一度保存してください。'; err.hidden=false; }
   }
 }
 
@@ -487,24 +703,24 @@ function openForm(existing){
 function shrink(file){
   return new Promise((res,rej)=>{
     const img=new Image(), url=URL.createObjectURL(file);
-    img.onload=()=>{ const s=Math.min(1, 1600/Math.max(img.width,img.height));
+    img.onload=()=>{ const s=Math.min(1,1600/Math.max(img.width,img.height));
       const cv=document.createElement('canvas'); cv.width=Math.round(img.width*s); cv.height=Math.round(img.height*s);
       cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height); URL.revokeObjectURL(url);
-      cv.toBlob(b=>b?res(b):rej(), 'image/jpeg', .85); };
+      cv.toBlob(b=>b?res(b):rej(),'image/jpeg',.85); };
     img.onerror=()=>{ URL.revokeObjectURL(url); rej(); };
     img.src=url;
   });
 }
 
-/* ---------- メニュー（インストール案内など） ---------- */
+/* ---------- メニュー ---------- */
 const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
 function openMenu(){
   let install;
-  if(isStandalone()) install = `<p>ホーム画面のアプリとして開いています。</p>`;
-  else if(installEvt) install = `<p>このスマホにアプリとして追加できます。</p><div><button class="btn primary" data-act="install">ホーム画面に追加</button></div>`;
-  else if(isIOS()) install = `<p>iPhone・iPad では Safari で開き、次の手順で追加します。</p><ol class="steps"><li>画面下の共有ボタン（□に↑）をタップ</li><li>「ホーム画面に追加」を選ぶ</li><li>右上の「追加」をタップ</li></ol>`;
-  else install = `<p>Chrome のメニュー（︙）から「ホーム画面に追加」または「アプリをインストール」を選びます。</p>`;
+  if(isStandalone()) install=`<p>ホーム画面のアプリとして開いています。</p>`;
+  else if(installEvt) install=`<p>このスマホにアプリとして追加できます。</p><div><button class="btn primary" data-act="install">ホーム画面に追加</button></div>`;
+  else if(isIOS()) install=`<p>iPhone・iPad では Safari で開き、次の手順で追加します。</p><ol class="steps"><li>画面下の共有ボタン（□に↑）をタップ</li><li>「ホーム画面に追加」を選ぶ</li><li>右上の「追加」をタップ</li></ol>`;
+  else install=`<p>Chrome のメニュー（︙）から「ホーム画面に追加」または「アプリをインストール」を選びます。</p>`;
   mount(`<div class="sheet" role="dialog" aria-modal="true" aria-label="メニュー">
     <div class="sheet-bar"><button class="btn ghost" data-act="close">‹ 戻る</button><h2>メニュー</h2><span style="width:60px"></span></div>
     <div class="sheet-body menu-list">
@@ -512,7 +728,7 @@ function openMenu(){
       <section><h3>記録者の名前</h3><div class="addtag field"><input id="m-nick" value="${esc(store.get('kohaku.nickname')||'')}" placeholder="例：南雲"><button class="btn" data-act="nick">保存</button></div>
         <p class="small" style="margin-top:6px">これから保存する記録に表示されます。</p></section>
       <section><h3>この端末について</h3><p class="small">自分の記録を編集・削除できるのは、記録したのと同じ端末・同じアプリからだけです。iPhone では Safari とホーム画面のアプリが別扱いになるため、先にホーム画面に追加してから記録してください。</p></section>
-      <p class="small">琥珀帳 バージョン ${APP_VERSION}</p>
+      <p class="small">HIDEOUT CARTER バージョン ${APP_VERSION}</p>
     </div></div>`);
   $('#sheet-root').onclick=async e=>{
     const a=e.target.closest('[data-act]')?.dataset.act;
@@ -521,20 +737,22 @@ function openMenu(){
     if(a==='install' && installEvt){ installEvt.prompt(); const r=await installEvt.userChoice; installEvt=null; if(r.outcome==='accepted') toast('ホーム画面に追加しました'); unmount(); }
   };
 }
-window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; });
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt=e; });
 
-let lastFocus=null;
-function mount(html){ if(!$('#sheet-root').children.length) lastFocus=document.activeElement; $('#sheet-root').innerHTML=html; document.body.style.overflow='hidden'; $('#sheet-root .sheet').scrollTop=0; }
-function unmount(){ const r=$('#sheet-root'); r.innerHTML=''; r.onclick=r.oninput=r.onchange=r.onkeydown=null; document.body.style.overflow=''; lastFocus?.focus?.({preventScroll:true}); }
-document.addEventListener('keydown',e=>{ if(e.key==='Escape' && $('#sheet-root').children.length) unmount(); });
+function mount(html){ const r=$('#sheet-root'); r.onclick=r.oninput=r.onchange=r.onkeydown=null; r.innerHTML=html; document.body.style.overflow='hidden'; const s=$('#sheet-root .sheet'); if(s) s.scrollTop=0; }
+function unmount(){ const r=$('#sheet-root'); r.innerHTML=''; r.onclick=r.oninput=r.onchange=r.onkeydown=null; document.body.style.overflow=''; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape' && $('#sheet-root').children.length){ currentBottle=null; unmount(); } });
 
-$('#list').addEventListener('click',e=>{ const c=e.target.closest('.card'); if(c) openDetail(c.dataset.id); });
+$('#list').addEventListener('click',e=>{ const c=e.target.closest('[data-bottle]'); if(c) openBottle(c.dataset.bottle); });
 $('#q').addEventListener('input',e=>{ query=e.target.value.trim(); renderList(); });
 const seg=(a,b,set)=>{ $(a).onclick=()=>{set(0);$(a).setAttribute('aria-pressed','true');$(b).setAttribute('aria-pressed','false');renderList();};
   $(b).onclick=()=>{set(1);$(b).setAttribute('aria-pressed','true');$(a).setAttribute('aria-pressed','false');renderList();}; };
 seg('#f-all','#f-mine',v=>filter=v?'mine':'all');
-seg('#s-new','#s-score',v=>sort=v?'score':'new');
-$('#add').onclick=()=>openForm(null);
+$('#sortbar').addEventListener('click',e=>{ const b=e.target.closest('[data-sort]'); if(!b) return; sort=b.dataset.sort;
+  $('#sortbar').querySelectorAll('[data-sort]').forEach(x=>x.setAttribute('aria-pressed',x===b)); renderList(); });
+const tab=v=>{ view=v; $('#t-bottles').setAttribute('aria-selected',v==='bottles'); $('#t-feed').setAttribute('aria-selected',v==='feed'); renderList(); };
+$('#t-bottles').onclick=()=>tab('bottles'); $('#t-feed').onclick=()=>tab('feed');
+$('#add').onclick=openPicker;
 $('#menu').onclick=openMenu;
 
 if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }
