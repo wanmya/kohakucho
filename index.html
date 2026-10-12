@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>HIDEOUT CARTER</title>
+<meta name="robots" content="noindex, nofollow">
 <meta name="description" content="ウイスキーのテイスティングを持ち寄り、銘柄ごとにみんなの感じ方を集めるノート">
 <meta name="theme-color" content="#F1EEE9" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#15110D" media="(prefers-color-scheme: dark)">
@@ -358,6 +359,20 @@ input[type=range]{accent-color:var(--amber);width:100%}
 .feed-soc{display:flex;align-items:center;gap:4px;margin-top:6px;font-family:var(--mono);font-size:12px;color:var(--muted)}
 .feed-soc span{margin-right:8px}
 .pk-h{margin-top:8px}
+.gate{position:fixed;inset:0;z-index:40;background:var(--bg);overflow-y:auto;display:grid;place-items:center;padding:calc(24px + env(safe-area-inset-top,0px)) 16px calc(24px + env(safe-area-inset-bottom,0px))}
+.gate-box{width:100%;max-width:380px;display:grid;gap:14px;text-align:center;justify-items:center}
+.gate-box img{border-radius:18px}
+.gate-box h1{font-family:var(--display);font-weight:800;font-size:24px;letter-spacing:.08em;margin:0}
+.gate-box p{margin:0;font-size:14.5px}
+.gate-form{display:grid;gap:10px;width:100%}
+.gate-form input{width:100%;text-align:center;font-family:var(--mono);font-size:20px;letter-spacing:.12em;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
+.gate-form .btn{padding:12px;font-size:16px;border-radius:12px}
+.gate-or{display:flex;align-items:center;gap:10px;width:100%;color:var(--muted);font-size:12px;margin-top:6px}
+.gate-or::before,.gate-or::after{content:"";flex:1;border-top:1px solid var(--line)}
+.gate .gbtn{width:100%}
+.code-box{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.code-box code{font-family:var(--mono);font-size:22px;letter-spacing:.12em;background:var(--bg);border-radius:8px;padding:4px 12px}
+.invite{white-space:pre-wrap;font-family:var(--body);font-size:12.5px;color:var(--muted);background:var(--bg);border-radius:8px;padding:8px 10px;margin:0;user-select:all}
 @media (prefers-reduced-motion:no-preference){.sheet{animation:up .22s ease-out}@keyframes up{from{transform:translateY(16px);opacity:.6}}}
 @media (max-width:380px){.row3{grid-template-columns:1fr 1fr}.bar{grid-template-columns:6em 1fr 3.2em}}
 </style>
@@ -395,6 +410,21 @@ input[type=range]{accent-color:var(--amber);width:100%}
 <button class="fab" id="add" hidden>＋ テイスティング</button>
 <div id="sheet-root"></div>
 <div class="toast" id="toast" hidden></div>
+<div class="gate" id="gate" hidden>
+  <div class="gate-box">
+    <img src="icon-192.png" alt="" width="72" height="72">
+    <h1>HIDEOUT CARTER</h1>
+    <p>このアプリは招待制です。<br>招待してくれた人から聞いた<b>招待コード</b>を入力してください。</p>
+    <form id="gate-form" class="gate-form" novalidate>
+      <input id="gate-code" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="招待コード" aria-label="招待コード">
+      <button class="btn primary" id="gate-join" type="submit">参加する</button>
+    </form>
+    <p class="err" id="gate-err" hidden></p>
+    <div class="gate-or"><span>すでにメンバーの方</span></div>
+    <button class="btn gbtn" id="gate-google" type="button"></button>
+    <p class="small">ほかの端末でGoogleログインしていれば、コードなしで使えます。</p>
+  </div>
+</div>
 <div class="exit-dlg" id="exit-dlg" role="alertdialog" aria-modal="true" aria-labelledby="exit-t" hidden>
   <div class="exit-box"><p id="exit-t">アプリを終了しますか？</p>
     <div class="exit-btns"><button class="btn" id="exit-no">いいえ</button><button class="btn primary" id="exit-yes">はい</button></div></div>
@@ -402,7 +432,7 @@ input[type=range]{accent-color:var(--amber);width:100%}
 
 <script>
 (() => {
-const APP_VERSION = '2026.10.12i';
+const APP_VERSION = '2026.10.12j';
 
 const COLORS = [
   ['white','ホワイトワイン','#F6F0D6'],['straw','ペールストロー','#F1E2A0'],['gold','ゴールド','#E7C25A'],['oldgold','オールドゴールド','#D9A63A'],
@@ -512,8 +542,40 @@ async function boot(){
     if(!session){ const r = await sb.auth.signInAnonymously(); if(r.error) throw r.error; session = r.data.session; }
     setMe(session?.user);
   }catch(e){ console.warn(e); toast('ログインできませんでした。閲覧のみで開いています。'); }
-  $('#add').hidden = !myId;
   let after=''; try{ after=sessionStorage.getItem('hc.afterLogin')||''; sessionStorage.removeItem('hc.afterLogin'); }catch(e){}
+  if(myId && !(await checkMember())){ showGate(); initNav(); return; }
+  await startApp(after);
+}
+/* 招待コード制：メンバーかどうかの確認 */
+async function checkMember(){
+  const { data, error } = await sb.rpc('is_member');
+  if(error) return true;              // 招待制のSQLを実行する前は、これまでどおり使える
+  if(data) return true;
+  if(!me.anon){ const c = await sb.rpc('claim_admin_membership'); if(c.data) return true; }
+  return false;
+}
+function showGate(){
+  $('#gate').hidden=false; document.body.style.overflow='hidden';
+  const msg=$('#gate-err'); msg.hidden=true;
+  setTimeout(()=>$('#gate-code')?.focus({preventScroll:true}),80);
+}
+async function submitGate(){
+  const code=$('#gate-code').value.trim(), msg=$('#gate-err'), btn=$('#gate-join');
+  if(!code){ msg.textContent='招待コードを入力してください。'; msg.hidden=false; return; }
+  btn.disabled=true; btn.textContent='確認中…';
+  const { data, error } = await sb.rpc('join_with_code', { code });
+  btn.disabled=false; btn.textContent='参加する';
+  if(error){ msg.textContent='確認できませんでした。通信状態を確認して、もう一度お試しください。'; msg.hidden=false; return; }
+  if(!data){ msg.textContent='招待コードが違います。招待してくれた人に確認してください。'; msg.hidden=false; return; }
+  $('#gate').hidden=true; document.body.style.overflow='';
+  toast('ようこそ HIDEOUT CARTER へ');
+  await startApp('');
+}
+let appStarted=false;
+async function startApp(after){
+  if(appStarted){ await loadAll(); return; }
+  appStarted=true;
+  $('#add').hidden = !myId;
   if(after==='mine' && !me.anon){ view='mine'; ['bottles','feed','zukan','mine'].forEach(k=>$('#t-'+k).setAttribute('aria-selected',view===k)); }
   await loadAll();
   await ensureProfile();
@@ -571,7 +633,7 @@ async function googleLogin(){
   if(!sb) return;
   const hasData = tastings.some(t=>t.author===myId) || bottles.some(b=>b.createdBy===myId) || wishlist.size>0;
   try{ sessionStorage.setItem('hc.afterLogin','mine'); }catch(e){}
-  if(me.id && me.anon && hasData){
+  if(me.id && me.anon && (hasData || appStarted)){
     try{ sessionStorage.setItem('hc.loginMode','link'); }catch(e){}
     const { error } = await sb.auth.linkIdentity({ provider:'google', options:{ redirectTo: REDIRECT() } });
     if(error){
@@ -588,7 +650,9 @@ async function logout(){
   await sb.auth.signOut();
   const r = await sb.auth.signInAnonymously();
   setMe(r.data?.user || null);
-  await loadAll(); toast('ログアウトしました');
+  toast('ログアウトしました');
+  if(!(await checkMember())){ bottles=[]; tastings=[]; buildAggs(); showGate(); return; }
+  await loadAll();
 }
 // OAuthから戻ってきたときのエラー（すでに別の記録とひも付いたGoogleアカウントなど）を処理する
 function readAuthError(){
@@ -680,6 +744,37 @@ async function tasteZukan(z){
   catch(e){ toast('銘柄を用意できませんでした：'+e.message); }
 }
 
+/* 管理者：招待コードの確認・変更 */
+const APP_URL = 'https://wanmya.github.io/kohakucho/';
+async function renderAdmin(){
+  const slot=$('#admin-slot'); if(!slot || !sb) return;
+  const { data, error } = await sb.rpc('admin_info');
+  if(error || !data || !$('#admin-slot')) return;
+  const invite = `HIDEOUT CARTER に招待します。\n${APP_URL}\n招待コード：${data.code}`;
+  $('#admin-slot').innerHTML = `<section class="mcard admin"><h3>招待コード<small>ADMIN</small></h3>
+    <p class="small">管理者だけに表示されています。メンバー ${data.members}人</p>
+    <div class="code-box"><code>${esc(data.code)}</code><button class="btn small" data-act="copy-invite">招待文をコピー</button></div>
+    <pre class="invite" id="invite-text">${esc(invite)}</pre>
+    <div class="addtag field"><input id="new-code" placeholder="新しい招待コード（4文字以上）" autocomplete="off"><button class="btn" data-act="set-code">変更</button></div>
+    <p class="small">コードを変えても、すでに参加したメンバーはそのまま使えます。新しく招待する人には新しいコードを伝えてください。</p></section>`;
+  slot.dataset.invite=invite;
+}
+$('#list').addEventListener('click', async e=>{
+  if(view!=='mine') return;
+  if(e.target.closest('[data-act="copy-invite"]')){
+    const t=$('#admin-slot')?.dataset.invite||'';
+    try{ await navigator.clipboard.writeText(t); toast('招待文をコピーしました'); }
+    catch(err){ const r=document.createRange(); r.selectNodeContents($('#invite-text')); const sel=getSelection(); sel.removeAllRanges(); sel.addRange(r); toast('選択した招待文をコピーしてください'); }
+  }
+  if(e.target.closest('[data-act="set-code"]')){
+    const v=$('#new-code').value.trim();
+    if(v.length<4) return toast('招待コードは4文字以上にしてください');
+    const { data, error } = await sb.rpc('set_invite_code', { new_code:v });
+    if(error || !data) return toast('変更できませんでした');
+    toast('招待コードを変更しました'); renderAdmin();
+  }
+});
+
 /* ---------- マイページ ---------- */
 function myAnalysis(){
   const mine = tastings.filter(t=>t.author===myId);
@@ -736,7 +831,8 @@ function renderMine(list){
   const wishSec = `<section class="mcard"><h3>飲みたいリスト<small>WISHLIST</small></h3>
       ${wl.length?`<div class="list" style="padding-top:0">${wl.map(w=>`<div class="wrow"><button class="zcard" data-open="${esc(w.open)}"><span class="gl" style="background:${w.color?glassColor(w.color):'var(--line)'}"></span><span class="info"><h3>${esc(w.name)}${w.done?'<span class="badge peat">記録済み</span>':''}</h3><div class="meta">${esc(w.sub)}</div></span><span class="right"></span></button><button class="btn small ghost" data-unwish="${esc(w.k)}" aria-label="リストから外す">外す</button></div>`).join('')}</div>`
         :`<p class="small">図鑑や銘柄のページの「飲みたい」で追加できます。</p>`}</section>`;
-  list.innerHTML = `<div class="mine">${!socialReady?`<div class="notice">ログイン・飲みたいリスト・いいね・コメントを使うには、Supabaseで <code>update-3-social.sql</code> を実行してください。</div>`:''}${acct}${analysis}${wishSec}</div>`;
+  if(!me.anon) setTimeout(renderAdmin,0);
+  list.innerHTML = `<div class="mine">${!socialReady?`<div class="notice">ログイン・飲みたいリスト・いいね・コメントを使うには、Supabaseで <code>update-3-social.sql</code> を実行してください。</div>`:''}${acct}<div id="admin-slot"></div>${analysis}${wishSec}</div>`;
 }
 $('#list').addEventListener('click', async e=>{
   if(view!=='mine') return;
@@ -1744,6 +1840,7 @@ window.addEventListener('popstate',()=>{
 window.addEventListener('scroll',()=>{ if(performance.now()<(nav.ignoreScrollUntil||0)) return; const t=nav.stack[nav.stack.length-1]; if(t && !t.sheet) t.y=window.scrollY; },{passive:true});
 document.addEventListener('scroll',e=>{ if(performance.now()<(nav.ignoreScrollUntil||0)) return; if(e.target.classList && e.target.classList.contains('sheet')){ const t=nav.stack[nav.stack.length-1]; if(t && t.sheet) t.sy=e.target.scrollTop; } },{capture:true,passive:true});
 function initNav(){
+  if(nav.inited) return; nav.inited=true;
   try{ history.replaceState({ hc:'base' }, ''); }catch(e){}
   nav.stack=[snap()];
   ensureGuard();
@@ -1776,6 +1873,9 @@ $('#sheet-root').addEventListener('click', async e=>{
   const w=e.target.closest('[data-wish]'); if(w){ const k=w.dataset.wish; if(await toggleWish(k)) w.outerHTML=wishBtn(k); return; }
   const s=e.target.closest('[data-rid] [data-act]'); if(s) handleSocialClick(s);
 });
+$('#gate-form').addEventListener('submit',e=>{ e.preventDefault(); submitGate(); });
+$('#gate-google').innerHTML = GOOGLE_G + '<span>Googleでログイン</span>';
+$('#gate-google').onclick = ()=>googleLogin();
 if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }
 boot();
 })();
