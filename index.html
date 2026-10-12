@@ -49,7 +49,7 @@ input,select,textarea{font-size:16px}
 .brand h1{font-family:var(--display);font-weight:800;font-size:clamp(17px,5.2vw,24px);line-height:1.2;margin:0;letter-spacing:.06em;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .count{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .menu-btn{border:1px solid var(--line);background:var(--surface);border-radius:9px;width:36px;height:32px;cursor:pointer;font-size:16px;line-height:1;flex-shrink:0}
-.tabs{display:grid;grid-template-columns:1fr 1.3fr 1fr;border-bottom:1px solid var(--line);margin-bottom:-11px}
+.tabs{display:grid;grid-template-columns:1fr 1.45fr 1fr 1fr;border-bottom:1px solid var(--line);margin-bottom:-11px}
 .tabs button{border:0;background:none;padding:8px 0 9px;font-size:14px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent}
 .tabs button[aria-selected="true"]{color:var(--ink);font-weight:700;border-bottom-color:var(--amber)}
 .tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -241,6 +241,10 @@ input[type=range]{accent-color:var(--amber);width:100%}
 .z-desc{font-size:15px;line-height:1.8;margin:0}
 .minimap{max-width:220px;margin:0 auto}
 .note-small{font-size:11.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+.story{display:grid;gap:14px;border-left:2px solid var(--amber-soft);padding-left:14px}
+.story .st h3{font-size:15.5px;margin:0 0 4px}
+.story .st p{margin:0;font-size:14.5px;line-height:1.85}
+.story-facts{margin-top:-6px}
 .zk-top{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:stretch}
 .cmp-open{display:flex;align-items:center;gap:6px;border-radius:10px}
 .cmp-open em{font-style:normal;font-family:var(--mono);font-size:11px;background:var(--amber);color:var(--amber-ink);border-radius:999px;min-width:18px;height:18px;display:grid;place-items:center}
@@ -318,6 +322,42 @@ input[type=range]{accent-color:var(--amber);width:100%}
 .cmap .dpin .dot2{fill:var(--amber);stroke:var(--near)}
 .cmap .dpin text{font-family:var(--body);font-weight:700;fill:var(--ink);paint-order:stroke;stroke:var(--near);stroke-linejoin:round}
 .cmap .dpin:focus-visible .dot2{stroke:var(--ink)}
+.exit-dlg{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.45);display:grid;place-items:center;padding:16px}
+.exit-box{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 18px 16px;width:100%;max-width:320px;display:grid;gap:16px;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.exit-box p{margin:0;font-family:var(--display);font-weight:800;font-size:18px;text-align:center}
+.exit-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.exit-btns .btn{padding:11px;font-size:15px}
+.tabs button{white-space:nowrap}
+.mine{display:grid;gap:14px;padding-top:14px}
+.mcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:10px;min-width:0}
+.mcard h3{font-family:var(--display);font-size:18px;margin:0;display:flex;align-items:baseline;gap:8px}
+.mcard h3 small{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--muted);font-weight:500}
+.mcard p{margin:0;font-size:14px}
+.mcard .stat{background:var(--bg)}
+.gbtn{display:flex;align-items:center;justify-content:center;gap:10px;padding:11px;font-weight:700;font-size:15px;background:var(--surface);border-color:var(--ink)}
+.acct{display:flex;align-items:center;gap:12px;min-width:0}
+.acct img,.acct .ava{width:44px;height:44px;border-radius:50%;flex-shrink:0;object-fit:cover}
+.acct .ava{display:grid;place-items:center;background:var(--amber-soft);font-weight:700}
+.acct strong{display:block;overflow-wrap:anywhere}
+.bias{font-size:14px}
+.bias b{font-family:var(--mono);color:var(--amber)}
+.wrow{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center}
+.wish{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 14px;font-size:13.5px}
+.wish.on{background:var(--amber-soft);border-color:var(--amber);color:var(--ink)}
+.wish svg{color:var(--amber)}
+.t-social{display:flex;gap:6px;border-top:1px solid var(--line);padding-top:8px}
+.soc{display:inline-flex;align-items:center;gap:5px;border:0;background:none;color:var(--muted);padding:4px 8px;border-radius:8px;cursor:pointer;font-size:13px;font-family:var(--mono)}
+.soc.on{color:var(--danger)}
+.soc:hover{background:var(--bg)}
+.cmts{display:grid;gap:8px;background:var(--bg);border-radius:10px;padding:10px}
+.cmt-h{display:flex;align-items:baseline;gap:8px;font-size:13px}
+.cmt-h .btn{margin-left:auto;padding:2px 6px}
+.cmt p{margin:2px 0 0;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
+.cmt-new{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:end}
+.cmt-new textarea{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:8px 10px;resize:vertical;min-height:44px}
+.feed-soc{display:flex;align-items:center;gap:4px;margin-top:6px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.feed-soc span{margin-right:8px}
+.pk-h{margin-top:8px}
 @media (prefers-reduced-motion:no-preference){.sheet{animation:up .22s ease-out}@keyframes up{from{transform:translateY(16px);opacity:.6}}}
 @media (max-width:380px){.row3{grid-template-columns:1fr 1fr}.bar{grid-template-columns:6em 1fr 3.2em}}
 </style>
@@ -345,6 +385,7 @@ input[type=range]{accent-color:var(--amber);width:100%}
       <button role="tab" id="t-bottles" aria-selected="true">銘柄</button>
       <button role="tab" id="t-feed" aria-selected="false">みんなの記録</button>
       <button role="tab" id="t-zukan" aria-selected="false">図鑑</button>
+      <button role="tab" id="t-mine" aria-selected="false">マイ</button>
     </div>
   </header>
   <main id="list" class="list" aria-live="polite">
@@ -354,10 +395,14 @@ input[type=range]{accent-color:var(--amber);width:100%}
 <button class="fab" id="add" hidden>＋ テイスティング</button>
 <div id="sheet-root"></div>
 <div class="toast" id="toast" hidden></div>
+<div class="exit-dlg" id="exit-dlg" role="alertdialog" aria-modal="true" aria-labelledby="exit-t" hidden>
+  <div class="exit-box"><p id="exit-t">アプリを終了しますか？</p>
+    <div class="exit-btns"><button class="btn" id="exit-no">いいえ</button><button class="btn primary" id="exit-yes">はい</button></div></div>
+</div>
 
 <script>
 (() => {
-const APP_VERSION = '2026.10.12f';
+const APP_VERSION = '2026.10.12i';
 
 const COLORS = [
   ['white','ホワイトワイン','#F6F0D6'],['straw','ペールストロー','#F1E2A0'],['gold','ゴールド','#E7C25A'],['oldgold','オールドゴールド','#D9A63A'],
@@ -401,7 +446,7 @@ const photoUrl = path => (!path||!sb) ? '' : sb.storage.from('photos').getPublic
 const rowToTasting = r => ({ ...(r.data||{}), id:r.id, bottleId:r.bottle_id, author:r.user_id, authorName:r.author_name||'',
   score:r.score ?? r.data?.score, createdAt:Date.parse(r.created_at), updatedAt:Date.parse(r.updated_at) });
 const rowToBottle = b => ({ id:b.id, name:b.name, distillery:b.distillery||'', type:b.type||'', region:b.region||'', age:b.age||'', abv:b.abv||'',
-  cask:b.cask||'', photo:b.photo||'', createdBy:b.created_by, createdAt:Date.parse(b.created_at) });
+  cask:b.cask||'', photo:b.photo||'', zukanId:b.zukan_id||'', createdBy:b.created_by, createdAt:Date.parse(b.created_at) });
 
 function buildAggs(){
   aggs = new Map();
@@ -437,6 +482,7 @@ async function loadAll(){
   if(error){ setupError = error.message; loaded=true; renderList(); return; }
   bottles = b.data.map(rowToBottle);
   tastings = r.data.map(rowToTasting).filter(t=>t.bottleId);
+  await loadSocial();
   buildAggs(); loaded=true; setupError=''; renderList();
   if(currentBottle && $('#sheet-root [data-view="bottle"]')) openBottle(currentBottle, true);
 }
@@ -446,20 +492,268 @@ const scheduleReload = () => { clearTimeout(reloadTimer); reloadTimer=setTimeout
 async function boot(){
   const cfg = window.KOHAKU_CONFIG || {};
   if(!window.supabase || !cfg.SUPABASE_URL || /xxxx/.test(cfg.SUPABASE_URL) || !cfg.SUPABASE_ANON_KEY || /ここに/.test(cfg.SUPABASE_ANON_KEY)){
-    setupError='config'; loaded=true; renderList(); return;
+    setupError='config'; loaded=true; renderList(); initNav(); return;
   }
-  sb = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY, { auth:{ persistSession:true, autoRefreshToken:true } });
+  const authErr = readAuthError();
+  sb = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY, { auth:{ persistSession:true, autoRefreshToken:true, detectSessionInUrl:true } });
+  let loginMode = ''; try{ loginMode = sessionStorage.getItem('hc.loginMode')||''; sessionStorage.removeItem('hc.loginMode'); }catch(e){}
   try{
+    if(authErr){
+      // このGoogleアカウントがすでに別の記録（別の端末）とひも付いている場合は、そのアカウントでログインし直す
+      if(loginMode==='link' && /already|exists|linked/i.test(authErr.code+' '+authErr.desc)){
+        toast('このGoogleアカウントは登録済みです。ログインし直します');
+        try{ sessionStorage.setItem('hc.loginMode','signin'); }catch(e){}
+        await sb.auth.signInWithOAuth({ provider:'google', options:{ redirectTo: location.origin+location.pathname } });
+        return;
+      }
+      toast('ログインできませんでした：'+(authErr.desc||authErr.code));
+    }
     let { data:{ session } } = await sb.auth.getSession();
     if(!session){ const r = await sb.auth.signInAnonymously(); if(r.error) throw r.error; session = r.data.session; }
-    myId = session?.user?.id || null;
+    setMe(session?.user);
   }catch(e){ console.warn(e); toast('ログインできませんでした。閲覧のみで開いています。'); }
   $('#add').hidden = !myId;
+  let after=''; try{ after=sessionStorage.getItem('hc.afterLogin')||''; sessionStorage.removeItem('hc.afterLogin'); }catch(e){}
+  if(after==='mine' && !me.anon){ view='mine'; ['bottles','feed','zukan','mine'].forEach(k=>$('#t-'+k).setAttribute('aria-selected',view===k)); }
   await loadAll();
+  await ensureProfile();
+  if(after==='mine' && !me.anon){ renderList(); toast('ログインしました'); }
+  initNav();
+  sb.auth.onAuthStateChange((ev, session)=>{ if(ev==='SIGNED_IN' || ev==='USER_UPDATED' || ev==='SIGNED_OUT'){ const u=session?.user; if(u && u.id!==myId){ setMe(u); scheduleReload(); } } });
   sb.channel('live').on('postgres_changes',{event:'*',schema:'public',table:'reviews'},scheduleReload)
-    .on('postgres_changes',{event:'*',schema:'public',table:'bottles'},scheduleReload).subscribe();
+    .on('postgres_changes',{event:'*',schema:'public',table:'bottles'},scheduleReload)
+    .on('postgres_changes',{event:'*',schema:'public',table:'review_likes'},scheduleReload)
+    .on('postgres_changes',{event:'*',schema:'public',table:'review_comments'},scheduleReload).subscribe();
   document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') scheduleReload(); });
 }
+
+/* ---------- アカウント（Google）・いいね・コメント・飲みたい ---------- */
+let me = { id:null, anon:true, name:'', email:'', avatar:'' };
+let profiles = new Map(), likesBy = new Map(), commentsBy = new Map(), wishlist = new Set();
+let socialReady = true;
+const openComments = new Set();
+const isAnonUser = u => !u || u.is_anonymous === true || (!u.email && !(u.identities||[]).length);
+const displayNameOf = uid => profiles.get(uid)?.display_name || '';
+const myName = () => displayNameOf(me.id) || store.get('kohaku.nickname') || me.name || '';
+const GOOGLE_G = `<svg viewBox="0 0 48 48" width="18" height="18" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>`;
+const ICON_HEART = on => `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.5 8 3.6 4.5 7.1 4.5c2 0 3.6 1.1 4.9 2.8 1.3-1.7 2.9-2.8 4.9-2.8 3.5 0 5.6 3.5 4.4 6.8-1.8 4.6-9.3 9.2-9.3 9.2z" fill="${on?'currentColor':'none'}" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>`;
+const ICON_BUBBLE = `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 5.5h16v10H9l-5 4v-14z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>`;
+const ICON_STAR = on => `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z" fill="${on?'currentColor':'none'}" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>`;
+
+function setMe(user){
+  me = { id:user?.id||null, anon:isAnonUser(user), email:user?.email||'',
+    name: user?.user_metadata?.full_name || user?.user_metadata?.name || '', avatar: user?.user_metadata?.avatar_url || user?.user_metadata?.picture || '' };
+  myId = me.id;
+}
+async function loadSocial(){
+  const [p, l, c, w] = await Promise.all([
+    sb.from('profiles').select('*').limit(5000),
+    sb.from('review_likes').select('review_id,user_id').limit(20000),
+    sb.from('review_comments').select('*').order('created_at',{ascending:true}).limit(10000),
+    sb.from('wishlist').select('*').limit(2000)
+  ]);
+  socialReady = !(p.error || l.error || c.error || w.error);
+  profiles = new Map((p.data||[]).map(x=>[x.id,x]));
+  likesBy = new Map(); (l.data||[]).forEach(x=>{ if(!likesBy.has(x.review_id)) likesBy.set(x.review_id,new Set()); likesBy.get(x.review_id).add(x.user_id); });
+  commentsBy = new Map(); (c.data||[]).forEach(x=>{ if(!commentsBy.has(x.review_id)) commentsBy.set(x.review_id,[]); commentsBy.get(x.review_id).push(x); });
+  wishlist = new Set((w.data||[]).filter(x=>x.user_id===myId).map(x=>x.item_key));
+}
+async function ensureProfile(){
+  if(!socialReady || me.anon || !me.id || profiles.has(me.id)) return;
+  const row = { id:me.id, display_name: store.get('kohaku.nickname') || me.name || (me.email||'').split('@')[0], avatar_url: me.avatar||null };
+  const { data, error } = await sb.from('profiles').upsert(row).select().single();
+  if(!error && data) profiles.set(me.id, data);
+}
+
+/* Googleログイン：この端末の記録があれば、そのまま引き継げるように連携する */
+const REDIRECT = () => location.origin + location.pathname;
+async function googleLogin(){
+  if(!sb) return;
+  const hasData = tastings.some(t=>t.author===myId) || bottles.some(b=>b.createdBy===myId) || wishlist.size>0;
+  try{ sessionStorage.setItem('hc.afterLogin','mine'); }catch(e){}
+  if(me.id && me.anon && hasData){
+    try{ sessionStorage.setItem('hc.loginMode','link'); }catch(e){}
+    const { error } = await sb.auth.linkIdentity({ provider:'google', options:{ redirectTo: REDIRECT() } });
+    if(error){
+      if(/manual linking/i.test(error.message)) toast('Supabaseで「Allow manual linking」をオンにしてください');
+      else { try{ sessionStorage.setItem('hc.loginMode','signin'); }catch(e){} await sb.auth.signInWithOAuth({ provider:'google', options:{ redirectTo: REDIRECT() } }); }
+    }
+  } else {
+    try{ sessionStorage.setItem('hc.loginMode','signin'); }catch(e){}
+    const { error } = await sb.auth.signInWithOAuth({ provider:'google', options:{ redirectTo: REDIRECT() } });
+    if(error) toast('ログインを開始できませんでした：'+error.message);
+  }
+}
+async function logout(){
+  await sb.auth.signOut();
+  const r = await sb.auth.signInAnonymously();
+  setMe(r.data?.user || null);
+  await loadAll(); toast('ログアウトしました');
+}
+// OAuthから戻ってきたときのエラー（すでに別の記録とひも付いたGoogleアカウントなど）を処理する
+function readAuthError(){
+  const q = new URLSearchParams(location.search), h = new URLSearchParams(location.hash.replace(/^#/,''));
+  const code = q.get('error_code') || h.get('error_code') || '', desc = q.get('error_description') || h.get('error_description') || '';
+  if(!(q.get('error') || h.get('error'))) return null;
+  try{ history.replaceState(null,'',location.pathname); }catch(e){}
+  return { code, desc };
+}
+
+/* いいね・コメント */
+async function toggleLike(rid){
+  if(!socialReady) return toast('いいねを使うには、Supabaseで update-3-social.sql を実行してください');
+  if(!myId) return;
+  const set = likesBy.get(rid) || new Set(); likesBy.set(rid,set);
+  const on = set.has(myId);
+  on ? set.delete(myId) : set.add(myId);
+  refreshOpenBottle();
+  const res = on ? await sb.from('review_likes').delete().eq('review_id',rid).eq('user_id',myId)
+                 : await sb.from('review_likes').insert({ review_id:rid });
+  if(res.error){ on ? set.add(myId) : set.delete(myId); refreshOpenBottle(); toast('いいねできませんでした'); }
+}
+async function addComment(rid, body){
+  if(!socialReady) return toast('コメントを使うには、Supabaseで update-3-social.sql を実行してください');
+  body = body.trim(); if(!body) return;
+  const { data, error } = await sb.from('review_comments').insert({ review_id:rid, body, author_name: myName() || null }).select().single();
+  if(error) return toast('コメントを送れませんでした：'+error.message);
+  if(!commentsBy.has(rid)) commentsBy.set(rid,[]); commentsBy.get(rid).push(data);
+  refreshOpenBottle();
+}
+async function deleteComment(cid, rid){
+  const { error } = await sb.from('review_comments').delete().eq('id',cid);
+  if(error) return toast('削除できませんでした');
+  commentsBy.set(rid,(commentsBy.get(rid)||[]).filter(x=>x.id!==cid)); refreshOpenBottle();
+}
+function refreshOpenBottle(){ if(currentBottle && $('#sheet-root [data-view="bottle"]')) openBottle(currentBottle, true); }
+function socialRow(t){
+  const likes = likesBy.get(t.id)?.size || 0, liked = !!likesBy.get(t.id)?.has(myId);
+  const cs = commentsBy.get(t.id) || [], open = openComments.has(t.id);
+  return `<div class="t-social" data-rid="${esc(t.id)}">
+      <button class="soc${liked?' on':''}" data-act="like" aria-pressed="${liked}" aria-label="いいね">${ICON_HEART(liked)}<span>${likes||''}</span></button>
+      <button class="soc" data-act="cmts" aria-expanded="${open}" aria-label="コメント">${ICON_BUBBLE}<span>${cs.length||''}</span></button>
+    </div>
+    ${open?`<div class="cmts" data-rid="${esc(t.id)}">
+      ${cs.map(c=>`<div class="cmt"><div class="cmt-h"><strong>${esc(c.user_id===myId?'あなた':(displayNameOf(c.user_id)||c.author_name||'メンバー'))}</strong><span class="small">${fmtDate(Date.parse(c.created_at))}</span>${c.user_id===myId?`<button class="btn small ghost" data-act="del-cmt" data-cid="${esc(c.id)}">削除</button>`:''}</div><p>${esc(c.body)}</p></div>`).join('')}
+      ${myId?`<div class="cmt-new"><textarea id="cmt-${esc(t.id)}" rows="2" maxlength="500" placeholder="コメントを書く"></textarea><button class="btn small primary" data-act="send-cmt">送信</button></div>`:''}
+    </div>`:''}`;
+}
+async function handleSocialClick(el){
+  const rid = el.closest('[data-rid]')?.dataset.rid; if(!rid) return false;
+  const act = el.dataset.act;
+  if(act==='like'){ toggleLike(rid); return true; }
+  if(act==='cmts'){ openComments.has(rid) ? openComments.delete(rid) : openComments.add(rid); refreshOpenBottle(); if(openComments.has(rid)) setTimeout(()=>$('#cmt-'+CSS.escape(rid))?.focus({preventScroll:true}),30); return true; }
+  if(act==='send-cmt'){ const ta=$('#cmt-'+CSS.escape(rid)); if(ta && ta.value.trim()){ el.disabled=true; await addComment(rid, ta.value); } return true; }
+  if(act==='del-cmt'){ deleteComment(el.dataset.cid, rid); return true; }
+  return false;
+}
+
+/* 飲みたいリスト */
+const wishKeyForBottle = b => { const z=zukanFor(b); return z ? 'z:'+z.id : 'b:'+b.id; };
+async function toggleWish(key){
+  if(!socialReady) return toast('飲みたいリストを使うには、Supabaseで update-3-social.sql を実行してください');
+  if(!myId) return;
+  const on = wishlist.has(key);
+  on ? wishlist.delete(key) : wishlist.add(key);
+  const res = on ? await sb.from('wishlist').delete().eq('user_id',myId).eq('item_key',key) : await sb.from('wishlist').insert({ item_key:key });
+  if(res.error){ on ? wishlist.add(key) : wishlist.delete(key); toast('保存できませんでした'); return false; }
+  toast(on ? '飲みたいリストから外しました' : '飲みたいリストに追加しました');
+  return true;
+}
+const wishBtn = key => `<button class="btn wish${wishlist.has(key)?' on':''}" data-wish="${esc(key)}" aria-pressed="${wishlist.has(key)}">${ICON_STAR(wishlist.has(key))}${wishlist.has(key)?'飲みたいリスト済み':'飲みたい'}</button>`;
+
+/* 図鑑の銘柄から、みんなの銘柄を用意する（なければ自動で登録） */
+async function bottleFromZukan(z){
+  const ex = bottleForZ(z); if(ex) return ex;
+  const r = ZUKAN_REGIONS[z.region];
+  const row = { name:z.name, distillery:z.distillery, type:TYPES.includes(z.type)?z.type:'その他', region:r?.pick||'', age:z.age||'', abv:z.abv||'', cask:z.cask||'', zukan_id:z.id };
+  let res = await sb.from('bottles').insert(row).select().single();
+  if(res.error && /zukan_id/.test(res.error.message)){ delete row.zukan_id; res = await sb.from('bottles').insert(row).select().single(); }
+  if(res.error){
+    if(res.error.code==='23505'){ await loadAll(); const again = bottleForZ(z) || bottles.find(b=>norm(b.name)===norm(z.name)); if(again) return again; }
+    throw new Error(res.error.message);
+  }
+  const nb=rowToBottle(res.data); bottles=[nb,...bottles]; buildAggs(); renderList(); return nb;
+}
+async function tasteZukan(z){
+  if(!myId) return;
+  try{ const b = await bottleFromZukan(z); openTastingForm(b, null, true); }
+  catch(e){ toast('銘柄を用意できませんでした：'+e.message); }
+}
+
+/* ---------- マイページ ---------- */
+function myAnalysis(){
+  const mine = tastings.filter(t=>t.author===myId);
+  if(!mine.length) return null;
+  const scores = mine.map(t=>t.score).filter(s=>typeof s==='number');
+  const avg = scores.reduce((a,b)=>a+b,0)/Math.max(1,scores.length);
+  // 点数のつけ方：同じ銘柄を記録したほかの人の平均と比べる
+  const diffs = []; mine.forEach(t=>{ const others = tastings.filter(o=>o.bottleId===t.bottleId && o.author!==myId && typeof o.score==='number'); if(others.length && typeof t.score==='number') diffs.push(t.score - others.reduce((s,o)=>s+o.score,0)/others.length); });
+  const bias = diffs.length ? diffs.reduce((a,b)=>a+b,0)/diffs.length : null;
+  // 好きな味わい：自分の平均点以上の記録を、点数で重みづけ
+  const liked = mine.filter(t=>t.profile && AXES.some(a=>t.profile[a[0]]>0) && (t.score??0) >= avg);
+  const base = liked.length ? liked : mine.filter(t=>t.profile && AXES.some(a=>t.profile[a[0]]>0));
+  let pref = null;
+  if(base.length){ const w = base.map(t=>Math.max(1,(t.score??avg)-avg+5)); const W=w.reduce((a,b)=>a+b,0);
+    pref = Object.fromEntries(AXES.map(([k])=>[k, base.reduce((s,t,i)=>s+(+t.profile[k]||0)*w[i],0)/W])); }
+  const tagCount = new Map(); (liked.length?liked:mine).forEach(t=>PHASES.forEach(([k])=>(t[k]?.tags||[]).forEach(tag=>tagCount.set(tag,(tagCount.get(tag)||0)+1))));
+  const tags = [...tagCount.entries()].sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const regionOf = t => { const b=bottles.find(x=>x.id===t.bottleId); const z=b&&zukanFor(b); return z ? (ZUKAN_REGIONS[z.region]?.jp||'') : (b?.region||''); };
+  const typeOf = t => { const b=bottles.find(x=>x.id===t.bottleId); return b?.type||''; };
+  const group = f => { const m=new Map(); mine.forEach(t=>{ const k=f(t); if(!k||typeof t.score!=='number') return; const g=m.get(k)||{n:0,s:0}; g.n++; g.s+=t.score; m.set(k,g); });
+    return [...m.entries()].map(([k,g])=>({k,n:g.n,avg:g.s/g.n})).sort((a,b)=>b.avg-a.avg || b.n-a.n); };
+  // おすすめ：まだ記録していない図鑑の銘柄から、好みに近いもの
+  const tasted = new Set(mine.map(t=>{ const b=bottles.find(x=>x.id===t.bottleId); return b && zukanFor(b)?.id; }).filter(Boolean));
+  const recs = pref ? ZUKAN_ENTRIES.filter(z=>!tasted.has(z.id)).map(z=>({ z, ...similarity({p:profArr(pref), tags:tags.map(x=>x[0])}, z) }))
+      .sort((a,b)=>b.score-a.score).slice(0,6) : [];
+  return { n:mine.length, bottles:new Set(mine.map(t=>t.bottleId)).size, avg, bias, biasN:diffs.length, pref, tags, regions:group(regionOf).slice(0,4), types:group(typeOf).slice(0,3), recs };
+}
+function renderMine(list){
+  $('#count').textContent = me.anon ? 'ゲスト' : (myName() || 'ログイン中');
+  const acct = me.anon
+    ? `<section class="mcard"><h3>アカウント<small>ACCOUNT</small></h3>
+        <p>いまはゲストとして使っています。Googleアカウントでログインすると、機種変更やアプリの入れ直しのあとも、自分の記録を編集・削除できます。</p>
+        ${tastings.some(t=>t.author===myId)?'<p class="small">この端末でつけた記録は、ログインするとそのままアカウントに引き継がれます。</p>':''}
+        <button class="btn gbtn" data-act="login">${GOOGLE_G}<span>Googleでログイン</span></button></section>`
+    : `<section class="mcard"><h3>アカウント<small>ACCOUNT</small></h3>
+        <div class="acct">${me.avatar?`<img src="${esc(me.avatar)}" alt="" referrerpolicy="no-referrer">`:`<span class="ava">${esc((myName()||'?').slice(0,1))}</span>`}
+          <div><strong>${esc(myName()||'名前未設定')}</strong><div class="small">${esc(me.email)}・Googleでログイン中</div></div></div>
+        <div class="addtag field"><input id="my-name" value="${esc(myName())}" placeholder="みんなに表示される名前"><button class="btn" data-act="save-name">保存</button></div>
+        <div><button class="btn small ghost" data-act="logout">ログアウト</button></div></section>`;
+  const A = myAnalysis();
+  const analysis = !A ? `<section class="mcard"><h3>あなたの好み<small>TASTE</small></h3><p class="small">テイスティングを記録すると、好みの傾向とおすすめの銘柄がここに表示されます。</p></section>`
+    : `<section class="mcard"><h3>あなたの好み<small>TASTE</small></h3>
+        <dl class="stat-row"><div class="stat"><dt>記録</dt><dd>${A.n}<small>件</small></dd></div><div class="stat"><dt>銘柄</dt><dd>${A.bottles}<small>本</small></dd></div><div class="stat"><dt>平均点</dt><dd>${fmt1(A.avg)}</dd></div></dl>
+        ${A.bias!=null?`<p class="bias">点数のつけ方：同じ銘柄のみんなの平均より <b>${A.bias>=0?'+':''}${fmt1(A.bias)}点</b>${Math.abs(A.bias)<1?'（ほぼ同じ）':A.bias>0?'（高めにつける傾向）':'（辛めにつける傾向）'}<span class="small">　${A.biasN}件の比較</span></p>`:''}
+        ${A.pref?`<div class="radar-wrap">${radarSVG({single:A.pref})}<div class="legend"><span><i style="border-color:var(--amber)"></i>高く評価した記録の平均</span></div></div>`:''}
+        ${A.tags.length?`<div class="group-name">好きな香りと味</div><div class="chips">${A.tags.map(([t,n])=>`<span class="chip" aria-pressed="true">${esc(t)} ${n}</span>`).join('')}</div>`:''}
+        ${A.regions.length?`<div class="group-name">評価の高い産地</div><div class="bars">${A.regions.map(r=>`<div class="bar"><span>${esc(r.k)}</span><div class="track"><div class="fill" style="width:${Math.max(4,(r.avg-50)*2)}%"></div></div><em>${fmt1(r.avg)}</em></div>`).join('')}</div>`:''}
+      </section>
+      ${A.recs.length?`<section class="mcard"><h3>あなたへのおすすめ<small>FOR YOU</small></h3><p class="small" style="margin:0">まだ記録していない図鑑の銘柄から、あなたが高く評価した味わいに近いものを選びました。</p>
+        <div class="list" style="padding-top:6px">${A.recs.map(s=>{ const o=s.z; const meta=[ZUKAN_REGIONS[o.region]?.jp, o.price?'約'+priceBand(o.price):''].filter(Boolean).join(' · ');
+          return `<button class="zcard" data-z="${esc(o.id)}"><span class="gl" style="background:${glassColor(o.color)}"></span><span class="info"><h3>${esc(o.name)}</h3><div class="meta">${esc(meta)}</div>${s.shared.length?`<div class="tagline">${s.shared.slice(0,4).map(t=>`<span>${esc(t)}</span>`).join('')}</div>`:''}</span><span class="right"><b>${Math.round(s.score*100)}<small style="font-size:11px">%</small></b><i>好みに近い</i></span></button>`; }).join('')}</div></section>`:''}`;
+  const wl = [...wishlist].map(k=>{ if(k.startsWith('z:')){ const z=zEntry(k.slice(2)); if(!z) return null; const b=bottleForZ(z); return {k, name:z.name, sub:[ZUKAN_REGIONS[z.region]?.jp, z.price?'約'+priceBand(z.price):''].filter(Boolean).join(' · '), color:z.color, open:'z:'+z.id, done: !!(b && aggs.get(b.id)?.mine.length)}; }
+    const b=bottles.find(x=>x.id===k.slice(2)); if(!b) return null; return {k, name:b.name, sub:[b.distillery,b.region].filter(Boolean).join(' · '), color:'', open:'b:'+b.id, done: !!aggs.get(b.id)?.mine.length}; }).filter(Boolean);
+  const wishSec = `<section class="mcard"><h3>飲みたいリスト<small>WISHLIST</small></h3>
+      ${wl.length?`<div class="list" style="padding-top:0">${wl.map(w=>`<div class="wrow"><button class="zcard" data-open="${esc(w.open)}"><span class="gl" style="background:${w.color?glassColor(w.color):'var(--line)'}"></span><span class="info"><h3>${esc(w.name)}${w.done?'<span class="badge peat">記録済み</span>':''}</h3><div class="meta">${esc(w.sub)}</div></span><span class="right"></span></button><button class="btn small ghost" data-unwish="${esc(w.k)}" aria-label="リストから外す">外す</button></div>`).join('')}</div>`
+        :`<p class="small">図鑑や銘柄のページの「飲みたい」で追加できます。</p>`}</section>`;
+  list.innerHTML = `<div class="mine">${!socialReady?`<div class="notice">ログイン・飲みたいリスト・いいね・コメントを使うには、Supabaseで <code>update-3-social.sql</code> を実行してください。</div>`:''}${acct}${analysis}${wishSec}</div>`;
+}
+$('#list').addEventListener('click', async e=>{
+  if(view!=='mine') return;
+  const t=e.target;
+  if(t.closest('[data-act="login"]')) return googleLogin();
+  if(t.closest('[data-act="logout"]')) return logout();
+  if(t.closest('[data-act="save-name"]')){
+    const v=$('#my-name').value.trim(); if(!v) return;
+    store.set('kohaku.nickname',v);
+    const { data, error } = await sb.from('profiles').upsert({ id:myId, display_name:v, avatar_url:me.avatar||null, updated_at:new Date().toISOString() }).select().single();
+    if(error) return toast('保存できませんでした');
+    profiles.set(myId,data); renderMine($('#list')); return toast('名前を保存しました');
+  }
+  const uw=t.closest('[data-unwish]'); if(uw){ await toggleWish(uw.dataset.unwish); renderMine($('#list')); return; }
+  const op=t.closest('[data-open]'); if(op){ const k=op.dataset.open; return k.startsWith('z:') ? openZukan(k.slice(2)) : openBottle(k.slice(2)); }
+  const z=t.closest('[data-z]'); if(z) return openZukan(z.dataset.z);
+});
 
 /* ---------- 図 ---------- */
 function radarSVG({ avg=null, others=[], mine=null, single=null }, size=280){
@@ -510,7 +804,8 @@ function renderList(){
   }
   if(!loaded) return;
   $('#sortbar').hidden = view!=='bottles';
-  $('#toolbar').hidden = view==='zukan';
+  $('#toolbar').hidden = view==='zukan' || view==='mine';
+  if(view==='mine') return renderMine(list);
   if(view==='zukan'){ $('#count').textContent=`${ZUKAN_ENTRIES.length}銘柄`; return renderZukan(list); }
   return view==='bottles' ? renderBottles(list) : renderFeed(list);
 }
@@ -546,14 +841,16 @@ function renderFeed(list){
     return `<button class="card feed-card" data-bottle="${esc(b.id)}">
       <div class="info"><h3>${esc(b.name)}</h3><div class="by">${esc(nameOf(t))}・${fmtDate(t.createdAt)}${t.serve?'・'+esc(t.serve):''}</div>
         ${tags.length?`<div class="tagline">${tags.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}
-        ${t.comment?`<div class="meta" style="margin-top:6px">${esc(t.comment.length>60?t.comment.slice(0,60)+'…':t.comment)}</div>`:''}</div>
+        ${t.comment?`<div class="meta" style="margin-top:6px">${esc(t.comment.length>60?t.comment.slice(0,60)+'…':t.comment)}</div>`:''}
+        ${(likesBy.get(t.id)?.size||commentsBy.get(t.id)?.length)?`<div class="feed-soc">${likesBy.get(t.id)?.size?`${ICON_HEART(likesBy.get(t.id).has(myId))}<span>${likesBy.get(t.id).size}</span>`:''}${commentsBy.get(t.id)?.length?`${ICON_BUBBLE}<span>${commentsBy.get(t.id).length}</span>`:''}</div>`:''}</div>
       <div class="score"><b>${t.score??'–'}</b><i>${t.score?esc(scoreWord(t.score)):''}</i></div></button>`;
   }).join('');
 }
-const nameOf = t => t.author && t.author===myId ? 'あなた' : (t.authorName || 'メンバー');
+const nameOf = t => t.author && t.author===myId ? 'あなた' : (displayNameOf(t.author) || t.authorName || 'メンバー');
 
 /* ---------- 銘柄ページ ---------- */
 function openBottle(id, keepScroll){
+  curSheet={t:'bottle',id};
   const b=bottles.find(x=>x.id===id); if(!b){ unmount(); return; }
   currentBottle=id;
   const a=aggs.get(id) || aggregate(id);
@@ -584,6 +881,7 @@ function openBottle(id, keepScroll){
       ${phases}
       ${t.comment?`<div class="t-note">${esc(t.comment)}</div>`:''}
       ${me?`<div class="t-actions" data-tid="${esc(t.id)}"><button class="btn small" data-act="edit-t">編集</button><button class="btn small danger" data-act="askdel-t">削除</button></div>`:''}
+      ${socialRow(t)}
     </article>`;
   }).join('');
 
@@ -596,6 +894,7 @@ function openBottle(id, keepScroll){
       <div class="d-head"><div><h1>${esc(b.name)}</h1><div class="meta">${esc(b.distillery||'')}</div></div>
         <div class="d-score"><b>${a.avg==null?'–':a.n>1?fmt1(a.avg):a.avg}</b><div>${a.n>1?'みんなの平均':a.n?'1件の記録':''}</div></div></div>
       ${facts.length?`<dl class="facts">${facts.map(f=>`<div><dt>${f[0]}</dt><dd>${esc(f[1])}</dd></div>`).join('')}</dl>`:''}
+      ${myId && !a.mine.length?`<div>${wishBtn(wishKeyForBottle(b))}</div>`:''}
 
       ${a.n===0?`<div class="notice">まだ誰も記録していません。最初の一杯を記録しましょう。</div>`:''}
       ${a.n>0?`<section class="sec"><h3>みんなの評価<small>CONSENSUS</small>${label?`<span class="agree">${label}</span>`:''}</h3>
@@ -625,10 +924,10 @@ function openBottle(id, keepScroll){
   $('#sheet-root').onclick=async e=>{
     const el=e.target.closest('[data-act]'); if(!el) return; const act=el.dataset.act;
     const tid=el.closest('[data-tid]')?.dataset.tid;
-    if(act==='close'){ currentBottle=null; unmount(); }
+    if(act==='close') goBack();
     if(act==='taste') openTastingForm(b, null);
     if(act==='zukan'){ const z=zukanFor(b); if(z) openZukan(z.id); }
-    if(act==='edit-b') openBottleForm(b, null, ()=>openBottle(b.id));
+    if(act==='edit-b') openBottleForm(b, null, ()=>{ nav.replaceNext=true; openBottle(b.id); });
     if(act==='edit-t'){ const t=tastings.find(x=>x.id===tid); if(t) openTastingForm(b,t); }
     if(act==='askdel-t'){ el.parentElement.innerHTML=`<span>この記録を削除しますか？</span><button class="btn small" data-act="nodel-t">やめる</button><button class="btn small danger" data-act="del-t">削除する</button>`; }
     if(act==='nodel-t'){ el.parentElement.innerHTML=`<button class="btn small" data-act="edit-t">編集</button><button class="btn small danger" data-act="askdel-t">削除</button>`; }
@@ -643,18 +942,19 @@ function openBottle(id, keepScroll){
       const { error } = await sb.from('bottles').delete().eq('id',b.id);
       if(error){ toast('削除できませんでした：'+error.message); return; }
       if(b.photo) sb.storage.from('photos').remove([b.photo]).catch(()=>{});
-      bottles=bottles.filter(x=>x.id!==b.id); buildAggs(); currentBottle=null; unmount(); renderList(); toast('銘柄を削除しました');
+      bottles=bottles.filter(x=>x.id!==b.id); buildAggs(); currentBottle=null; renderList(); goBack(); toast('銘柄を削除しました');
     }
   };
 }
 
 /* ---------- 投稿の流れ：銘柄を選ぶ → （新しければ登録）→ テイスティング ---------- */
 function openPicker(){
+  curSheet={t:'picker'};
   mount(`<div class="sheet" role="dialog" aria-modal="true" aria-label="銘柄を選ぶ">
     <div class="sheet-bar"><button class="btn ghost" data-act="close">キャンセル</button><h2>どの銘柄を飲みましたか？</h2><span style="width:60px"></span></div>
     <div class="sheet-body">
-      <div class="field"><label class="lbl" for="pk-q">銘柄名で探す</label><input id="pk-q" placeholder="例：ラガヴーリン 16" autocomplete="off"></div>
-      <p class="small" style="margin:-10px 0 0">すでに登録されている銘柄を選ぶと、みんなの記録と一緒に集計されます。</p>
+      <div class="field"><label class="lbl" for="pk-q">銘柄名・蒸留所で探す</label><input id="pk-q" placeholder="例：ラガヴーリン 16" autocomplete="off"></div>
+      <p class="small" style="margin:-10px 0 0">図鑑の銘柄から選ぶと、同じ銘柄の記録がひとつにまとまります。</p>
       <div class="pick" id="pk-list"></div>
     </div></div>`);
   const draw=()=>{
@@ -662,26 +962,31 @@ function openPicker(){
     let rows=bottles.map(b=>({b,a:aggs.get(b.id)}));
     if(nq) rows=rows.filter(({b})=>norm(b.name+b.distillery).includes(nq));
     rows.sort((x,y)=>(y.a.lastAt||y.b.createdAt)-(x.a.lastAt||x.b.createdAt));
-    const exact = nq && bottles.some(b=>norm(b.name)===nq);
+    const exact = nq && (bottles.some(b=>norm(b.name)===nq) || ZUKAN_ENTRIES.some(z=>norm(z.name)===nq));
+    const zs = nq ? ZUKAN_ENTRIES.filter(z=>!bottleForZ(z) && norm([z.name,z.en,z.distillery,z.label].join(' ')).includes(nq)).slice(0,30) : [];
+    const head = t => `<div class="group-name pk-h">${t}</div>`;
     $('#pk-list').innerHTML =
-      (q && !exact ? `<button class="new" data-act="new">＋「${esc(q)}」を新しい銘柄として登録</button>` : '')
-      + rows.slice(0,40).map(({b,a})=>`<button data-pick="${esc(b.id)}"><span><strong>${esc(b.name)}</strong><br><small>${esc([b.distillery,b.age?b.age+'年':''].filter(Boolean).join(' · ')||'—')}</small></span><small>${a.people}人${a.mine.length?'・記録済み':''}</small></button>`).join('')
-      + (!q && !rows.length ? `<p class="small">まだ銘柄がありません。上に名前を入力して登録してください。</p>` : '')
-      + (!q && rows.length ? `<button class="new" data-act="new">＋ 新しい銘柄を登録</button>` : '');
+      (rows.length ? head(q?'記録のある銘柄':'最近記録された銘柄') : '')
+      + rows.slice(0, q?20:15).map(({b,a})=>`<button data-pick="${esc(b.id)}"><span><strong>${esc(b.name)}</strong><br><small>${esc([b.distillery,b.age?b.age+'年':''].filter(Boolean).join(' · ')||'—')}</small></span><small>${a.people}人${a.mine.length?'・記録済み':''}</small></button>`).join('')
+      + (zs.length ? head('図鑑から選ぶ') + zs.map(z=>`<button data-pickz="${esc(z.id)}"><span><strong>${esc(z.name)}</strong><br><small>${esc([z.distillery, ZUKAN_REGIONS[z.region]?.jp].filter(Boolean).join(' · '))}</small></span><small>図鑑</small></button>`).join('') : '')
+      + (!q ? `<p class="small">名前を入力すると、図鑑の${ZUKAN_ENTRIES.length}銘柄からも探せます。</p>` : '')
+      + (q && !exact ? `${head('見つからないとき')}<button class="new" data-act="new">＋「${esc(q)}」を新しい銘柄として登録</button>` : '');
   };
   draw();
   const root=$('#sheet-root');
   root.oninput=e=>{ if(e.target.id==='pk-q') draw(); };
   root.onclick=e=>{
     const el=e.target.closest('button'); if(!el) return;
-    if(el.dataset.act==='close') unmount();
+    if(el.dataset.act==='close') goBack();
     if(el.dataset.pick){ const b=bottles.find(x=>x.id===el.dataset.pick); if(b) openTastingForm(b,null,true); }
-    if(el.dataset.act==='new') openBottleForm(null, $('#pk-q').value.trim(), b=>openTastingForm(b,null,true));
+    if(el.dataset.pickz){ const z=ZUKAN_ENTRIES.find(x=>x.id===el.dataset.pickz); if(z){ el.disabled=true; tasteZukan(z); } }
+    if(el.dataset.act==='new') openBottleForm(null, $('#pk-q').value.trim(), b=>{ nav.replaceNext=true; openTastingForm(b,null,true); });
   };
   setTimeout(()=>$('#pk-q')?.focus(),50);
 }
 
 function openBottleForm(existing, prefill, onDone, onCancel){
+  curSheet={t:'bform', id:existing?.id||null, prefill: prefill && typeof prefill==='object' ? prefill : (prefill||'')};
   const base = {name:'',distillery:'',type:'シングルモルト',region:'',age:'',abv:'',cask:'',photo:''};
   const f = existing ? {...existing} : typeof prefill==='object' && prefill ? {...base, ...prefill} : {...base, name:prefill||''};
   let newPhoto=null, previewUrl=f.photo?photoUrl(f.photo):'', saving=false; const oldPhoto=f.photo||'';
@@ -717,8 +1022,8 @@ function openBottleForm(existing, prefill, onDone, onCancel){
   };
   root.onclick=async e=>{
     const el=e.target.closest('button'); if(!el) return;
-    if(el.dataset.use){ const b=bottles.find(x=>x.id===el.dataset.use); if(b) openTastingForm(b,null,true); return; }
-    if(el.dataset.act==='cancel') existing ? onDone?.() : onCancel ? onCancel() : openPicker();
+    if(el.dataset.use){ const b=bottles.find(x=>x.id===el.dataset.use); if(b){ nav.replaceNext=true; openTastingForm(b,null,true); } return; }
+    if(el.dataset.act==='cancel') return goBack();
     if(el.dataset.act!=='save' || saving) return;
     const err=$('#err');
     const data={ name:$('#b-name').value.trim(), distillery:$('#b-dist').value.trim(), type:$('#b-type').value, region:$('#b-region').value,
@@ -751,12 +1056,12 @@ function blankTasting(){ return {serve:'ストレート',color:'',nose:{tags:[],
   profile:Object.fromEntries(AXES.map(a=>[a[0],0])),score:85,comment:''}; }
 
 function openTastingForm(bottle, existing, fromPicker){
+  curSheet={t:'taste', b:bottle.id, tid:existing?.id||null, fp:!!fromPicker};
   const f = existing ? JSON.parse(JSON.stringify(existing)) : blankTasting();
   ['nose','palate','finish'].forEach(k=>{ f[k]=f[k]||{tags:[],note:''}; f[k].tags=f[k].tags||[]; });
   f.profile = Object.assign(Object.fromEntries(AXES.map(a=>[a[0],0])), f.profile||{});
   let phase='nose', saving=false;
-  const nick = existing?.authorName || store.get('kohaku.nickname') || '';
-  const back = () => fromPicker && !existing ? openPicker() : openBottle(bottle.id);
+  const nick = existing?.authorName || myName() || '';
 
   mount(`<div class="sheet" role="dialog" aria-modal="true" aria-label="テイスティングを記録">
     <div class="sheet-bar"><button class="btn ghost" data-act="cancel">${fromPicker&&!existing?'‹ 戻る':'キャンセル'}</button><h2>${esc(bottle.name)}</h2><button class="btn primary" data-act="save" id="savebtn">保存</button></div>
@@ -816,7 +1121,7 @@ function openTastingForm(bottle, existing, fromPicker){
     if(b.dataset.color){ f.color = f.color===b.dataset.color?'':b.dataset.color; root.querySelectorAll('[data-color]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.color===f.color)); return; }
     const a=b.dataset.act;
     if(a==='addtag') addTag();
-    if(a==='cancel') back();
+    if(a==='cancel') goBack();
     if(a==='save' && !saving) save(b);
   };
 
@@ -827,14 +1132,14 @@ function openTastingForm(bottle, existing, fromPicker){
     try{
       if(nickname) store.set('kohaku.nickname',nickname);
       const data={ serve:f.serve, color:f.color, nose:f.nose, palate:f.palate, finish:f.finish, finishLength:f.finishLength, profile:f.profile, score:f.score, comment:f.comment, name:bottle.name };
-      const row={ data, score:f.score, author_name:nickname||null, bottle_id:bottle.id };
+      const row={ data, score:f.score, author_name:nickname||myName()||null, bottle_id:bottle.id };
       const res = existing
         ? await sb.from('reviews').update({...row, updated_at:new Date().toISOString()}).eq('id',existing.id).select().single()
         : await sb.from('reviews').insert(row).select().single();
       if(res.error) throw new Error(res.error.message);
       const t=rowToTasting(res.data);
       tastings=[t,...tastings.filter(x=>x.id!==t.id)]; buildAggs(); renderList();
-      openBottle(bottle.id); toast(existing?'記録を更新しました':'記録しました');
+      nav.replaceNext=true; openBottle(bottle.id); toast(existing?'記録を更新しました':'記録しました');
     }catch(x){ saving=false; btn.disabled=false; btn.textContent='保存'; err.textContent=x.message+' 通信状態を確認して、もう一度保存してください。'; err.hidden=false; }
   }
 }
@@ -855,10 +1160,12 @@ const zDist = id => ZUKAN_DISTILLERIES.find(x=>x.id===id);
 const compare = { a:null, b:null };
 
 function zukanFor(b){
+  if(b.zukanId){ const z=ZUKAN_ENTRIES.find(x=>x.id===b.zukanId); if(z) return z; }
   const k = keyNorm(b.name);
   return ZUKAN_ENTRIES.find(z => keyNorm(z.name)===k || keyNorm(z.en)===k) || null;
 }
 function bottleForZ(z){
+  const linked = bottles.find(b=>b.zukanId===z.id); if(linked) return linked;
   const a=keyNorm(z.name), e=keyNorm(z.en);
   return bottles.find(b=>{ const k=keyNorm(b.name); return k===a || k===e; }) || null;
 }
@@ -1107,11 +1414,11 @@ document.addEventListener('input',e=>{ if(e.target.id==='zk-q'){ zk.q=e.target.v
 $('#list').addEventListener('click',e=>{
   if(view!=='zukan') return;
   const t=e.target;
-  const rg=t.closest('.rg'); if(rg){ const k=rg.dataset.region; zk.region = zk.region===k?null:k; renderZukan($('#list')); if(zk.region) setTimeout(()=>$('#zk-results')?.scrollIntoView({behavior:'smooth',block:'start'}),50); return; }
-  const ct=t.closest('[data-country]'); if(ct){ zk.country=ct.dataset.country; zk.region=null; renderZukan($('#list')); window.scrollTo({top:0}); return; }
-  if(t.closest('[data-act="world"]')){ zk.country=null; zk.region=null; renderZukan($('#list')); return; }
-  const w=t.closest('[data-world]'); if(w){ const k=w.dataset.world; zk.region = zk.region===k?null:k; renderZukan($('#list')); return; }
-  const m=t.closest('[data-zmode]'); if(m){ zk.mode=m.dataset.zmode; renderZukan($('#list')); return; }
+  const rg=t.closest('.rg'); if(rg){ const k=rg.dataset.region; zk.region = zk.region===k?null:k; renderZukan($('#list')); navCommit(); if(zk.region) setTimeout(()=>$('#zk-results')?.scrollIntoView({behavior:'smooth',block:'start'}),50); return; }
+  const ct=t.closest('[data-country]'); if(ct){ zk.country=ct.dataset.country; zk.region=null; renderZukan($('#list')); navCommit(); window.scrollTo({top:0}); return; }
+  if(t.closest('[data-act="world"]')){ const prev=nav.stack[nav.stack.length-2]; if(prev && !prev.sheet && prev.view==='zukan' && !prev.zk.country) return goBack(); zk.country=null; zk.region=null; renderZukan($('#list')); navCommit(); return; }
+  const w=t.closest('[data-world]'); if(w){ const k=w.dataset.world; zk.region = zk.region===k?null:k; renderZukan($('#list')); navCommit(); return; }
+  const m=t.closest('[data-zmode]'); if(m){ if(zk.mode===m.dataset.zmode) return; zk.mode=m.dataset.zmode; renderZukan($('#list')); navCommit(); return; }
   const tog=(arr,v)=>{ const i=arr.indexOf(v); i<0?arr.push(v):arr.splice(i,1); };
   const ax=t.closest('[data-axis-pick]'); if(ax){ tog(zk.axes,ax.dataset.axisPick); renderZukan($('#list')); return; }
   const tg=t.closest('[data-tag-pick]'); if(tg){ tog(zk.tags,tg.dataset.tagPick); renderZukan($('#list')); return; }
@@ -1129,8 +1436,20 @@ function openZukanItem(id){
   openZukan(id);
 }
 
+/* 蒸留所の物語 */
+const STORY_HEADS = [['はじまり','HISTORY'],['造りのこだわり','CRAFT'],['ウイスキー界での存在感','STANDING']];
+const BLEND_HEADS = [['はじまり','HISTORY'],['ブレンドの特徴','BLEND'],['ウイスキー界での存在感','STANDING']];
+function storyBlock(d){
+  const st = (typeof ZUKAN_STORY!=='undefined') && ZUKAN_STORY[d.id]; if(!st) return '';
+  const heads = d.lat==null && d.type ? BLEND_HEADS : STORY_HEADS;
+  const facts=[['創業',st.founded],['所有',st.owner]].filter(f=>f[1]);
+  return `${facts.length?`<dl class="facts story-facts">${facts.map(f=>`<div><dt>${f[0]}</dt><dd>${esc(f[1])}</dd></div>`).join('')}</dl>`:''}
+    <section class="sec story">${st.story.map((t,i)=>`<div class="st"><h3>${heads[i][0]}<small>${heads[i][1]}</small></h3><p>${esc(t)}</p></div>`).join('')}</section>`;
+}
+
 /* 蒸留所ページ */
 function openDistillery(id){
+  curSheet={t:'dist',id};
   const d = zDist(id); if(!d) return;
   currentBottle=null;
   const r = ZUKAN_REGIONS[d.region];
@@ -1147,23 +1466,25 @@ function openDistillery(id){
       <div class="z-hero"><span class="gl" style="background:${glassColor(d.ex[0].color)}"></span>
         <div><div class="small">${esc(r?.jp||'')}${r?.en?` · ${esc(r.en)}`:''}</div><h1>${esc(d.name)}</h1><div class="en">${esc(d.en)}</div></div></div>
       <p class="z-desc">${esc(d.desc)}</p>
+      ${storyBlock(d)}
       <section class="sec"><h3>ラインナップ<small>${d.ex.length} BOTTLINGS</small></h3>
         <div class="list" style="padding-top:0">${exCards}</div>
         ${d.ex.length>1?`<div style="margin-top:10px"><button class="btn" data-act="cmp-dist">この中の2本を比較する</button></div>`:''}
       </section>
       ${d.lat!=null?`<section class="sec"><h3>蒸留所の場所<small>MAP</small></h3><div class="minimap">${miniMap(d)}</div></section>`:''}
-      <p class="note-small">味わいは一般的に語られる傾向をもとにした目安です。参考価格は国内のおおよその目安で、時期や店舗によって変わります。</p>
+      <p class="note-small">味わいは一般的に語られる傾向をもとにした目安です。参考価格は国内のおおよその目安で、時期や店舗によって変わります。創業年や逸話は一般に伝えられている内容で、諸説あるものを含みます。所有会社は買収などで変わることがあります。</p>
     </div></div>`);
   $('#sheet-root').onclick=e=>{
     const el=e.target.closest('[data-act],[data-zopen]'); if(!el) return;
     if(el.dataset.zopen) return openZukan(el.dataset.zopen);
-    if(el.dataset.act==='close') unmount();
+    if(el.dataset.act==='close') goBack();
     if(el.dataset.act==='cmp-dist'){ compare.a=d.ex[0].id; compare.b=d.ex[1].id; openCompare(); }
   };
 }
 
 /* 銘柄ページ */
 function openZukan(id){
+  curSheet={t:'zukan',id};
   const z = zEntry(id); if(!z) return;
   currentBottle=null;
   const d = zDist(z.distilleryId);
@@ -1174,10 +1495,11 @@ function openZukan(id){
   const siblings = d ? d.ex.filter(x=>x.id!==z.id) : [];
   const community = a?.avgProfile ? profArr(a.avgProfile) : null;
   mount(`<div class="sheet" data-view="zukan" role="dialog" aria-modal="true" aria-label="${esc(z.name)}">
-    <div class="sheet-bar"><button class="btn ghost" data-act="back">‹ ${esc(d?d.name:'図鑑')}</button><h2></h2><button class="btn" data-act="cmp-add">比較</button></div>
+    <div class="sheet-bar"><button class="btn ghost" data-act="back">‹ 戻る</button><h2></h2><button class="btn" data-act="cmp-add">比較</button></div>
     <div class="sheet-body">
       <div class="z-hero"><span class="gl" style="background:${glassColor(z.color)}"></span>
         <div><div class="small">${esc(r?.jp||'')}${r?.en?` · ${esc(r.en)}`:''}</div><h1>${esc(z.name)}</h1><div class="en">${esc(z.en)}</div></div></div>
+      ${myId?`<div>${wishBtn('z:'+z.id)}</div>`:''}
       <p class="z-desc">${esc(z.desc)}</p>
       <dl class="facts">${facts.map(f=>`<div><dt>${f[0]}</dt><dd>${esc(f[1])}</dd></div>`).join('')}</dl>
       ${z.price?`<p class="small" style="margin:-12px 0 0">参考価格は${z.priceNote?esc(z.priceNote)+'。':'国内の店頭価格（700ml前後）のおおよその目安です。時期や店舗によって変わります。'}</p>`:''}
@@ -1214,18 +1536,14 @@ function openZukan(id){
     const el=e.target.closest('[data-act],[data-zopen]'); if(!el) return;
     if(el.dataset.zopen) return openZukanItem(el.dataset.zopen);
     const act=el.dataset.act;
-    if(act==='back') d ? openDistillery(d.id) : unmount();
+    if(act==='back') goBack();
     if(act==='open-b' && b) openBottle(b.id);
     if(act==='cmp-add'){
       if(compare.a===z.id || compare.b===z.id){ openCompare(); return; }
       if(!compare.a) compare.a=z.id; else if(!compare.b) compare.b=z.id; else compare.b=z.id;
       openCompare();
     }
-    if(act==='taste-z'){
-      const ex = bottleForZ(z);
-      if(ex) return openTastingForm(ex, null);
-      openBottleForm(null, { name:z.name, distillery:z.distillery, type:z.type, region:r?.pick||'', age:z.age, abv:z.abv, cask:z.cask }, nb=>openTastingForm(nb,null,true), ()=>openZukan(z.id));
-    }
+    if(act==='taste-z'){ el.disabled=true; tasteZukan(z); }
   };
 }
 
@@ -1235,6 +1553,7 @@ function butterfly(A,B){
     return `<div class="bf-row"><em class="bf-n">${a}</em><div class="bf-l"><i style="width:${a*20}%"></i></div><span class="bf-k${a!==b?' diff':''}">${jp}</span><div class="bf-r"><i style="width:${b*20}%"></i></div><em class="bf-n">${b}</em></div>`; }).join('')}</div>`;
 }
 function openCompare(){
+  curSheet={t:'cmp'};
   const A = compare.a ? zEntry(compare.a) : null, B = compare.b ? zEntry(compare.b) : null;
   const slot = (z, key) => z
     ? `<div class="cmp-slot"><span class="gl" style="background:${glassColor(z.color)}"></span><strong>${esc(z.name)}</strong><span class="small">${esc(ZUKAN_REGIONS[z.region]?.jp||'')}</span>
@@ -1281,12 +1600,13 @@ function openCompare(){
     if(el.dataset.pick) return openComparePicker(el.dataset.pick);
     if(el.dataset.open) return openZukan(el.dataset.open);
     const act=el.dataset.act;
-    if(act==='close'){ unmount(); if(view==='zukan') renderZukan($('#list')); }
+    if(act==='close') goBack();
     if(act==='cmp-reset'){ compare.a=null; compare.b=null; openCompare(); }
     if(act==='swap'){ [compare.a,compare.b]=[compare.b,compare.a]; openCompare(); }
   };
 }
 function openComparePicker(slot){
+  curSheet={t:'cpick',slot};
   const other = slot==='a' ? compare.b : compare.a;
   const od = other ? zEntry(other)?.distilleryId : null;
   mount(`<div class="sheet" role="dialog" aria-modal="true" aria-label="比較する銘柄を選ぶ">
@@ -1310,8 +1630,8 @@ function openComparePicker(slot){
   root.oninput=e=>{ if(e.target.id==='cp-q') draw(); };
   root.onclick=e=>{
     const el=e.target.closest('[data-act],[data-cp]'); if(!el) return;
-    if(el.dataset.cp){ compare[slot]=el.dataset.cp; openCompare(); return; }
-    if(el.dataset.act==='back') openCompare();
+    if(el.dataset.cp){ compare[slot]=el.dataset.cp; goBack(); return; }
+    if(el.dataset.act==='back') goBack();
   };
 }
 
@@ -1332,6 +1652,7 @@ function shrink(file){
 const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
 function openMenu(){
+  curSheet={t:'menu'};
   let install;
   if(isStandalone()) install=`<p>ホーム画面のアプリとして開いています。</p>`;
   else if(installEvt) install=`<p>このスマホにアプリとして追加できます。</p><div><button class="btn primary" data-act="install">ホーム画面に追加</button></div>`;
@@ -1348,16 +1669,96 @@ function openMenu(){
     </div></div>`);
   $('#sheet-root').onclick=async e=>{
     const a=e.target.closest('[data-act]')?.dataset.act;
-    if(a==='close') unmount();
+    if(a==='close') goBack();
     if(a==='nick'){ store.set('kohaku.nickname',$('#m-nick').value.trim()); toast('名前を保存しました'); }
-    if(a==='install' && installEvt){ installEvt.prompt(); const r=await installEvt.userChoice; installEvt=null; if(r.outcome==='accepted') toast('ホーム画面に追加しました'); unmount(); }
+    if(a==='install' && installEvt){ installEvt.prompt(); const r=await installEvt.userChoice; installEvt=null; if(r.outcome==='accepted') toast('ホーム画面に追加しました'); goBack(); }
   };
 }
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt=e; });
 
-function mount(html){ const r=$('#sheet-root'); r.onclick=r.oninput=r.onchange=r.onkeydown=null; r.innerHTML=html; document.body.style.overflow='hidden'; const s=$('#sheet-root .sheet'); if(s) s.scrollTop=0; }
-function unmount(){ const r=$('#sheet-root'); r.innerHTML=''; r.onclick=r.oninput=r.onchange=r.onkeydown=null; document.body.style.overflow=''; }
-document.addEventListener('keydown',e=>{ if(e.key==='Escape' && $('#sheet-root').children.length){ currentBottle=null; unmount(); } });
+/* ---------- 戻るボタン（画面の履歴） ----------
+   アプリ内の画面遷移を独自の履歴として積み、ブラウザ履歴には「ガード」を1つだけ置く。
+   端末の戻るボタン → popstate → 1つ前の画面を復元。最初の画面なら終了の確認を出す。 */
+let curSheet = null;
+const nav = { stack:[], restoring:false, replaceNext:false, guarded:false, exitOpen:false };
+const FORM_SHEETS = ['picker','bform','taste','cpick'];
+const snapKey = s => JSON.stringify({ v:s.view, z:s.zk, s:s.sheet });
+function snap(){ return { view, zk:{ mode:zk.mode, country:zk.country, region:zk.region }, sheet: curSheet ? { ...curSheet } : null }; }
+function ensureGuard(){ if(!nav.guarded){ try{ history.pushState({ hc:'guard' }, ''); nav.guarded=true; }catch(e){} } }
+function navCommit(){
+  if(nav.restoring) return;
+  const s = snap(), st = nav.stack, top = st[st.length-1];
+  if(nav.replaceNext){
+    nav.replaceNext=false;
+    if(st.length) st.pop();
+    // 保存などで画面が切り替わったときは、下に残った入力画面も取り除く
+    while(st.length>1 && st[st.length-1].sheet && FORM_SHEETS.includes(st[st.length-1].sheet.t)) st.pop();
+    if(st.length && snapKey(st[st.length-1])===snapKey(s)) return;
+    st.push(s);
+  } else {
+    if(top && snapKey(top)===snapKey(s)) return;
+    st.push(s);
+  }
+  if(st.length>1) ensureGuard();
+}
+function goBack(){ if(nav.stack.length>1) history.back(); }
+function restore(s){
+  nav.restoring=true; nav.ignoreScrollUntil=performance.now()+400;
+  const y=s.y, sy=s.sy;
+  try{
+    view=s.view; zk.mode=s.zk.mode; zk.country=s.zk.country; zk.region=s.zk.region;
+    ['bottles','feed','zukan','mine'].forEach(k=>$('#t-'+k).setAttribute('aria-selected',view===k));
+    renderList();
+    const sh=s.sheet; let ok=true;
+    if(!sh){ currentBottle=null; unmount(); }
+    else if(sh.t==='bottle'){ if(bottles.find(x=>x.id===sh.id)) openBottle(sh.id); else ok=false; }
+    else if(sh.t==='zukan') openZukan(sh.id);
+    else if(sh.t==='dist') openDistillery(sh.id);
+    else if(sh.t==='cmp') openCompare();
+    else if(sh.t==='cpick') openComparePicker(sh.slot);
+    else if(sh.t==='picker') openPicker();
+    else if(sh.t==='menu') openMenu();
+    else if(sh.t==='taste'){ const b=bottles.find(x=>x.id===sh.b); const t=sh.tid?tastings.find(x=>x.id===sh.tid):null;
+      if(b && (!sh.tid || t)) openTastingForm(b,t,sh.fp); else ok=false; }
+    else if(sh.t==='bform'){ const b=sh.id?bottles.find(x=>x.id===sh.id):null;
+      if(sh.id && !b) ok=false;
+      else openBottleForm(b, sh.prefill, b ? ()=>{ nav.replaceNext=true; openBottle(b.id); } : nb=>{ nav.replaceNext=true; openTastingForm(nb,null,true); }); }
+    if(!ok){ curSheet=null; unmount(); }
+    curSheet = ok ? s.sheet : null;
+    requestAnimationFrame(()=>{ if(s.sheet){ const el=$('#sheet-root .sheet'); if(el && sy) el.scrollTop=sy; } else window.scrollTo(0,y||0); s.y=y; s.sy=sy; });
+  } finally { nav.restoring=false; }
+}
+function showExitConfirm(){
+  nav.exitOpen=true;
+  $('#exit-dlg').hidden=false;
+  $('#exit-no').focus({ preventScroll:true });
+}
+function hideExitConfirm(){ nav.exitOpen=false; $('#exit-dlg').hidden=true; }
+window.addEventListener('popstate',()=>{
+  nav.guarded=false;
+  if(nav.exitOpen){ hideExitConfirm(); return; }
+  if(nav.stack.length>1){ nav.stack.pop(); restore(nav.stack[nav.stack.length-1]); ensureGuard(); }
+  else showExitConfirm();
+});
+// 各画面のスクロール位置を覚えておき、戻ったときに復元する
+window.addEventListener('scroll',()=>{ if(performance.now()<(nav.ignoreScrollUntil||0)) return; const t=nav.stack[nav.stack.length-1]; if(t && !t.sheet) t.y=window.scrollY; },{passive:true});
+document.addEventListener('scroll',e=>{ if(performance.now()<(nav.ignoreScrollUntil||0)) return; if(e.target.classList && e.target.classList.contains('sheet')){ const t=nav.stack[nav.stack.length-1]; if(t && t.sheet) t.sy=e.target.scrollTop; } },{capture:true,passive:true});
+function initNav(){
+  try{ history.replaceState({ hc:'base' }, ''); }catch(e){}
+  nav.stack=[snap()];
+  ensureGuard();
+  $('#exit-no').onclick=()=>{ hideExitConfirm(); ensureGuard(); };
+  $('#exit-yes').onclick=()=>{
+    hideExitConfirm();
+    try{ window.close(); }catch(e){}
+    // 端末によってはアプリ側から閉じられないため、もう一度の戻るで終了できる状態にして案内する
+    setTimeout(()=>toast('もう一度戻るボタンを押すと終了します'),250);
+  };
+}
+
+function mount(html){ const r=$('#sheet-root'); r.onclick=r.oninput=r.onchange=r.onkeydown=null; r.innerHTML=html; document.body.style.overflow='hidden'; const s=$('#sheet-root .sheet'); if(s) s.scrollTop=0; navCommit(); }
+function unmount(){ curSheet=null; const r=$('#sheet-root'); r.innerHTML=''; r.onclick=r.oninput=r.onchange=r.onkeydown=null; document.body.style.overflow=''; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape' && $('#sheet-root').children.length) goBack(); });
 
 $('#list').addEventListener('click',e=>{ const c=e.target.closest('[data-bottle]'); if(c) openBottle(c.dataset.bottle); });
 $('#q').addEventListener('input',e=>{ query=e.target.value.trim(); renderList(); });
@@ -1366,11 +1767,15 @@ const seg=(a,b,set)=>{ $(a).onclick=()=>{set(0);$(a).setAttribute('aria-pressed'
 seg('#f-all','#f-mine',v=>filter=v?'mine':'all');
 $('#sortbar').addEventListener('click',e=>{ const b=e.target.closest('[data-sort]'); if(!b) return; sort=b.dataset.sort;
   $('#sortbar').querySelectorAll('[data-sort]').forEach(x=>x.setAttribute('aria-pressed',x===b)); renderList(); });
-const tab=v=>{ view=v; ['bottles','feed','zukan'].forEach(k=>$('#t-'+k).setAttribute('aria-selected',v===k)); renderList(); window.scrollTo(0,0); };
-$('#t-bottles').onclick=()=>tab('bottles'); $('#t-feed').onclick=()=>tab('feed'); $('#t-zukan').onclick=()=>tab('zukan');
+const tab=v=>{ if(view===v) return; view=v; ['bottles','feed','zukan','mine'].forEach(k=>$('#t-'+k).setAttribute('aria-selected',v===k)); renderList(); navCommit(); window.scrollTo(0,0); };
+$('#t-bottles').onclick=()=>tab('bottles'); $('#t-feed').onclick=()=>tab('feed'); $('#t-zukan').onclick=()=>tab('zukan'); $('#t-mine').onclick=()=>tab('mine');
 $('#add').onclick=openPicker;
 $('#menu').onclick=openMenu;
 
+$('#sheet-root').addEventListener('click', async e=>{
+  const w=e.target.closest('[data-wish]'); if(w){ const k=w.dataset.wish; if(await toggleWish(k)) w.outerHTML=wishBtn(k); return; }
+  const s=e.target.closest('[data-rid] [data-act]'); if(s) handleSocialClick(s);
+});
 if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }
 boot();
 })();
