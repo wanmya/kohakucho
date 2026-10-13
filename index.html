@@ -498,7 +498,7 @@ body.kinds-on{overflow:hidden}
 
 <script>
 (() => {
-const APP_VERSION = '2026.10.13c';
+const APP_VERSION = '2026.10.13e';
 
 /* ---------- お酒の種類ごとの設定（ウイスキー／ワイン。日本酒・ビール・カクテルは今後ここに足す） ---------- */
 const STORY_HEADS = [['はじまり','HISTORY'],['造りのこだわり','CRAFT'],['ウイスキー界での存在感','STANDING']];
@@ -653,7 +653,7 @@ const photoUrl = path => (!path||!sb) ? '' : sb.storage.from('photos').getPublic
 const rowToTasting = r => ({ ...(r.data||{}), id:r.id, bottleId:r.bottle_id, author:r.user_id, authorName:r.author_name||'',
   score:r.score ?? r.data?.score, createdAt:Date.parse(r.created_at), updatedAt:Date.parse(r.updated_at) });
 const rowToBottle = b => ({ id:b.id, name:b.name, distillery:b.distillery||'', type:b.type||'', region:b.region||'', age:b.age||'', abv:b.abv||'',
-  cask:b.cask||'', photo:b.photo||'', zukanId:b.zukan_id||'', kind:b.kind||'whisky', createdBy:b.created_by, createdAt:Date.parse(b.created_at) });
+  cask:b.cask||'', photo:b.photo||'', zukanId:b.zukan_id||'', kind:b.kind||'whisky', price:+b.price||0, createdBy:b.created_by, createdAt:Date.parse(b.created_at) });
 
 // 選んでいるお酒の種類の銘柄と記録だけを取り出す
 function refilter(){
@@ -926,6 +926,16 @@ async function bottleFromZukan(z){
   const nb=rowToBottle(res.data); allBottles=[nb,...allBottles]; refilter(); renderList(); return nb;
 }
 // 銘柄の登録。種類（kind）の列がまだないデータベースでは、ウイスキーだけ従来どおり登録できるようにする
+// 価格の列がまだないデータベースでは、価格を外して保存する
+async function saveBottleRow(row, id){
+  const run = r => id ? sb.from('bottles').update(r).eq('id',id).select().single() : insertBottle(r);
+  let res = await run(row);
+  if(res.error && /price/.test(res.error.message||'') && 'price' in row){
+    const r2={...row}; delete r2.price; res = await run(r2);
+    if(!res.error) toast('価格を保存するには、Supabaseで update-6-price.sql を実行してください');
+  }
+  return res;
+}
 async function insertBottle(row){
   let res = await sb.from('bottles').insert(row).select().single();
   if(res.error && /kind/.test(res.error.message||'')){
@@ -1113,7 +1123,7 @@ function renderBottles(list){
     const tags = topTags(a,3);
     const top = Object.entries(a.colors).sort((x,y)=>y[1]-x[1])[0]; const col = top && colorOf(top[0]);
     const thumb = b.photo ? `<img class="thumb" src="${esc(photoUrl(b.photo))}" alt="" loading="lazy">` : `<div class="thumb"><div class="glass" style="background:${col?col[2]:'var(--line)'}"></div></div>`;
-    const meta=[b.distillery,ageText(b.age),b.abv?b.abv+'%':''].filter(Boolean).join(' · ');
+    const meta=[b.distillery,ageText(b.age),b.abv?b.abv+'%':'',b.price?b.price.toLocaleString('ja-JP')+'円':''].filter(Boolean).join(' · ');
     return `<button class="card" data-bottle="${esc(b.id)}">${thumb}
       <div class="info"><h3>${esc(b.name)}</h3><div class="meta">${esc(meta||b.type||b.region||'')}</div>
         ${tags.length?`<div class="tagline">${tags.map(([t,s])=>`<span>${esc(t)}${a.people>1?`<b>${s.size}</b>`:''}</span>`).join('')}</div>`:''}
@@ -1147,7 +1157,8 @@ function openBottle(id, keepScroll){
   currentBottle=id;
   const a=aggs.get(id) || aggregate(id);
   const prevScroll = keepScroll ? $('#sheet-root .sheet')?.scrollTop : 0;
-  const facts=[[L.typeLbl,b.type],['産地',b.region],[L.age,ageText(b.age)],['度数',b.abv?b.abv+'%':''],[L.cask,b.cask],[L.maker,b.distillery]].filter(f=>f[1]);
+  const zp = !b.price && zukanFor(b)?.price ? '約'+priceBand(zukanFor(b).price)+'（図鑑）' : '';
+  const facts=[['価格', b.price ? b.price.toLocaleString('ja-JP')+'円' : zp],[L.typeLbl,b.type],['産地',b.region],[L.age,ageText(b.age)],['度数',b.abv?b.abv+'%':''],[L.cask,b.cask],[L.maker,b.distillery]].filter(f=>f[1]);
   const myLatest = a.mine[0];
   const myProfile = myLatest?.profile && AXES.some(x=>myLatest.profile[x[0]]>0) ? myLatest.profile : null;
   const others = a.people>1 ? a.profs : [];
@@ -1329,6 +1340,8 @@ function openBottleForm(existing, prefill, onDone, onCancel){
           <div class="field"><label class="lbl" for="b-abv">度数 %</label><input id="b-abv" inputmode="decimal" value="${esc(f.abv)}" placeholder="${L.abvPh}"></div>
           <div class="field"><label class="lbl" for="b-cask">${L.cask}</label><input id="b-cask" value="${esc(f.cask)}" placeholder="${L.caskPh}"></div>
         </div>
+        <div class="field"><label class="lbl" for="b-price">価格（円）</label><input id="b-price" inputmode="numeric" value="${f.price?esc(f.price):''}" placeholder="例：1980" autocomplete="off">
+          <p class="small" style="margin:4px 0 0">買ったときのおおよその値段。図鑑の価格帯での絞り込みや比較に使われます。</p></div>
       </fieldset>
       <fieldset><legend>ボトルの写真</legend>
         <label class="photo-drop" id="pdrop">${previewUrl?`<img src="${esc(previewUrl)}" alt="">`:`<span>タップしてボトルを撮影<br>またはライブラリから選択</span>`}
@@ -1350,6 +1363,7 @@ function openBottleForm(existing, prefill, onDone, onCancel){
     const err=$('#err');
     const data={ name:$('#b-name').value.trim(), distillery:$('#b-dist').value.trim(), type:$('#b-type').value, region:$('#b-region').value,
       age:$('#b-age').value.trim(), abv:$('#b-abv').value.trim(), cask:$('#b-cask').value.trim() };
+    const pr=$('#b-price').value.normalize('NFKC').replace(/[^\d]/g,''); data.price = pr ? Math.min(99999999,+pr) : null;
     if(!data.name){ err.textContent='銘柄名を入力してください。'; err.hidden=false; $('#b-name').focus(); return; }
     const dup = bottles.find(b=>norm(b.name)===norm(data.name) && b.id!==existing?.id);
     if(dup){ err.innerHTML=`「${esc(dup.name)}」はすでに登録されています。<button type="button" class="btn small" data-use="${esc(dup.id)}">その銘柄で記録する</button>`; err.hidden=false; return; }
@@ -1362,8 +1376,8 @@ function openBottleForm(existing, prefill, onDone, onCancel){
         data.photo=path;
       }
       let res;
-      if(existing) res=await sb.from('bottles').update({...data, updated_at:new Date().toISOString()}).eq('id',existing.id).select().single();
-      else res=await insertBottle({...data, kind:KIND});
+      if(existing) res=await saveBottleRow({...data, updated_at:new Date().toISOString()}, existing.id);
+      else res=await saveBottleRow({...data, kind:KIND});
       if(res.error) throw new Error(res.error.code==='23505'?'同じ名前の銘柄がすでに登録されています。一覧を更新して選び直してください。':res.error.message);
       if(newPhoto && oldPhoto) sb.storage.from('photos').remove([oldPhoto]).catch(()=>{});
       const nb=rowToBottle(res.data);
@@ -1524,10 +1538,10 @@ function bottleForZ(z){
 }
 // みんなの記録だけにある銘柄（図鑑にないもの）も、似ている銘柄・検索の対象にする
 function communityItems(){
-  return bottles.filter(b=>!zukanFor(b)).map(b=>{ const a=aggs.get(b.id); if(!a?.avgProfile) return null;
+  return bottles.filter(b=>!zukanFor(b)).map(b=>{ const a=aggs.get(b.id); if(!a?.avgProfile && !b.price) return null;
     const regionKey = Object.keys(ZR).find(k=>ZR[k].pick && ZR[k].pick===b.region) || null;
-    return { id:'b:'+b.id, bottleId:b.id, name:b.name, en:'', distillery:b.distillery, region:regionKey, type:b.type, age:b.age, abv:b.abv,
-      color:(Object.entries(a.colors).sort((x,y)=>y[1]-x[1])[0]||[])[0]||'', p:profArr(a.avgProfile), tags:topTags(a,6).map(t=>t[0]), community:true, people:a.people };
+    return { id:'b:'+b.id, bottleId:b.id, name:b.name, en:'', distillery:b.distillery, region:regionKey, type:b.type, age:b.age, abv:b.abv, price:b.price||0, cask:b.cask,
+      color:(Object.entries(a.colors).sort((x,y)=>y[1]-x[1])[0]||[])[0]||'', p:profArr(a?.avgProfile), tags:topTags(a,6).map(t=>t[0]), community:true, people:a.people };
   }).filter(Boolean);
 }
 function similarity(x,y){
@@ -1539,7 +1553,7 @@ function similarity(x,y){
 }
 // 同じ蒸留所の銘柄は「似ている銘柄」から外し、別の蒸留所の候補を見せる
 function similarTo(item, n=5){
-  const pool=[...ZE, ...communityItems()].filter(o=>o.id!==item.id && (!item.distilleryId || o.distilleryId!==item.distilleryId));
+  const pool=[...ZE, ...communityItems()].filter(o=>o.id!==item.id && o.p.some(v=>v>0) && (!item.distilleryId || o.distilleryId!==item.distilleryId));
   return pool.map(o=>({o, ...similarity(item,o)})).sort((a,b)=>b.score-a.score).slice(0,n);
 }
 function projXY(lon,lat){ const P=ZUKAN_MAP.proj; return [ (lon-P.lon0)*P.c*P.k, (P.lat1-lat)*P.k ]; }
