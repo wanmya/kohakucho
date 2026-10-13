@@ -45,6 +45,90 @@ const SAKE_BREWERIES = [
 ]
 },
 {
+"id": "s-otokoyama",
+"name": "男山",
+"en": "Otokoyama",
+"region": "hokkaido",
+"pref": "北海道",
+"lat": 43.79,
+"lon": 142.39,
+"type": "純米",
+"desc": "北海道旭川市の蔵。江戸時代の銘酒「男山」の名を受け継ぐ。",
+"ex": [
+{
+"id": "s-otokoyama-kimoto",
+"label": "男山 生酛純米",
+"name": "男山 生酛純米",
+"en": "Otokoyama Kimoto Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1600,
+"p": [
+1,
+2,
+4,
+3,
+4,
+4,
+1,
+1
+],
+"tags": [
+"ナッツ",
+"米粉",
+"ヨーグルト"
+],
+"desc": "生酛らしい骨太な旨みと、キレのよい後味。"
+}
+]
+},
+{
+"id": "s-kamikawataisetsu",
+"name": "上川大雪酒造",
+"en": "Kamikawa Taisetsu",
+"region": "hokkaido",
+"pref": "北海道",
+"lat": 43.85,
+"lon": 142.77,
+"type": "純米",
+"desc": "北海道上川町に2017年に生まれた新しい蔵。",
+"ex": [
+{
+"id": "s-kamikawataisetsu-tj",
+"label": "上川大雪 特別純米",
+"name": "上川大雪 特別純米",
+"en": "Kamikawa Taisetsu Tokubetsu Junmai",
+"type": "特別純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1800,
+"p": [
+3,
+2,
+4,
+2,
+3,
+2,
+3,
+0
+],
+"tags": [
+"洋梨",
+"柑橘",
+"ミネラル"
+],
+"desc": "北海道の酒米を使った、すっきりと透明感のある純米酒。"
+}
+]
+},
+{
 "id": "s-denshu",
 "name": "西田酒造店",
 "en": "Nishida Shuzo",
@@ -358,6 +442,35 @@ const SAKE_BREWERIES = [
 "柑橘"
 ],
 "desc": "山形の酒米・出羽燦々を使った純米吟醸。"
+},
+{
+"id": "s-dewazakura-izumi",
+"label": "出羽桜 純米 出羽の里",
+"name": "出羽桜 純米 出羽の里",
+"en": "Dewazakura Dewa no Sato",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1400,
+"p": [
+3,
+2,
+3,
+2,
+4,
+3,
+2,
+0
+],
+"tags": [
+"米粉",
+"洋梨",
+"炊きたてご飯"
+],
+"desc": "山形の米「出羽の里」の、やわらかな旨み。"
 }
 ]
 },
@@ -428,6 +541,35 @@ const SAKE_BREWERIES = [
 "ミネラル"
 ],
 "desc": "すっきりとした日常の一杯。燗にもよく合う。"
+},
+{
+"id": "s-urakasumi-junmai",
+"label": "浦霞 特別純米酒 生一本",
+"name": "浦霞 特別純米酒 生一本",
+"en": "Urakasumi Kippon",
+"type": "特別純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1600,
+"p": [
+2,
+2,
+3,
+2,
+4,
+3,
+2,
+1
+],
+"tags": [
+"米粉",
+"洋梨",
+"炊きたてご飯"
+],
+"desc": "米の旨みと、やわらかな口当たり。"
 }
 ]
 },
@@ -560,6 +702,584 @@ const SAKE_BREWERIES = [
 ]
 },
 {
+"id": "s-daishichi",
+"name": "大七酒造",
+"en": "Daishichi",
+"region": "tohoku",
+"pref": "福島",
+"lat": 37.59,
+"lon": 140.43,
+"type": "純米",
+"desc": "福島県二本松市の蔵。伝統の生酛造りを守り続ける。",
+"ex": [
+{
+"id": "s-daishichi-kimoto",
+"label": "大七 純米生酛",
+"name": "大七 純米生酛",
+"en": "Daishichi Junmai Kimoto",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "paleyellow",
+"price": 1600,
+"p": [
+2,
+2,
+3,
+3,
+5,
+5,
+1,
+2
+],
+"tags": [
+"炊きたてご飯",
+"ナッツ",
+"ヨーグルト"
+],
+"desc": "生酛らしい厚みのある旨みと酸。燗でふくらむ。"
+}
+]
+},
+{
+"id": "s-ichinokura",
+"name": "一ノ蔵",
+"en": "Ichinokura",
+"region": "tohoku",
+"pref": "宮城",
+"lat": 38.58,
+"lon": 140.95,
+"type": "純米",
+"desc": "宮城県大崎市の蔵。4つの蔵が合同して生まれた。",
+"ex": [
+{
+"id": "s-ichinokura-karakuchi",
+"label": "一ノ蔵 無鑑査本醸造 辛口",
+"name": "一ノ蔵 無鑑査本醸造 辛口",
+"en": "Ichinokura Mukansa Karakuchi",
+"type": "本醸造",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1100,
+"p": [
+1,
+1,
+5,
+2,
+3,
+2,
+2,
+0
+],
+"tags": [
+"米粉",
+"ミネラル"
+],
+"desc": "すっきりとした辛口の定番。"
+},
+{
+"id": "s-ichinokura-suzune",
+"label": "すず音",
+"name": "一ノ蔵 発泡清酒 すず音",
+"en": "Ichinokura Suzune",
+"type": "スパークリング",
+"age": "",
+"abv": "5",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 700,
+"p": [
+4,
+5,
+1,
+4,
+1,
+1,
+5,
+0
+],
+"tags": [
+"りんご",
+"ヨーグルト",
+"ガス感"
+],
+"desc": "瓶内で発酵させた、甘酸っぱい泡の日本酒。",
+"priceNote": "300mlのおおよその店頭価格です"
+}
+]
+},
+{
+"id": "s-hidakami",
+"name": "平孝酒造",
+"en": "Hirako Shuzo",
+"region": "tohoku",
+"pref": "宮城",
+"lat": 38.43,
+"lon": 141.3,
+"type": "純米",
+"desc": "宮城県石巻市の蔵。「日高見」は魚に合う酒として知られる。",
+"ex": [
+{
+"id": "s-hidakami-karakuchi",
+"label": "日高見 超辛口純米",
+"name": "日高見 超辛口純米",
+"en": "Hidakami Chokarakuchi Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1500,
+"p": [
+1,
+1,
+5,
+2,
+3,
+2,
+2,
+0
+],
+"tags": [
+"米粉",
+"ミネラル",
+"柑橘"
+],
+"desc": "すっきりとした超辛口。寿司や刺身に合わせたい。"
+}
+]
+},
+{
+"id": "s-tatenokawa",
+"name": "楯の川酒造",
+"en": "Tatenokawa",
+"region": "tohoku",
+"pref": "山形",
+"lat": 38.91,
+"lon": 139.85,
+"type": "純米",
+"desc": "山形県酒田市の蔵。造る酒をすべて純米大吟醸にした。",
+"ex": [
+{
+"id": "s-tatenokawa-seiryu",
+"label": "楯野川 純米大吟醸 清流",
+"name": "楯野川 純米大吟醸 清流",
+"en": "Tatenokawa Seiryu",
+"type": "純米大吟醸",
+"age": "",
+"abv": "",
+"cask": "出羽燦々",
+"grapes": [
+"dewasansan"
+],
+"color": "clear",
+"price": 1800,
+"p": [
+4,
+2,
+4,
+2,
+3,
+2,
+3,
+0
+],
+"tags": [
+"洋梨",
+"白い花",
+"柑橘"
+],
+"desc": "すっきりと軽やかな純米大吟醸。食事にも合わせやすい。"
+}
+]
+},
+{
+"id": "s-kudokijozu",
+"name": "亀の井酒造",
+"en": "Kamenoi Shuzo",
+"region": "tohoku",
+"pref": "山形",
+"lat": 38.79,
+"lon": 139.88,
+"type": "純米",
+"desc": "山形県鶴岡市の蔵。華やかな吟醸酒「くどき上手」で人気。",
+"ex": [
+{
+"id": "s-kudokijozu-jg",
+"label": "くどき上手 純米吟醸",
+"name": "くどき上手 純米吟醸",
+"en": "Kudoki Jozu Junmai Ginjo",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1800,
+"p": [
+5,
+3,
+3,
+2,
+3,
+2,
+3,
+0
+],
+"tags": [
+"メロン",
+"りんご",
+"バナナ"
+],
+"desc": "華やかな吟醸香とやさしい甘み。"
+}
+]
+},
+{
+"id": "s-kariho",
+"name": "刈穂酒造",
+"en": "Kariho",
+"region": "tohoku",
+"pref": "秋田",
+"lat": 39.46,
+"lon": 140.48,
+"type": "純米",
+"desc": "秋田県大仙市の蔵。山廃仕込みの辛口で知られる。",
+"ex": [
+{
+"id": "s-kariho-yamahai",
+"label": "刈穂 山廃純米 超辛口",
+"name": "刈穂 山廃純米 超辛口",
+"en": "Kariho Yamahai Chokarakuchi",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1500,
+"p": [
+1,
+1,
+5,
+4,
+4,
+4,
+1,
+2
+],
+"tags": [
+"ナッツ",
+"ヨーグルト",
+"米粉"
+],
+"desc": "山廃らしい酸とキレのある超辛口。燗でも冷やでも。"
+}
+]
+},
+{
+"id": "s-mansaku",
+"name": "日の丸醸造",
+"en": "Hinomaru Jozo",
+"region": "tohoku",
+"pref": "秋田",
+"lat": 39.3,
+"lon": 140.56,
+"type": "純米",
+"desc": "秋田県横手市の蔵。「まんさくの花」で知られる。",
+"ex": [
+{
+"id": "s-mansaku-jg",
+"label": "まんさくの花 純米吟醸",
+"name": "まんさくの花 純米吟醸",
+"en": "Mansaku no Hana Junmai Ginjo",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1700,
+"p": [
+4,
+3,
+3,
+2,
+3,
+2,
+3,
+0
+],
+"tags": [
+"りんご",
+"洋梨",
+"白い花"
+],
+"desc": "穏やかな香りと、やさしくふくらむ旨み。"
+}
+]
+},
+{
+"id": "s-hassen",
+"name": "八戸酒造",
+"en": "Hachinohe Shuzo",
+"region": "tohoku",
+"pref": "青森",
+"lat": 40.53,
+"lon": 141.53,
+"type": "純米",
+"desc": "青森県八戸市の蔵。「陸奥八仙」で人気を集める。",
+"ex": [
+{
+"id": "s-hassen-tj",
+"label": "陸奥八仙 特別純米",
+"name": "陸奥八仙 特別純米",
+"en": "Mutsu Hassen Tokubetsu Junmai",
+"type": "特別純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1500,
+"p": [
+3,
+3,
+3,
+3,
+3,
+2,
+3,
+0
+],
+"tags": [
+"りんご",
+"柑橘",
+"米粉"
+],
+"desc": "果実のような香りと、酸のきいたすっきりした味わい。"
+}
+]
+},
+{
+"id": "s-houhai",
+"name": "三浦酒造",
+"en": "Miura Shuzo",
+"region": "tohoku",
+"pref": "青森",
+"lat": 40.6,
+"lon": 140.46,
+"type": "純米",
+"desc": "青森県弘前市の小さな蔵。「豊盃」で知られる。",
+"ex": [
+{
+"id": "s-houhai-tj",
+"label": "豊盃 特別純米",
+"name": "豊盃 特別純米",
+"en": "Houhai Tokubetsu Junmai",
+"type": "特別純米",
+"age": "",
+"abv": "",
+"cask": "豊盃米",
+"grapes": [],
+"color": "clear",
+"price": 1500,
+"p": [
+3,
+3,
+3,
+2,
+3,
+2,
+3,
+0
+],
+"tags": [
+"りんご",
+"白桃",
+"米粉"
+],
+"desc": "青森の酒米「豊盃米」を使った、やわらかく香り高い純米酒。",
+"priceNote": "定価のおおよその目安です。品薄で、店頭では手に入りにくく、販売価格が大きく上下することがあります"
+}
+]
+},
+{
+"id": "s-naraman",
+"name": "夢心酒造",
+"en": "Yumegokoro Shuzo",
+"region": "tohoku",
+"pref": "福島",
+"lat": 37.65,
+"lon": 139.87,
+"type": "純米",
+"desc": "福島県喜多方市の蔵。「奈良萬」で知られる。",
+"ex": [
+{
+"id": "s-naraman-junmai",
+"label": "奈良萬 純米",
+"name": "奈良萬 純米",
+"en": "Naraman Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1500,
+"p": [
+2,
+2,
+3,
+2,
+4,
+3,
+2,
+1
+],
+"tags": [
+"炊きたてご飯",
+"米粉",
+"洋梨"
+],
+"desc": "ふくよかな旨みと、きれいな後味の純米酒。"
+}
+]
+},
+{
+"id": "s-aizumusume",
+"name": "高橋庄作酒造店",
+"en": "Takahashi Shosaku Shuzoten",
+"region": "tohoku",
+"pref": "福島",
+"lat": 37.47,
+"lon": 139.95,
+"type": "純米",
+"desc": "会津若松市の蔵。自社の田んぼで米を育てる。",
+"ex": [
+{
+"id": "s-aizumusume-junmai",
+"label": "会津娘 純米",
+"name": "会津娘 純米",
+"en": "Aizu Musume Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1600,
+"p": [
+2,
+2,
+3,
+3,
+4,
+4,
+1,
+1
+],
+"tags": [
+"炊きたてご飯",
+"米粉",
+"ナッツ"
+],
+"desc": "米の旨みがしっかりとした、穏やかな純米酒。"
+}
+]
+},
+{
+"id": "s-suehiro",
+"name": "末廣酒造",
+"en": "Suehiro",
+"region": "tohoku",
+"pref": "福島",
+"lat": 37.49,
+"lon": 139.93,
+"type": "純米",
+"desc": "会津若松市の老舗。山廃仕込みの酒で知られる。",
+"ex": [
+{
+"id": "s-suehiro-yamahai",
+"label": "末廣 山廃純米",
+"name": "末廣 山廃純米",
+"en": "Suehiro Yamahai Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "paleyellow",
+"price": 1500,
+"p": [
+1,
+2,
+3,
+4,
+5,
+5,
+1,
+3
+],
+"tags": [
+"ナッツ",
+"ヨーグルト",
+"炊きたてご飯"
+],
+"desc": "山廃らしいコクと酸。燗にするとふくらむ。"
+}
+]
+},
+{
+"id": "s-akabu",
+"name": "赤武酒造",
+"en": "Akabu",
+"region": "tohoku",
+"pref": "岩手",
+"lat": 39.7,
+"lon": 141.15,
+"type": "純米",
+"desc": "盛岡市の蔵。若い杜氏が造る「AKABU」で人気を集める。",
+"ex": [
+{
+"id": "s-akabu-junmai",
+"label": "AKABU 純米",
+"name": "AKABU 純米",
+"en": "AKABU Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1600,
+"p": [
+3,
+3,
+3,
+2,
+3,
+2,
+4,
+0
+],
+"tags": [
+"りんご",
+"白桃",
+"米粉"
+],
+"desc": "みずみずしい香りと、きれいな甘み。"
+}
+]
+},
+{
 "id": "s-sawanoi",
 "name": "小澤酒造",
 "en": "Ozawa Shuzo",
@@ -681,6 +1401,133 @@ const SAKE_BREWERIES = [
 "柑橘"
 ],
 "desc": "華やかな香りと、引き締まったキレ。"
+}
+]
+},
+{
+"id": "s-hanaabi",
+"name": "南陽醸造",
+"en": "Nanyo Jozo",
+"region": "kanto",
+"pref": "埼玉",
+"lat": 36.19,
+"lon": 139.52,
+"type": "純米",
+"desc": "埼玉県羽生市の蔵。「花陽浴（はなあび）」で人気を集めた。",
+"ex": [
+{
+"id": "s-hanaabi-jg",
+"label": "花陽浴 純米吟醸",
+"name": "花陽浴 純米吟醸",
+"en": "Hanaabi Junmai Ginjo",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1900,
+"p": [
+5,
+4,
+2,
+3,
+3,
+2,
+4,
+0
+],
+"tags": [
+"パイナップル",
+"メロン",
+"白桃"
+],
+"desc": "トロピカルな香りと濃密な甘み。入手困難な人気銘柄。",
+"priceNote": "定価のおおよその目安です。品薄で、店頭では手に入りにくく、販売価格が大きく上下することがあります"
+}
+]
+},
+{
+"id": "s-shinkame",
+"name": "神亀酒造",
+"en": "Shinkame Shuzo",
+"region": "kanto",
+"pref": "埼玉",
+"lat": 35.98,
+"lon": 139.65,
+"type": "純米",
+"desc": "埼玉県蓮田市の蔵。全量を純米酒にした先駆けとして知られる。",
+"ex": [
+{
+"id": "s-shinkame-junmai",
+"label": "神亀 純米",
+"name": "神亀 純米 辛口",
+"en": "Shinkame Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "yellow",
+"price": 1800,
+"p": [
+1,
+2,
+4,
+3,
+5,
+5,
+1,
+3
+],
+"tags": [
+"ナッツ",
+"カラメル",
+"炊きたてご飯"
+],
+"desc": "熟成させた純米酒の、深い旨み。燗がおすすめ。"
+}
+]
+},
+{
+"id": "s-teradahonke",
+"name": "寺田本家",
+"en": "Terada Honke",
+"region": "kanto",
+"pref": "千葉",
+"lat": 35.85,
+"lon": 140.5,
+"type": "純米",
+"desc": "千葉県神崎町の蔵。自然の力を生かした酒造りで知られる。",
+"ex": [
+{
+"id": "s-teradahonke-gonin",
+"label": "五人娘 純米",
+"name": "五人娘 純米 自然酒",
+"en": "Gonin Musume Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "paleyellow",
+"price": 2000,
+"p": [
+1,
+2,
+3,
+5,
+4,
+4,
+1,
+2
+],
+"tags": [
+"ヨーグルト",
+"ナッツ",
+"穀物"
+],
+"desc": "酸がしっかりとした、力強い味わいの自然酒。"
 }
 ]
 },
@@ -852,6 +1699,35 @@ const SAKE_BREWERIES = [
 "柑橘"
 ],
 "desc": "淡麗でキレのよい、八海山らしい一本。"
+},
+{
+"id": "s-hakkaisan-jg",
+"label": "八海山 純米吟醸",
+"name": "八海山 純米吟醸",
+"en": "Hakkaisan Junmai Ginjo",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1900,
+"p": [
+3,
+2,
+4,
+2,
+3,
+2,
+2,
+0
+],
+"tags": [
+"洋梨",
+"米粉",
+"ミネラル"
+],
+"desc": "穏やかな香りと、すっきりとした八海山らしい味わい。"
 }
 ]
 },
@@ -1103,6 +1979,35 @@ const SAKE_BREWERIES = [
 "炊きたてご飯"
 ],
 "desc": "山吹色で、濃厚な旨みと酸。ぬる燗がおすすめ。"
+},
+{
+"id": "s-tengumai-jg",
+"label": "天狗舞 吟醸 吟こうぶり",
+"name": "天狗舞 吟醸 吟こうぶり",
+"en": "Tengumai Gin Kouburi",
+"type": "吟醸",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1800,
+"p": [
+4,
+2,
+3,
+2,
+3,
+2,
+2,
+0
+],
+"tags": [
+"洋梨",
+"メロン",
+"米粉"
+],
+"desc": "華やかな香りと、ふくよかな味わい。"
 }
 ]
 },
@@ -1147,6 +2052,324 @@ const SAKE_BREWERIES = [
 "ミネラル"
 ],
 "desc": "穏やかな香りとすっきりした味わいの、黒龍の定番。"
+},
+{
+"id": "s-kokuryu-jg",
+"label": "黒龍 純米吟醸",
+"name": "黒龍 純米吟醸",
+"en": "Kokuryu Junmai Ginjo",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1900,
+"p": [
+3,
+2,
+4,
+2,
+3,
+2,
+2,
+0
+],
+"tags": [
+"洋梨",
+"白い花",
+"米粉"
+],
+"desc": "穏やかな香りと、なめらかでキレのよい味わい。"
+}
+]
+},
+{
+"id": "s-kikusui",
+"name": "菊水酒造",
+"en": "Kikusui Sake",
+"region": "hokuriku",
+"pref": "新潟",
+"lat": 37.95,
+"lon": 139.33,
+"type": "純米",
+"desc": "新潟県新発田市の蔵。日本初の缶入り生原酒「ふなぐち」で知られる。",
+"ex": [
+{
+"id": "s-kikusui-funaguchi",
+"label": "ふなぐち菊水一番しぼり",
+"name": "ふなぐち菊水一番しぼり",
+"en": "Funaguchi Kikusui Ichiban Shibori",
+"type": "本醸造",
+"age": "",
+"abv": "19",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 300,
+"p": [
+3,
+4,
+2,
+2,
+4,
+4,
+4,
+0
+],
+"tags": [
+"メロン",
+"米粉",
+"蜂蜜"
+],
+"desc": "しぼりたての生原酒を缶に詰めた、濃厚でフレッシュな味わい。",
+"priceNote": "200ml缶1本のおおよその店頭価格です"
+}
+]
+},
+{
+"id": "s-born",
+"name": "加藤吟醸本店",
+"en": "Katoukichibee Shouten",
+"region": "hokuriku",
+"pref": "福井",
+"lat": 35.96,
+"lon": 136.18,
+"type": "純米",
+"desc": "福井県鯖江市の蔵。「梵（ぼん）」は熟成させた純米大吟醸で知られる。",
+"ex": [
+{
+"id": "s-born-gold",
+"label": "梵 ゴールド",
+"name": "梵 ゴールド 無濾過純米大吟醸",
+"en": "Born Gold",
+"type": "純米大吟醸",
+"age": "",
+"abv": "",
+"cask": "山田錦",
+"grapes": [
+"yamadanishiki"
+],
+"color": "clear",
+"price": 2800,
+"p": [
+4,
+3,
+3,
+2,
+3,
+3,
+2,
+2
+],
+"tags": [
+"洋梨",
+"蜂蜜",
+"白い花"
+],
+"desc": "低温で熟成させた、なめらかで上品な純米大吟醸。"
+}
+]
+},
+{
+"id": "s-kikuhime",
+"name": "菊姫",
+"en": "Kikuhime",
+"region": "hokuriku",
+"pref": "石川",
+"lat": 36.45,
+"lon": 136.63,
+"type": "純米",
+"desc": "石川県白山市鶴来の蔵。山廃仕込みと熟成による、濃醇な酒で知られる。",
+"ex": [
+{
+"id": "s-kikuhime-yamahai",
+"label": "菊姫 山廃純米",
+"name": "菊姫 山廃純米",
+"en": "Kikuhime Yamahai Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "山田錦",
+"grapes": [
+"yamadanishiki"
+],
+"color": "yellow",
+"price": 2200,
+"p": [
+1,
+2,
+3,
+4,
+5,
+5,
+1,
+4
+],
+"tags": [
+"カラメル",
+"ナッツ",
+"炊きたてご飯",
+"ドライフルーツ"
+],
+"desc": "熟成による山吹色と、力強い旨みと酸。燗で真価を発揮する。"
+},
+{
+"id": "s-kikuhime-ginjo",
+"label": "菊姫 吟",
+"name": "菊姫 吟",
+"en": "Kikuhime Gin",
+"type": "吟醸",
+"age": "",
+"abv": "",
+"cask": "山田錦",
+"grapes": [
+"yamadanishiki"
+],
+"color": "paleyellow",
+"price": 3000,
+"p": [
+3,
+2,
+3,
+3,
+4,
+4,
+1,
+2
+],
+"tags": [
+"洋梨",
+"ナッツ",
+"蜂蜜"
+],
+"desc": "熟成させた吟醸酒。香りは穏やかで、味わいに厚みがある。"
+}
+]
+},
+{
+"id": "s-kakurei",
+"name": "青木酒造",
+"en": "Aoki Shuzo",
+"region": "hokuriku",
+"pref": "新潟",
+"lat": 37.0,
+"lon": 138.86,
+"type": "純米",
+"desc": "新潟県南魚沼市塩沢の蔵。「鶴齢」で知られる。",
+"ex": [
+{
+"id": "s-kakurei-tj",
+"label": "鶴齢 特別純米",
+"name": "鶴齢 特別純米",
+"en": "Kakurei Tokubetsu Junmai",
+"type": "特別純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1600,
+"p": [
+2,
+2,
+3,
+2,
+4,
+3,
+2,
+1
+],
+"tags": [
+"炊きたてご飯",
+"米粉",
+"洋梨"
+],
+"desc": "米の旨みがふくらむ、やわらかな味わいの純米酒。"
+}
+]
+},
+{
+"id": "s-kagetora",
+"name": "諸橋酒造",
+"en": "Morohashi Shuzo",
+"region": "hokuriku",
+"pref": "新潟",
+"lat": 37.4,
+"lon": 138.95,
+"type": "純米",
+"desc": "新潟県長岡市栃尾の蔵。「越乃景虎」で知られる。",
+"ex": [
+{
+"id": "s-kagetora-meisui",
+"label": "越乃景虎 名水仕込 特別純米",
+"name": "越乃景虎 名水仕込 特別純米",
+"en": "Koshino Kagetora Meisui",
+"type": "特別純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1600,
+"p": [
+2,
+2,
+4,
+2,
+3,
+2,
+2,
+0
+],
+"tags": [
+"米粉",
+"ミネラル",
+"柑橘"
+],
+"desc": "超軟水の名水で仕込んだ、なめらかで淡麗な純米酒。"
+}
+]
+},
+{
+"id": "s-haneya",
+"name": "富美菊酒造",
+"en": "Fumigiku Shuzo",
+"region": "hokuriku",
+"pref": "富山",
+"lat": 36.69,
+"lon": 137.22,
+"type": "純米",
+"desc": "富山市の蔵。「羽根屋」で注目を集める。",
+"ex": [
+{
+"id": "s-haneya-jg",
+"label": "羽根屋 純米吟醸",
+"name": "羽根屋 純米吟醸 煌火",
+"en": "Haneya Junmai Ginjo Kirabi",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1900,
+"p": [
+4,
+3,
+3,
+2,
+3,
+2,
+3,
+0
+],
+"tags": [
+"メロン",
+"白桃",
+"白い花"
+],
+"desc": "華やかな香りと、透明感のある味わい。"
 }
 ]
 },
@@ -1191,6 +2414,35 @@ const SAKE_BREWERIES = [
 "ミネラル"
 ],
 "desc": "穏やかな香りとすっきりとした辛口。"
+},
+{
+"id": "s-masumi-sanka",
+"label": "真澄 純米大吟醸 山花",
+"name": "真澄 純米大吟醸 山花",
+"en": "Masumi Sanka",
+"type": "純米大吟醸",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 3500,
+"p": [
+3,
+3,
+3,
+2,
+3,
+2,
+2,
+0
+],
+"tags": [
+"洋梨",
+"白い花",
+"米粉"
+],
+"desc": "7号酵母らしい落ち着いた香りと、上品な旨み。"
 }
 ]
 },
@@ -1362,6 +2614,218 @@ const SAKE_BREWERIES = [
 "白い花"
 ],
 "desc": "穏やかな香りとやわらかな旨みの、作の定番。"
+}
+]
+},
+{
+"id": "s-shichiken",
+"name": "山梨銘醸",
+"en": "Yamanashi Meijo",
+"region": "koshin",
+"pref": "山梨",
+"lat": 35.82,
+"lon": 138.32,
+"type": "純米",
+"desc": "山梨県北杜市白州の蔵。「七賢」で知られる。",
+"ex": [
+{
+"id": "s-shichiken-furin",
+"label": "七賢 風凛美山",
+"name": "七賢 純米 風凛美山",
+"en": "Shichiken Furin Bizan",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "美山錦",
+"grapes": [
+"miyamanishiki"
+],
+"color": "clear",
+"price": 1500,
+"p": [
+3,
+2,
+3,
+2,
+3,
+2,
+3,
+0
+],
+"tags": [
+"洋梨",
+"柑橘",
+"米粉"
+],
+"desc": "南アルプスの水で仕込んだ、軽やかでやさしい純米酒。"
+}
+]
+},
+{
+"id": "s-kaiun",
+"name": "土井酒造場",
+"en": "Doi Shuzojo",
+"region": "koshin",
+"pref": "静岡",
+"lat": 34.71,
+"lon": 138.03,
+"type": "純米",
+"desc": "静岡県掛川市の蔵。「開運」で知られる。",
+"ex": [
+{
+"id": "s-kaiun-tj",
+"label": "開運 特別純米",
+"name": "開運 特別純米",
+"en": "Kaiun Tokubetsu Junmai",
+"type": "特別純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1600,
+"p": [
+3,
+2,
+3,
+2,
+3,
+2,
+2,
+0
+],
+"tags": [
+"洋梨",
+"メロン",
+"米粉"
+],
+"desc": "静岡酵母らしい穏やかな香りと、きれいな味わい。"
+}
+]
+},
+{
+"id": "s-kikuyoi",
+"name": "青島酒造",
+"en": "Aoshima Shuzo",
+"region": "koshin",
+"pref": "静岡",
+"lat": 34.86,
+"lon": 138.26,
+"type": "純米",
+"desc": "静岡県藤枝市の蔵。「喜久醉」で知られる。",
+"ex": [
+{
+"id": "s-kikuyoi-tj",
+"label": "喜久醉 特別純米",
+"name": "喜久醉 特別純米",
+"en": "Kikuyoi Tokubetsu Junmai",
+"type": "特別純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1600,
+"p": [
+2,
+2,
+4,
+2,
+3,
+2,
+2,
+0
+],
+"tags": [
+"米粉",
+"洋梨",
+"ミネラル"
+],
+"desc": "穏やかな香りと、すっきりとした上品な味わい。"
+}
+]
+},
+{
+"id": "s-daishinshu",
+"name": "大信州酒造",
+"en": "Daishinshu",
+"region": "koshin",
+"pref": "長野",
+"lat": 36.25,
+"lon": 137.97,
+"type": "純米",
+"desc": "長野県松本市の蔵。長野の米と水にこだわる。",
+"ex": [
+{
+"id": "s-daishinshu-karakuchi",
+"label": "大信州 超辛口純米吟醸",
+"name": "大信州 超辛口純米吟醸",
+"en": "Daishinshu Chokarakuchi",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1800,
+"p": [
+3,
+1,
+5,
+2,
+3,
+2,
+3,
+0
+],
+"tags": [
+"りんご",
+"柑橘",
+"ミネラル"
+],
+"desc": "香りがありながら、キレのよい辛口。"
+}
+]
+},
+{
+"id": "s-yoakemae",
+"name": "小野酒造店",
+"en": "Ono Shuzoten",
+"region": "koshin",
+"pref": "長野",
+"lat": 35.98,
+"lon": 137.98,
+"type": "純米",
+"desc": "長野県辰野町の蔵。島崎藤村の小説から名を取った「夜明け前」で知られる。",
+"ex": [
+{
+"id": "s-yoakemae-jg",
+"label": "夜明け前 純米吟醸 生一本",
+"name": "夜明け前 純米吟醸 生一本",
+"en": "Yoakemae Junmai Ginjo",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1900,
+"p": [
+4,
+3,
+3,
+2,
+3,
+2,
+3,
+0
+],
+"tags": [
+"洋梨",
+"メロン",
+"白い花"
+],
+"desc": "華やかで上品な香りと、やわらかな味わい。"
 }
 ]
 },
@@ -1759,6 +3223,511 @@ const SAKE_BREWERIES = [
 ]
 },
 {
+"id": "s-sawaya",
+"name": "松本酒造",
+"en": "Matsumoto Shuzo",
+"region": "kinki",
+"pref": "京都",
+"lat": 34.92,
+"lon": 135.77,
+"type": "純米",
+"desc": "京都・伏見の蔵。「澤屋まつもと」で注目を集める。",
+"ex": [
+{
+"id": "s-sawaya-shutosha",
+"label": "澤屋まつもと 守破離",
+"name": "澤屋まつもと 守破離",
+"en": "Sawaya Matsumoto Shuhari",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1700,
+"p": [
+3,
+2,
+4,
+4,
+3,
+2,
+3,
+0
+],
+"tags": [
+"柑橘",
+"りんご",
+"ミネラル"
+],
+"desc": "爽やかな酸とキレのよさ。食事を引き立てる。"
+}
+]
+},
+{
+"id": "s-shichihonyari",
+"name": "冨田酒造",
+"en": "Tomita Shuzo",
+"region": "kinki",
+"pref": "滋賀",
+"lat": 35.5,
+"lon": 136.21,
+"type": "純米",
+"desc": "滋賀県長浜市木之本の蔵。「七本鎗」で知られる。",
+"ex": [
+{
+"id": "s-shichihonyari-junmai",
+"label": "七本鎗 純米",
+"name": "七本鎗 純米",
+"en": "Shichihonyari Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1600,
+"p": [
+2,
+2,
+3,
+3,
+4,
+4,
+1,
+1
+],
+"tags": [
+"炊きたてご飯",
+"ナッツ"
+],
+"desc": "米の旨みがしっかりとした、燗に向く純米酒。"
+}
+]
+},
+{
+"id": "s-matsunotsukasa",
+"name": "松瀬酒造",
+"en": "Matsuse Shuzo",
+"region": "kinki",
+"pref": "滋賀",
+"lat": 35.07,
+"lon": 136.1,
+"type": "純米",
+"desc": "滋賀県竜王町の蔵。「松の司」で知られる。",
+"ex": [
+{
+"id": "s-matsunotsukasa-raku",
+"label": "松の司 純米吟醸 楽",
+"name": "松の司 純米吟醸 楽",
+"en": "Matsunotsukasa Raku",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1700,
+"p": [
+3,
+2,
+3,
+2,
+3,
+2,
+2,
+0
+],
+"tags": [
+"洋梨",
+"米粉",
+"白い花"
+],
+"desc": "穏やかな香りと、透明感のある旨み。"
+}
+]
+},
+{
+"id": "s-furosen",
+"name": "上原酒造",
+"en": "Uehara Shuzo",
+"region": "kinki",
+"pref": "滋賀",
+"lat": 35.3,
+"lon": 136.06,
+"type": "純米",
+"desc": "滋賀県高島市の蔵。木桶と山廃仕込みを守る。",
+"ex": [
+{
+"id": "s-furosen-yamahai",
+"label": "不老泉 山廃仕込純米",
+"name": "不老泉 山廃仕込純米",
+"en": "Furosen Yamahai Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "yellow",
+"price": 1800,
+"p": [
+1,
+2,
+3,
+4,
+5,
+5,
+1,
+3
+],
+"tags": [
+"ナッツ",
+"カラメル",
+"ヨーグルト"
+],
+"desc": "自然の乳酸菌を生かした山廃の、複雑な旨みと酸。"
+}
+]
+},
+{
+"id": "s-eikun",
+"name": "齊藤酒造",
+"en": "Saito Shuzo",
+"region": "kinki",
+"pref": "京都",
+"lat": 34.93,
+"lon": 135.76,
+"type": "純米",
+"desc": "京都・伏見の蔵。「英勲」で知られる。",
+"ex": [
+{
+"id": "s-eikun-jg",
+"label": "英勲 純米吟醸 古都千年",
+"name": "英勲 純米吟醸 古都千年",
+"en": "Eikun Kotosennen",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "祝",
+"grapes": [],
+"color": "clear",
+"price": 1600,
+"p": [
+3,
+3,
+3,
+2,
+3,
+2,
+2,
+0
+],
+"tags": [
+"洋梨",
+"白い花",
+"米粉"
+],
+"desc": "京都の酒米「祝」を使った、やさしく上品な味わい。"
+}
+]
+},
+{
+"id": "s-akishika",
+"name": "秋鹿酒造",
+"en": "Akishika",
+"region": "kinki",
+"pref": "大阪",
+"lat": 34.97,
+"lon": 135.42,
+"type": "純米",
+"desc": "大阪府能勢町の蔵。自ら米を育て、純米酒だけを造る。",
+"ex": [
+{
+"id": "s-akishika-junmai",
+"label": "秋鹿 純米",
+"name": "秋鹿 純米",
+"en": "Akishika Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1600,
+"p": [
+1,
+2,
+4,
+4,
+5,
+4,
+1,
+2
+],
+"tags": [
+"ナッツ",
+"炊きたてご飯",
+"ヨーグルト"
+],
+"desc": "しっかりした酸と旨みの、燗映えする純米酒。"
+}
+]
+},
+{
+"id": "s-chikusen",
+"name": "田治米",
+"en": "Tajime",
+"region": "kinki",
+"pref": "兵庫",
+"lat": 35.25,
+"lon": 134.85,
+"type": "純米",
+"desc": "兵庫県朝来市の蔵。「竹泉」は燗で旨くなる純米酒にこだわる。",
+"ex": [
+{
+"id": "s-chikusen-junmai",
+"label": "竹泉 純米",
+"name": "竹泉 純米",
+"en": "Chikusen Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1600,
+"p": [
+2,
+2,
+3,
+3,
+4,
+4,
+1,
+1
+],
+"tags": [
+"炊きたてご飯",
+"ナッツ",
+"米粉"
+],
+"desc": "米の旨みと酸がしっかりとした、燗向きの純米酒。"
+}
+]
+},
+{
+"id": "s-tatsuriki",
+"name": "本田商店",
+"en": "Honda Shoten",
+"region": "kinki",
+"pref": "兵庫",
+"lat": 34.78,
+"lon": 134.66,
+"type": "純米",
+"desc": "兵庫県姫路市の蔵。「龍力」は山田錦にこだわる。",
+"ex": [
+{
+"id": "s-tatsuriki-tj",
+"label": "龍力 特別純米 播州山田錦",
+"name": "龍力 特別純米 播州山田錦",
+"en": "Tatsuriki Tokubetsu Junmai",
+"type": "特別純米",
+"age": "",
+"abv": "",
+"cask": "山田錦",
+"grapes": [
+"yamadanishiki"
+],
+"color": "clear",
+"price": 1500,
+"p": [
+3,
+2,
+3,
+2,
+4,
+3,
+2,
+1
+],
+"tags": [
+"洋梨",
+"米粉",
+"ナッツ"
+],
+"desc": "山田錦らしいふくよかな旨み。"
+}
+]
+},
+{
+"id": "s-okuharima",
+"name": "下村酒造店",
+"en": "Shimomura Shuzoten",
+"region": "kinki",
+"pref": "兵庫",
+"lat": 35.01,
+"lon": 134.63,
+"type": "純米",
+"desc": "兵庫県姫路市安富町の小さな蔵。「奥播磨」は純米酒だけを造る。",
+"ex": [
+{
+"id": "s-okuharima-junmai",
+"label": "奥播磨 純米",
+"name": "奥播磨 純米",
+"en": "Okuharima Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1600,
+"p": [
+2,
+2,
+3,
+3,
+4,
+4,
+1,
+1
+],
+"tags": [
+"炊きたてご飯",
+"ナッツ",
+"米粉"
+],
+"desc": "穏やかな香りと、ふくらみのある旨み。"
+}
+]
+},
+{
+"id": "s-hanatomoe",
+"name": "美吉野醸造",
+"en": "Miyoshino Jozo",
+"region": "kinki",
+"pref": "奈良",
+"lat": 34.39,
+"lon": 135.85,
+"type": "純米",
+"desc": "奈良県吉野町の蔵。「花巴」は、奈良に伝わる「水酛」など酸の効いた酒で知られる。",
+"ex": [
+{
+"id": "s-hanatomoe-mizumoto",
+"label": "花巴 水酛 純米",
+"name": "花巴 水酛 純米",
+"en": "Hanatomoe Mizumoto Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "paleyellow",
+"price": 1800,
+"p": [
+1,
+3,
+2,
+5,
+4,
+4,
+1,
+2
+],
+"tags": [
+"ヨーグルト",
+"柑橘",
+"ナッツ"
+],
+"desc": "強い酸と甘み、旨みが重なる個性的な味わい。"
+}
+]
+},
+{
+"id": "s-kuroushi",
+"name": "名手酒造店",
+"en": "Nate Shuzoten",
+"region": "kinki",
+"pref": "和歌山",
+"lat": 34.1,
+"lon": 135.19,
+"type": "純米",
+"desc": "和歌山県海南市の蔵。「黒牛」で知られる。",
+"ex": [
+{
+"id": "s-kuroushi-junmai",
+"label": "黒牛 純米",
+"name": "黒牛 純米",
+"en": "Kuroushi Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1500,
+"p": [
+2,
+2,
+3,
+3,
+4,
+4,
+1,
+1
+],
+"tags": [
+"炊きたてご飯",
+"米粉",
+"ナッツ"
+],
+"desc": "ふくらみのある旨みと、やわらかな口当たり。"
+}
+]
+},
+{
+"id": "s-kid",
+"name": "平和酒造",
+"en": "Heiwa Shuzo",
+"region": "kinki",
+"pref": "和歌山",
+"lat": 34.18,
+"lon": 135.3,
+"type": "純米",
+"desc": "和歌山県海南市の蔵。「紀土（KID）」で人気を集める。",
+"ex": [
+{
+"id": "s-kid-jg",
+"label": "紀土 純米吟醸",
+"name": "紀土 純米吟醸",
+"en": "KID Junmai Ginjo",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1500,
+"p": [
+4,
+3,
+3,
+2,
+3,
+2,
+3,
+0
+],
+"tags": [
+"洋梨",
+"メロン",
+"白い花"
+],
+"desc": "華やかな香りと、さらりとした味わい。手頃な価格も魅力。"
+}
+]
+},
+{
 "id": "s-dassai",
 "name": "獺祭",
 "en": "Dassai",
@@ -1991,6 +3960,343 @@ const SAKE_BREWERIES = [
 ]
 },
 {
+"id": "s-gangi",
+"name": "八百新酒造",
+"en": "Yaoshin Shuzo",
+"region": "chugoku",
+"pref": "山口",
+"lat": 34.17,
+"lon": 132.22,
+"type": "純米",
+"desc": "山口県岩国市の蔵。「雁木」は無ろ過の純米酒にこだわる。",
+"ex": [
+{
+"id": "s-gangi-hitotsubi",
+"label": "雁木 純米 無濾過生原酒 ひとつび",
+"name": "雁木 純米 無濾過生原酒 ひとつび",
+"en": "Gangi Hitotsubi",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1700,
+"p": [
+3,
+3,
+3,
+3,
+4,
+3,
+4,
+0
+],
+"tags": [
+"メロン",
+"米粉",
+"柑橘"
+],
+"desc": "しぼったままの力強い旨みとフレッシュさ。"
+}
+]
+},
+{
+"id": "s-toshimori",
+"name": "利守酒造",
+"en": "Toshimori Shuzo",
+"region": "chugoku",
+"pref": "岡山",
+"lat": 34.75,
+"lon": 134.02,
+"type": "純米",
+"desc": "岡山県赤磐市の蔵。幻となっていた酒米「赤磐雄町」を復活させた。",
+"ex": [
+{
+"id": "s-toshimori-sakehitosuji",
+"label": "酒一筋 純米吟醸 赤磐雄町",
+"name": "酒一筋 純米吟醸 赤磐雄町",
+"en": "Sake Hitosuji Akaiwa Omachi",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "雄町",
+"grapes": [
+"omachi"
+],
+"color": "clear",
+"price": 2200,
+"p": [
+3,
+3,
+3,
+2,
+5,
+4,
+2,
+1
+],
+"tags": [
+"ナッツ",
+"洋梨",
+"炊きたてご飯"
+],
+"desc": "雄町らしい、ふくよかで奥行きのある旨み。"
+}
+]
+},
+{
+"id": "s-gozenshu",
+"name": "辻本店",
+"en": "Tsuji Honten",
+"region": "chugoku",
+"pref": "岡山",
+"lat": 35.07,
+"lon": 133.75,
+"type": "純米",
+"desc": "岡山県真庭市勝山の蔵。「御前酒」は、古い仕込み方「菩提酛」を復活させた。",
+"ex": [
+{
+"id": "s-gozenshu-bodaimoto",
+"label": "御前酒 菩提酛 純米",
+"name": "御前酒 菩提酛 純米",
+"en": "Gozenshu Bodaimoto Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1500,
+"p": [
+2,
+2,
+3,
+4,
+4,
+4,
+1,
+1
+],
+"tags": [
+"ヨーグルト",
+"柑橘",
+"米粉"
+],
+"desc": "菩提酛ならではの爽やかな酸と旨み。"
+}
+]
+},
+{
+"id": "s-rihaku",
+"name": "李白酒造",
+"en": "Rihaku",
+"region": "chugoku",
+"pref": "島根",
+"lat": 35.47,
+"lon": 133.06,
+"type": "純米",
+"desc": "松江市の蔵。中国の詩人の名を冠した「李白」で知られる。",
+"ex": [
+{
+"id": "s-rihaku-tj",
+"label": "李白 特別純米",
+"name": "李白 特別純米 やまたのおろち",
+"en": "Rihaku Tokubetsu Junmai",
+"type": "特別純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1500,
+"p": [
+2,
+2,
+4,
+2,
+3,
+3,
+2,
+1
+],
+"tags": [
+"米粉",
+"柑橘",
+"ナッツ"
+],
+"desc": "すっきりとした辛口で、食事を引き立てる。"
+}
+]
+},
+{
+"id": "s-hiokizakura",
+"name": "山根酒造場",
+"en": "Yamane Shuzojo",
+"region": "chugoku",
+"pref": "鳥取",
+"lat": 35.48,
+"lon": 134.12,
+"type": "純米",
+"desc": "鳥取市の蔵。「日置桜」は、燗にして旨い純米酒を追い求める。",
+"ex": [
+{
+"id": "s-hiokizakura-junmai",
+"label": "日置桜 純米",
+"name": "日置桜 純米",
+"en": "Hiokizakura Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1600,
+"p": [
+1,
+1,
+4,
+4,
+5,
+4,
+1,
+2
+],
+"tags": [
+"ナッツ",
+"炊きたてご飯"
+],
+"desc": "力強い旨みとキレ。熱燗にしても崩れない。"
+}
+]
+},
+{
+"id": "s-ugonotsuki",
+"name": "相原酒造",
+"en": "Aihara Shuzo",
+"region": "chugoku",
+"pref": "広島",
+"lat": 34.25,
+"lon": 132.66,
+"type": "純米",
+"desc": "広島県呉市の蔵。「雨後の月」で知られる。",
+"ex": [
+{
+"id": "s-ugonotsuki-jg",
+"label": "雨後の月 純米吟醸",
+"name": "雨後の月 純米吟醸",
+"en": "Ugo no Tsuki Junmai Ginjo",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1800,
+"p": [
+4,
+2,
+3,
+2,
+3,
+2,
+3,
+0
+],
+"tags": [
+"洋梨",
+"白い花",
+"柑橘"
+],
+"desc": "透明感のある香りと、なめらかな味わい。"
+}
+]
+},
+{
+"id": "s-houken",
+"name": "宝剣酒造",
+"en": "Houken Shuzo",
+"region": "chugoku",
+"pref": "広島",
+"lat": 34.23,
+"lon": 132.61,
+"type": "純米",
+"desc": "広島県呉市の蔵。「宝剣」は、蔵の湧き水で仕込む。",
+"ex": [
+{
+"id": "s-houken-junmai",
+"label": "宝剣 純米 超辛口",
+"name": "宝剣 純米 超辛口",
+"en": "Houken Junmai Chokarakuchi",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1500,
+"p": [
+2,
+1,
+5,
+2,
+3,
+2,
+2,
+0
+],
+"tags": [
+"米粉",
+"柑橘",
+"ミネラル"
+],
+"desc": "キレのよい辛口ながら、米の旨みも感じられる。"
+}
+]
+},
+{
+"id": "s-gokyo",
+"name": "酒井酒造",
+"en": "Sakai Shuzo",
+"region": "chugoku",
+"pref": "山口",
+"lat": 34.17,
+"lon": 132.22,
+"type": "純米",
+"desc": "山口県岩国市の蔵。「五橋」の名は錦帯橋の5つのアーチに由来する。",
+"ex": [
+{
+"id": "s-gokyo-junmai",
+"label": "五橋 純米",
+"name": "五橋 純米",
+"en": "Gokyo Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1400,
+"p": [
+2,
+2,
+3,
+3,
+4,
+4,
+1,
+1
+],
+"tags": [
+"炊きたてご飯",
+"米粉",
+"洋梨"
+],
+"desc": "やわらかくふくらむ、穏やかな純米酒。"
+}
+]
+},
+{
 "id": "s-suigei",
 "name": "酔鯨酒造",
 "en": "Suigei",
@@ -2071,6 +4377,132 @@ const SAKE_BREWERIES = [
 "ナッツ"
 ],
 "desc": "すっきりとした超辛口。坂本龍馬の「船中八策」にちなむ。"
+}
+]
+},
+{
+"id": "s-minami",
+"name": "南酒造場",
+"en": "Minami Shuzojo",
+"region": "shikoku",
+"pref": "高知",
+"lat": 33.44,
+"lon": 133.98,
+"type": "純米",
+"desc": "高知県安田町の蔵。「南」は、すっきりとした味わいで人気。",
+"ex": [
+{
+"id": "s-minami-tj",
+"label": "南 特別純米",
+"name": "南 特別純米",
+"en": "Minami Tokubetsu Junmai",
+"type": "特別純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1600,
+"p": [
+3,
+2,
+4,
+3,
+3,
+2,
+3,
+0
+],
+"tags": [
+"柑橘",
+"りんご",
+"ミネラル"
+],
+"desc": "爽やかな香りとキレのよさ。"
+}
+]
+},
+{
+"id": "s-bijofu",
+"name": "濵川商店",
+"en": "Hamakawa Shoten",
+"region": "shikoku",
+"pref": "高知",
+"lat": 33.43,
+"lon": 134.02,
+"type": "純米",
+"desc": "高知県田野町の蔵。「美丈夫」で知られる。",
+"ex": [
+{
+"id": "s-bijofu-jg",
+"label": "美丈夫 純米吟醸",
+"name": "美丈夫 純米吟醸",
+"en": "Bijofu Junmai Ginjo",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1700,
+"p": [
+4,
+2,
+4,
+2,
+3,
+2,
+3,
+0
+],
+"tags": [
+"洋梨",
+"柑橘",
+"白い花"
+],
+"desc": "華やかな香りと、すっきりとした後味。"
+}
+]
+},
+{
+"id": "s-ishizuchi",
+"name": "石鎚酒造",
+"en": "Ishizuchi Shuzo",
+"region": "shikoku",
+"pref": "愛媛",
+"lat": 33.91,
+"lon": 133.18,
+"type": "純米",
+"desc": "愛媛県西条市の蔵。家族で丁寧に造る「石鎚」で知られる。",
+"ex": [
+{
+"id": "s-ishizuchi-green",
+"label": "石鎚 純米吟醸 緑ラベル",
+"name": "石鎚 純米吟醸 緑ラベル",
+"en": "Ishizuchi Junmai Ginjo Green",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1700,
+"p": [
+3,
+2,
+3,
+2,
+3,
+2,
+2,
+0
+],
+"tags": [
+"洋梨",
+"米粉",
+"白い花"
+],
+"desc": "穏やかな香りの、料理に寄り添う純米吟醸。"
 }
 ]
 },
@@ -2204,221 +4636,22 @@ const SAKE_BREWERIES = [
 ]
 },
 {
-"id": "s-kikusui",
-"name": "菊水酒造",
-"en": "Kikusui Sake",
-"region": "hokuriku",
-"pref": "新潟",
-"lat": 37.95,
-"lon": 139.33,
+"id": "s-tenzan",
+"name": "天山酒造",
+"en": "Tenzan",
+"region": "kyushu",
+"pref": "佐賀",
+"lat": 33.27,
+"lon": 130.2,
 "type": "純米",
-"desc": "新潟県新発田市の蔵。日本初の缶入り生原酒「ふなぐち」で知られる。",
+"desc": "佐賀県小城市の蔵。「天山」で知られる。",
 "ex": [
 {
-"id": "s-kikusui-funaguchi",
-"label": "ふなぐち菊水一番しぼり",
-"name": "ふなぐち菊水一番しぼり",
-"en": "Funaguchi Kikusui Ichiban Shibori",
-"type": "本醸造",
-"age": "",
-"abv": "19",
-"cask": "",
-"grapes": [],
-"color": "clear",
-"price": 300,
-"p": [
-3,
-4,
-2,
-2,
-4,
-4,
-4,
-0
-],
-"tags": [
-"メロン",
-"米粉",
-"蜂蜜"
-],
-"desc": "しぼりたての生原酒を缶に詰めた、濃厚でフレッシュな味わい。",
-"priceNote": "200ml缶1本のおおよその店頭価格です"
-}
-]
-},
-{
-"id": "s-daishichi",
-"name": "大七酒造",
-"en": "Daishichi",
-"region": "tohoku",
-"pref": "福島",
-"lat": 37.59,
-"lon": 140.43,
-"type": "純米",
-"desc": "福島県二本松市の蔵。伝統の生酛造りを守り続ける。",
-"ex": [
-{
-"id": "s-daishichi-kimoto",
-"label": "大七 純米生酛",
-"name": "大七 純米生酛",
-"en": "Daishichi Junmai Kimoto",
-"type": "純米",
-"age": "",
-"abv": "",
-"cask": "",
-"grapes": [],
-"color": "paleyellow",
-"price": 1600,
-"p": [
-2,
-2,
-3,
-3,
-5,
-5,
-1,
-2
-],
-"tags": [
-"炊きたてご飯",
-"ナッツ",
-"ヨーグルト"
-],
-"desc": "生酛らしい厚みのある旨みと酸。燗でふくらむ。"
-}
-]
-},
-{
-"id": "s-ichinokura",
-"name": "一ノ蔵",
-"en": "Ichinokura",
-"region": "tohoku",
-"pref": "宮城",
-"lat": 38.58,
-"lon": 140.95,
-"type": "純米",
-"desc": "宮城県大崎市の蔵。4つの蔵が合同して生まれた。",
-"ex": [
-{
-"id": "s-ichinokura-karakuchi",
-"label": "一ノ蔵 無鑑査本醸造 辛口",
-"name": "一ノ蔵 無鑑査本醸造 辛口",
-"en": "Ichinokura Mukansa Karakuchi",
-"type": "本醸造",
-"age": "",
-"abv": "",
-"cask": "",
-"grapes": [],
-"color": "clear",
-"price": 1100,
-"p": [
-1,
-1,
-5,
-2,
-3,
-2,
-2,
-0
-],
-"tags": [
-"米粉",
-"ミネラル"
-],
-"desc": "すっきりとした辛口の定番。"
-},
-{
-"id": "s-ichinokura-suzune",
-"label": "すず音",
-"name": "一ノ蔵 発泡清酒 すず音",
-"en": "Ichinokura Suzune",
-"type": "スパークリング",
-"age": "",
-"abv": "5",
-"cask": "",
-"grapes": [],
-"color": "clear",
-"price": 700,
-"p": [
-4,
-5,
-1,
-4,
-1,
-1,
-5,
-0
-],
-"tags": [
-"りんご",
-"ヨーグルト",
-"ガス感"
-],
-"desc": "瓶内で発酵させた、甘酸っぱい泡の日本酒。",
-"priceNote": "300mlのおおよその店頭価格です"
-}
-]
-},
-{
-"id": "s-hanaabi",
-"name": "南陽醸造",
-"en": "Nanyo Jozo",
-"region": "kanto",
-"pref": "埼玉",
-"lat": 36.19,
-"lon": 139.52,
-"type": "純米",
-"desc": "埼玉県羽生市の蔵。「花陽浴（はなあび）」で人気を集めた。",
-"ex": [
-{
-"id": "s-hanaabi-jg",
-"label": "花陽浴 純米吟醸",
-"name": "花陽浴 純米吟醸",
-"en": "Hanaabi Junmai Ginjo",
+"id": "s-tenzan-jg",
+"label": "天山 純米吟醸",
+"name": "天山 純米吟醸",
+"en": "Tenzan Junmai Ginjo",
 "type": "純米吟醸",
-"age": "",
-"abv": "",
-"cask": "",
-"grapes": [],
-"color": "clear",
-"price": 1900,
-"p": [
-5,
-4,
-2,
-3,
-3,
-2,
-4,
-0
-],
-"tags": [
-"パイナップル",
-"メロン",
-"白桃"
-],
-"desc": "トロピカルな香りと濃密な甘み。入手困難な人気銘柄。",
-"priceNote": "定価のおおよその目安です。品薄で、店頭では手に入りにくく、販売価格が大きく上下することがあります"
-}
-]
-},
-{
-"id": "s-sawaya",
-"name": "松本酒造",
-"en": "Matsumoto Shuzo",
-"region": "kinki",
-"pref": "京都",
-"lat": 34.92,
-"lon": 135.77,
-"type": "純米",
-"desc": "京都・伏見の蔵。「澤屋まつもと」で注目を集める。",
-"ex": [
-{
-"id": "s-sawaya-shutosha",
-"label": "澤屋まつもと 守破離",
-"name": "澤屋まつもと 守破離",
-"en": "Sawaya Matsumoto Shuhari",
-"type": "純米",
 "age": "",
 "abv": "",
 "cask": "",
@@ -2426,52 +4659,138 @@ const SAKE_BREWERIES = [
 "color": "clear",
 "price": 1700,
 "p": [
+4,
+3,
 3,
 2,
-4,
-4,
 3,
 2,
 3,
 0
 ],
 "tags": [
-"柑橘",
-"りんご",
-"ミネラル"
+"洋梨",
+"メロン",
+"米粉"
 ],
-"desc": "爽やかな酸とキレのよさ。食事を引き立てる。"
+"desc": "ふくよかな香りと、やわらかな旨み。"
 }
 ]
 },
 {
-"id": "s-shichihonyari",
-"name": "冨田酒造",
-"en": "Tomita Shuzo",
-"region": "kinki",
-"pref": "滋賀",
-"lat": 35.5,
-"lon": 136.21,
+"id": "s-niwanouguisu",
+"name": "山口酒造場",
+"en": "Yamaguchi Shuzojo",
+"region": "kyushu",
+"pref": "福岡",
+"lat": 33.3,
+"lon": 130.6,
 "type": "純米",
-"desc": "滋賀県長浜市木之本の蔵。「七本鎗」で知られる。",
+"desc": "福岡県久留米市の蔵。「庭のうぐいす」で知られる。",
 "ex": [
 {
-"id": "s-shichihonyari-junmai",
-"label": "七本鎗 純米",
-"name": "七本鎗 純米",
-"en": "Shichihonyari Junmai",
+"id": "s-niwanouguisu-tj",
+"label": "庭のうぐいす 特別純米",
+"name": "庭のうぐいす 特別純米",
+"en": "Niwa no Uguisu Tokubetsu Junmai",
+"type": "特別純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1500,
+"p": [
+3,
+3,
+3,
+2,
+3,
+2,
+3,
+0
+],
+"tags": [
+"洋梨",
+"米粉",
+"白い花"
+],
+"desc": "やさしい香りとまろやかな味わい。"
+}
+]
+},
+{
+"id": "s-tanaka65",
+"name": "白糸酒造",
+"en": "Shiraito Shuzo",
+"region": "kyushu",
+"pref": "福岡",
+"lat": 33.55,
+"lon": 130.2,
+"type": "純米",
+"desc": "福岡県糸島市の蔵。昔ながらの「ハネ木搾り」を守る。",
+"ex": [
+{
+"id": "s-tanaka65-junmai",
+"label": "田中六五 純米",
+"name": "田中六五 純米",
+"en": "Tanaka 65 Junmai",
+"type": "純米",
+"age": "65",
+"abv": "",
+"cask": "山田錦",
+"grapes": [
+"yamadanishiki"
+],
+"color": "clear",
+"price": 1700,
+"p": [
+3,
+2,
+3,
+2,
+4,
+3,
+2,
+0
+],
+"tags": [
+"炊きたてご飯",
+"洋梨",
+"米粉"
+],
+"desc": "糸島産の山田錦を65%まで磨いた、旨みのある純米酒。"
+}
+]
+},
+{
+"id": "s-nishinoseki",
+"name": "萱島酒造",
+"en": "Kayashima Shuzo",
+"region": "kyushu",
+"pref": "大分",
+"lat": 33.56,
+"lon": 131.73,
+"type": "純米",
+"desc": "大分県国東市の蔵。「西の関」で知られる。",
+"ex": [
+{
+"id": "s-nishinoseki-junmai",
+"label": "西の関 手造り純米",
+"name": "西の関 手造り純米",
+"en": "Nishinoseki Tezukuri Junmai",
 "type": "純米",
 "age": "",
 "abv": "",
 "cask": "",
 "grapes": [],
 "color": "clear",
-"price": 1600,
+"price": 1500,
 "p": [
 2,
+3,
+3,
 2,
-3,
-3,
 4,
 4,
 1,
@@ -2479,95 +4798,10 @@ const SAKE_BREWERIES = [
 ],
 "tags": [
 "炊きたてご飯",
-"ナッツ"
-],
-"desc": "米の旨みがしっかりとした、燗に向く純米酒。"
-}
-]
-},
-{
-"id": "s-gangi",
-"name": "八百新酒造",
-"en": "Yaoshin Shuzo",
-"region": "chugoku",
-"pref": "山口",
-"lat": 34.17,
-"lon": 132.22,
-"type": "純米",
-"desc": "山口県岩国市の蔵。「雁木」は無ろ過の純米酒にこだわる。",
-"ex": [
-{
-"id": "s-gangi-hitotsubi",
-"label": "雁木 純米 無濾過生原酒 ひとつび",
-"name": "雁木 純米 無濾過生原酒 ひとつび",
-"en": "Gangi Hitotsubi",
-"type": "純米",
-"age": "",
-"abv": "",
-"cask": "",
-"grapes": [],
-"color": "clear",
-"price": 1700,
-"p": [
-3,
-3,
-3,
-3,
-4,
-3,
-4,
-0
-],
-"tags": [
-"メロン",
 "米粉",
-"柑橘"
+"蜂蜜"
 ],
-"desc": "しぼったままの力強い旨みとフレッシュさ。"
-}
-]
-},
-{
-"id": "s-born",
-"name": "加藤吟醸本店",
-"en": "Katoukichibee Shouten",
-"region": "hokuriku",
-"pref": "福井",
-"lat": 35.96,
-"lon": 136.18,
-"type": "純米",
-"desc": "福井県鯖江市の蔵。「梵（ぼん）」は熟成させた純米大吟醸で知られる。",
-"ex": [
-{
-"id": "s-born-gold",
-"label": "梵 ゴールド",
-"name": "梵 ゴールド 無濾過純米大吟醸",
-"en": "Born Gold",
-"type": "純米大吟醸",
-"age": "",
-"abv": "",
-"cask": "山田錦",
-"grapes": [
-"yamadanishiki"
-],
-"color": "clear",
-"price": 2800,
-"p": [
-4,
-3,
-3,
-2,
-3,
-3,
-2,
-2
-],
-"tags": [
-"洋梨",
-"蜂蜜",
-"白い花"
-],
-"desc": "低温で熟成させた、なめらかで上品な純米大吟醸。"
+"desc": "ふくよかな旨みとやわらかな甘み。"
 }
 ]
 }
@@ -3051,6 +5285,438 @@ const SAKE_STORY = {
 "1860年、福井県鯖江市で創業した。",
 "純米大吟醸を低温でじっくり熟成させる造りを得意とする。",
 "「梵」は国際的な行事や晩餐会でも振る舞われてきた。"
+]
+},
+"s-kikuhime": {
+"founded": "安土桃山時代",
+"owner": "菊姫",
+"story": [
+"安土桃山時代の天正年間に創業したと伝わる、白山市鶴来の老舗。",
+"兵庫県産の山田錦を使い、手間のかかる山廃仕込みと、蔵での長期熟成を大切にする。",
+"「加賀の菊酒」の伝統を受け継ぐ、濃醇な酒の代表格として知られる。"
+]
+},
+"s-kakurei": {
+"founded": "1717年",
+"owner": "青木酒造",
+"story": [
+"1717年、新潟県塩沢で創業した。",
+"銘柄名は、この地の文人・鈴木牧之が命名したと伝わる。",
+"雪国の米と水で、旨みのあるやわらかな酒を造る。"
+]
+},
+"s-kagetora": {
+"founded": "江戸時代後期",
+"owner": "諸橋酒造",
+"story": [
+"江戸時代後期に創業した、長岡市栃尾の蔵。",
+"超軟水の湧き水「杜々の森名水」を仕込みに使う。",
+"銘柄名は、栃尾にゆかりの深い上杉謙信（長尾景虎）にちなむ。"
+]
+},
+"s-haneya": {
+"founded": "大正時代",
+"owner": "富美菊酒造",
+"story": [
+"大正時代に富山市で創業した。",
+"少量を丁寧に仕込み、香り高く透明感のある酒を造る。",
+"「羽根屋」は全国から注目される銘柄に育った。"
+]
+},
+"s-hidakami": {
+"founded": "江戸時代末期",
+"owner": "平孝酒造",
+"story": [
+"江戸時代末期に宮城県石巻市で創業した。",
+"港町の蔵として、寿司や魚料理に合う酒を目指している。",
+"東日本大震災で被災したが、酒造りを続けてきた。"
+]
+},
+"s-tatenokawa": {
+"founded": "1832年",
+"owner": "楯の川酒造",
+"story": [
+"1832年、山形県酒田市で創業した。",
+"2010年に、造る酒をすべて純米大吟醸に切り替えた。",
+"海外への輸出にも積極的に取り組んでいる。"
+]
+},
+"s-kudokijozu": {
+"founded": "明治時代",
+"owner": "亀の井酒造",
+"story": [
+"明治時代に山形県鶴岡市で創業した。",
+"華やかな香りの吟醸酒を得意とし、さまざまな酒米で造り分ける。",
+"「くどき上手」は吟醸酒ファンに人気の銘柄。"
+]
+},
+"s-kariho": {
+"founded": "大正時代",
+"owner": "刈穂酒造",
+"story": [
+"大正時代に秋田県大仙市で創業した。",
+"手間のかかる山廃仕込みと、昔ながらの槽搾りを守る。",
+"山廃仕込みの辛口酒の代表的な銘柄として知られる。"
+]
+},
+"s-mansaku": {
+"founded": "1689年",
+"owner": "日の丸醸造",
+"story": [
+"1689年、秋田県横手市で創業した。",
+"雪国の冷涼な気候を生かし、穏やかな香りの吟醸酒を造る。",
+"銘柄名は、横手を舞台にしたテレビドラマにちなむ。"
+]
+},
+"s-hassen": {
+"founded": "1775年",
+"owner": "八戸酒造",
+"story": [
+"1775年、青森県八戸市で創業した。",
+"地元の米と水、酵母にこだわった酒造りを続ける。",
+"「陸奥八仙」は、若い世代が手がける人気銘柄。"
+]
+},
+"s-houhai": {
+"founded": "昭和初期",
+"owner": "三浦酒造",
+"story": [
+"昭和初期に青森県弘前市で創業した、家族で営む小さな蔵。",
+"銘柄と同じ名の酒米「豊盃米」を使い、香り高い酒を造る。",
+"少量生産のため、品薄が続く人気銘柄。"
+]
+},
+"s-naraman": {
+"founded": "明治時代",
+"owner": "夢心酒造",
+"story": [
+"明治時代に福島県喜多方市で創業した。",
+"福島の米と、飯豊山の伏流水で仕込む。",
+"「奈良萬」は、会津の名酒のひとつとして人気を集める。"
+]
+},
+"s-aizumusume": {
+"founded": "明治時代",
+"owner": "高橋庄作酒造店",
+"story": [
+"明治時代に会津若松市で創業した。",
+"蔵のまわりの田んぼで米を育てる「土産土法」を掲げる。",
+"地元の米と水、人で造る、会津の酒らしい純米酒が持ち味。"
+]
+},
+"s-suehiro": {
+"founded": "1850年",
+"owner": "末廣酒造",
+"story": [
+"1850年、会津若松市で創業した。",
+"明治時代から山廃仕込みに取り組み、その伝統を受け継ぐ。",
+"会津を代表する老舗として、蔵の見学も人気。"
+]
+},
+"s-shinkame": {
+"founded": "江戸時代後期",
+"owner": "神亀酒造",
+"story": [
+"江戸時代後期に創業した、埼玉県蓮田市の蔵。",
+"1987年、戦後初めて造る酒をすべて純米酒にした。熟成させた純米酒の燗のおいしさを広めた。",
+"「純米酒の神亀」として、日本酒好きに広く知られる。"
+]
+},
+"s-teradahonke": {
+"founded": "江戸時代",
+"owner": "寺田本家",
+"story": [
+"江戸時代に千葉県神崎町で創業した。",
+"蔵に住みつく微生物の力を生かし、生酛造りや無農薬の米による「自然酒」を造る。",
+"発酵の文化を伝える蔵として、全国にファンを持つ。"
+]
+},
+"s-akabu": {
+"founded": "明治時代",
+"owner": "赤武酒造",
+"story": [
+"明治時代に岩手県大槌町で創業した。",
+"東日本大震災で蔵を失い、盛岡市に移って酒造りを再開した。",
+"若い杜氏が造る「AKABU」は、全国的な人気銘柄となった。"
+]
+},
+"s-shichiken": {
+"founded": "1750年",
+"owner": "山梨銘醸",
+"story": [
+"1750年、甲州街道の宿場町・台ヶ原（現在の北杜市白州）で創業した。",
+"南アルプスの名水で仕込む。",
+"明治天皇が宿泊した際に贈られた「竹林の七賢人」の欄間が、銘柄名の由来。"
+]
+},
+"s-kaiun": {
+"founded": "1872年",
+"owner": "土井酒造場",
+"story": [
+"1872年、静岡県掛川市で創業した。",
+"能登杜氏の名人・波瀬正吉のもとで、静岡吟醸の評価を高めた。",
+"静岡酵母を使った、穏やかな香りの酒が持ち味。"
+]
+},
+"s-kikuyoi": {
+"founded": "",
+"owner": "青島酒造",
+"story": [
+"静岡県藤枝市の蔵。",
+"蔵元自らが米づくりから関わり、丁寧に酒を造る。",
+"静岡らしい穏やかで上品な酒として知られる。"
+]
+},
+"s-daishinshu": {
+"founded": "明治時代",
+"owner": "大信州酒造",
+"story": [
+"明治時代に長野県で創業した。",
+"長野県産の米と、北アルプスの伏流水で仕込む。",
+"すっきりとした香り高い酒で、長野を代表する銘柄のひとつ。"
+]
+},
+"s-yoakemae": {
+"founded": "江戸時代末期",
+"owner": "小野酒造店",
+"story": [
+"江戸時代末期に長野県辰野町で創業した。",
+"中山道の宿場町の蔵として、地元の米と水で酒を造る。",
+"銘柄名は、島崎藤村の小説「夜明け前」から許しを得て名づけられた。"
+]
+},
+"s-matsunotsukasa": {
+"founded": "1860年",
+"owner": "松瀬酒造",
+"story": [
+"1860年、滋賀県竜王町で創業した。",
+"地元の契約農家と米づくりから取り組む。",
+"透明感のある酒で、滋賀を代表する銘柄のひとつ。"
+]
+},
+"s-furosen": {
+"founded": "江戸時代末期",
+"owner": "上原酒造",
+"story": [
+"江戸時代末期に滋賀県高島市で創業した。",
+"木桶での仕込みと、山廃仕込みを守り続ける。",
+"蔵に住みつく乳酸菌を生かした、個性的な酒で知られる。"
+]
+},
+"s-eikun": {
+"founded": "1895年",
+"owner": "齊藤酒造",
+"story": [
+"1895年、京都・伏見で創業した。",
+"京都の酒米「祝」を使った酒に力を入れている。",
+"伏見の水で造る、やさしい味わいの酒が持ち味。"
+]
+},
+"s-akishika": {
+"founded": "明治時代",
+"owner": "秋鹿酒造",
+"story": [
+"明治時代に大阪府能勢町で創業した。",
+"自ら田んぼで米を育て、純米酒だけを造る。",
+"熟成させた純米酒の燗は、日本酒好きに高く評価されている。"
+]
+},
+"s-chikusen": {
+"founded": "1702年",
+"owner": "田治米",
+"story": [
+"1702年、兵庫県朝来市で創業した。",
+"地元の米を使い、燗にしておいしい純米酒を追い求める。",
+"生野銀山に近い山あいの蔵として知られる。"
+]
+},
+"s-tatsuriki": {
+"founded": "大正時代",
+"owner": "本田商店",
+"story": [
+"大正時代に兵庫県姫路市で創業した。",
+"酒米の王・山田錦の産地、播州の蔵として、山田錦にこだわる。",
+"「龍力」は兵庫を代表する銘柄のひとつ。"
+]
+},
+"s-okuharima": {
+"founded": "明治時代",
+"owner": "下村酒造店",
+"story": [
+"明治時代に兵庫県姫路市の山あいで創業した。",
+"純米酒だけを、少量で丁寧に仕込む。",
+"穏やかで飲み飽きない純米酒として、根強いファンを持つ。"
+]
+},
+"s-hanatomoe": {
+"founded": "",
+"owner": "美吉野醸造",
+"story": [
+"奈良県吉野町の蔵。",
+"奈良に伝わる「水酛（菩提酛）」など、古い造り方を生かす。",
+"酸の効いた個性的な酒で、日本酒好きの注目を集めている。"
+]
+},
+"s-kuroushi": {
+"founded": "江戸時代末期",
+"owner": "名手酒造店",
+"story": [
+"江戸時代末期に和歌山県海南市で創業した。",
+"銘柄名は、近くの海岸にある、黒い牛の形の岩にちなむ。",
+"和歌山を代表する銘柄として親しまれている。"
+]
+},
+"s-kid": {
+"founded": "昭和初期",
+"owner": "平和酒造",
+"story": [
+"昭和初期に和歌山県海南市で創業した。",
+"若い造り手たちが、香り高く飲みやすい酒を手頃な価格で届けている。",
+"「紀土」は全国的な人気銘柄となった。"
+]
+},
+"s-toshimori": {
+"founded": "明治時代",
+"owner": "利守酒造",
+"story": [
+"明治時代に岡山県赤磐市で創業した。",
+"一度は途絶えかけた地元の酒米「赤磐雄町」の栽培を、農家とともに復活させた。",
+"雄町の魅力を伝える蔵として知られる。"
+]
+},
+"s-gozenshu": {
+"founded": "1804年",
+"owner": "辻本店",
+"story": [
+"1804年、岡山県真庭市勝山で創業した。",
+"室町時代に奈良の寺で生まれたとされる「菩提酛」の造り方を復活させた。",
+"雄町を使った酒にも力を入れている。"
+]
+},
+"s-rihaku": {
+"founded": "明治時代",
+"owner": "李白酒造",
+"story": [
+"明治時代に松江市で創業した。",
+"銘柄名は酒好きで知られる唐の詩人・李白から。元首相の若槻礼次郎が名付けたと伝わる。",
+"食事に合う辛口の酒で知られる。"
+]
+},
+"s-hiokizakura": {
+"founded": "明治時代",
+"owner": "山根酒造場",
+"story": [
+"明治時代に鳥取市で創業した。",
+"熟成させた純米酒を、燗にしておいしく飲むことを大切にする。",
+"燗酒の名手として、日本酒好きに知られる蔵。"
+]
+},
+"s-ugonotsuki": {
+"founded": "明治時代",
+"owner": "相原酒造",
+"story": [
+"明治時代に広島県呉市で創業した。",
+"銘柄名は、徳冨蘆花の随筆の一節にちなむ。",
+"透明感のある吟醸酒で知られる、広島の名蔵。"
+]
+},
+"s-houken": {
+"founded": "明治時代",
+"owner": "宝剣酒造",
+"story": [
+"明治時代に広島県呉市で創業した。",
+"蔵の敷地に湧く水で仕込む。",
+"若い蔵元のもとで、キレのよい純米酒が評価を高めた。"
+]
+},
+"s-gokyo": {
+"founded": "明治時代",
+"owner": "酒井酒造",
+"story": [
+"明治時代に山口県岩国市で創業した。",
+"錦川の伏流水で仕込む。",
+"銘柄名は、名勝・錦帯橋の5つのアーチにちなむ。"
+]
+},
+"s-minami": {
+"founded": "明治時代",
+"owner": "南酒造場",
+"story": [
+"明治時代に高知県安田町で創業した。",
+"高知らしいキレのよさと、香りのよさを両立させた酒を造る。",
+"「南」は全国的な人気を集める銘柄となった。"
+]
+},
+"s-bijofu": {
+"founded": "明治時代",
+"owner": "濵川商店",
+"story": [
+"明治時代に高知県田野町で創業した。",
+"地元の水と、高知の酵母を生かした酒を造る。",
+"「美丈夫」は土佐の名酒として親しまれている。"
+]
+},
+"s-ishizuchi": {
+"founded": "大正時代",
+"owner": "石鎚酒造",
+"story": [
+"大正時代に愛媛県西条市で創業した。",
+"西日本最高峰・石鎚山の伏流水で、家族で丁寧に酒を造る。",
+"食事に寄り添う穏やかな酒として評価が高い。"
+]
+},
+"s-tenzan": {
+"founded": "明治時代",
+"owner": "天山酒造",
+"story": [
+"明治時代に佐賀県小城市で創業した。",
+"もとは水車を使った製粉業を営んでいた。",
+"佐賀の米と天山山系の水で、ふくよかな酒を造る。"
+]
+},
+"s-niwanouguisu": {
+"founded": "江戸時代",
+"owner": "山口酒造場",
+"story": [
+"江戸時代に福岡県久留米市で創業した。",
+"銘柄名は、蔵の庭の井戸に鶯が水を飲みに来たことに由来すると伝わる。",
+"やさしい味わいの酒で知られる。"
+]
+},
+"s-tanaka65": {
+"founded": "江戸時代末期",
+"owner": "白糸酒造",
+"story": [
+"江戸時代末期に福岡県糸島市で創業した。",
+"重い石で酒袋を押す、昔ながらの「ハネ木搾り」を守る。",
+"地元糸島の山田錦を使った「田中六五」で人気を集めた。"
+]
+},
+"s-nishinoseki": {
+"founded": "明治時代",
+"owner": "萱島酒造",
+"story": [
+"明治時代に大分県国東市で創業した。",
+"九州では珍しい、甘口でふくよかな酒の伝統を守る。",
+"「西の関」は大分を代表する銘柄。"
+]
+},
+"s-otokoyama": {
+"founded": "江戸時代（伊丹で創業）",
+"owner": "男山",
+"story": [
+"江戸時代の伊丹で名声を得た銘酒「男山」の流れをくむ。",
+"大雪山の伏流水と北の寒さを生かし、生酛造りの酒も手がける。",
+"北海道を代表する蔵として、海外でも評価されている。"
+]
+},
+"s-kamikawataisetsu": {
+"founded": "2017年",
+"owner": "上川大雪酒造",
+"story": [
+"2017年、北海道上川町に生まれた新しい蔵。",
+"北海道の酒米を使い、大雪山の伏流水で仕込む。",
+"北海道の各地に蔵を開き、地域とともに酒造りを広げている。"
 ]
 }
 };
