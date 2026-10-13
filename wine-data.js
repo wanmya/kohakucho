@@ -383,6 +383,8 @@ const WINE_PRODUCERS = [
    ex:[
     {id:'w-conchaytoro-cd',label:'カッシェロ・デル・ディアブロ',name:'カッシェロ・デル・ディアブロ カベルネ・ソーヴィニヨン',en:'Casillero del Diablo Cabernet Sauvignon',cask:'カベルネ・ソーヴィニヨン',grapes:['cabernet'],color:'ruby',price:1500,
      p:[5,3,3,3,0,2,0,1],tags:['カシス','ブラックチェリー','バニラ'],desc:'熟した果実とやわらかな口当たり。手頃な定番。'},
+    {id:'w-conchaytoro-fr',label:'フロンテラ カベルネ・ソーヴィニヨン',name:'フロンテラ カベルネ・ソーヴィニヨン',en:'Frontera Cabernet Sauvignon',cask:'カベルネ・ソーヴィニヨン',grapes:['cabernet'],color:'ruby',price:700,
+     p:[4,2,2,3,1,0,0,0],tags:['カシス','プラム','ジャム'],desc:'コンチャ・イ・トロの手頃なシリーズ。やわらかな果実味。'},
     {id:'w-conchaytoro-dm',label:'ドン・メルチョー',name:'ドン・メルチョー',en:'Don Melchor',cask:'カベルネ・ソーヴィニヨン主体',grapes:['cabernet'],color:'garnet',price:25000,
      p:[5,3,4,5,0,4,2,2],tags:['カシス','杉','ココア','ハーブ'],desc:'プエンテ・アルトの畑から生まれる、チリを代表する高級カベルネ。'},
    ]},
@@ -473,6 +475,126 @@ const WINE_PRODUCERS = [
    ex:[
     {id:'w-manns-sol',label:'ソラリス 信州東山 カベルネ',name:'ソラリス 信州東山 カベルネ・ソーヴィニヨン',en:'Solaris Shinshu Higashiyama Cabernet Sauvignon',cask:'カベルネ・ソーヴィニヨン',grapes:['cabernet'],color:'garnet',price:10000,
      p:[4,3,3,4,0,3,1,2],tags:['カシス','杉','スミレ','バニラ'],desc:'冷涼な信州で育った、上品でバランスのよいカベルネ。'},
+   ]},
+
+  /* ───────── 手頃なデイリーワイン（スーパーなどで買いやすいもの） ───────── */
+  {id:'w-santahelena',name:'サンタ・ヘレナ',en:'Santa Helena',region:'chile',lat:-34.590,lon:-71.000,type:'赤',daily:true,
+   desc:'チリの老舗ワイナリー。アルパカのラベルの手頃なワインが、日本のスーパーやコンビニでおなじみ。',
+   ex:[
+    {id:'w-alpaca-cm',label:'アルパカ カベルネ・メルロー',name:'サンタ・ヘレナ アルパカ カベルネ・メルロー',en:'Santa Helena Alpaca Cabernet Merlot',cask:'カベルネ・ソーヴィニヨン、メルロー',grapes:['cabernet','merlot'],color:'ruby',price:600,
+     p:[4,2,2,3,1,0,0,0],tags:['カシス','プラム','ジャム'],desc:'熟した果実のやわらかな甘さ。渋みが穏やかで、気軽に飲める赤。'},
+    {id:'w-alpaca-cs',label:'アルパカ シャルドネ・セミヨン',name:'サンタ・ヘレナ アルパカ シャルドネ・セミヨン',en:'Santa Helena Alpaca Chardonnay Semillon',type:'白',cask:'シャルドネ、セミヨン',grapes:['chardonnay','semillon'],color:'lemon',price:600,
+     p:[4,3,0,2,1,0,1,0],tags:['白桃','パイナップル','柑橘'],desc:'果実味がふくよかで、すっきりした後味の白。'},
+   ]},
+  {id:'w-conosur',name:'コノスル',en:'Cono Sur',region:'chile',lat:-34.710,lon:-71.040,type:'赤',daily:true,
+   desc:'自転車のラベルで知られるチリのワイナリー。手頃な価格で品種の個性がはっきりしたワインを造る。',
+   ex:[
+    {id:'w-conosur-bpn',label:'ビシクレタ ピノ・ノワール',name:'コノスル ビシクレタ ピノ・ノワール',en:'Cono Sur Bicicleta Pinot Noir',cask:'ピノ・ノワール',grapes:['pinot'],color:'ruby',price:1000,
+     p:[4,3,1,2,0,1,1,1],tags:['いちご','さくらんぼ','ラズベリー'],desc:'赤い果実の軽やかなピノ・ノワール。少し冷やしてもおいしい。'},
+    {id:'w-conosur-bcs',label:'ビシクレタ カベルネ・ソーヴィニヨン',name:'コノスル ビシクレタ カベルネ・ソーヴィニヨン',en:'Cono Sur Bicicleta Cabernet Sauvignon',cask:'カベルネ・ソーヴィニヨン',grapes:['cabernet'],color:'ruby',price:1000,
+     p:[4,3,3,3,0,1,0,1],tags:['カシス','ブラックチェリー','ピーマン'],desc:'カシスの果実味と、ほどよい渋み。'},
+    {id:'w-conosur-bsb',label:'ビシクレタ ソーヴィニヨン・ブラン',name:'コノスル ビシクレタ ソーヴィニヨン・ブラン',en:'Cono Sur Bicicleta Sauvignon Blanc',type:'白',cask:'ソーヴィニヨン・ブラン',grapes:['sauvignon'],color:'pale',price:1000,
+     p:[4,4,0,2,0,0,2,0],tags:['グレープフルーツ','ライム','ハーブ'],desc:'グレープフルーツやハーブの爽やかな香り。'},
+   ]},
+  {id:'w-santarita',name:'サンタ・リタ',en:'Santa Rita',region:'chile',lat:-33.770,lon:-70.680,type:'赤',daily:true,
+   desc:'チリの名門ワイナリー。「120（シエント・ベインテ）」シリーズは手頃な定番として親しまれている。',
+   ex:[
+    {id:'w-santarita-120cs',label:'120 カベルネ・ソーヴィニヨン',name:'サンタ・リタ 120 カベルネ・ソーヴィニヨン',en:'Santa Rita 120 Cabernet Sauvignon',cask:'カベルネ・ソーヴィニヨン',grapes:['cabernet'],color:'ruby',price:1000,
+     p:[4,3,3,3,0,1,0,1],tags:['カシス','プラム','黒胡椒'],desc:'しっかりした果実味と、ほどよい骨格の赤。'},
+   ]},
+  {id:'w-losvascos',name:'ロス・ヴァスコス',en:'Los Vascos',region:'chile',lat:-34.600,lon:-71.420,type:'赤',daily:true,
+   desc:'シャトー・ラフィット・ロートシルトの一族がチリで手がけるワイナリー。',
+   ex:[
+    {id:'w-losvascos-cs',label:'カベルネ・ソーヴィニヨン',name:'ロス・ヴァスコス カベルネ・ソーヴィニヨン',en:'Los Vascos Cabernet Sauvignon',cask:'カベルネ・ソーヴィニヨン',grapes:['cabernet'],color:'garnet',price:1800,
+     p:[4,3,3,3,0,1,1,1],tags:['カシス','ブラックチェリー','杉'],desc:'ボルドーを思わせる端正な味わいを、手頃な価格で。'},
+   ]},
+  {id:'w-trapiche',name:'トラピチェ',en:'Trapiche',region:'mendoza',lat:-32.990,lon:-68.780,type:'赤',daily:true,
+   desc:'アルゼンチン最大級のワイナリー。手頃なマルベックが人気。',
+   ex:[
+    {id:'w-trapiche-ocm',label:'オーク・カスク マルベック',name:'トラピチェ オーク・カスク マルベック',en:'Trapiche Oak Cask Malbec',cask:'マルベック',grapes:['malbec'],color:'purple',price:1500,
+     p:[5,3,3,4,0,2,0,1],tags:['ブラックベリー','プラム','スミレ','バニラ'],desc:'樽熟成によるバニラの香りと、熟した黒い果実。'},
+   ]},
+  {id:'w-tavernello',name:'タヴェルネッロ',en:'Tavernello',region:'italy_o',lat:44.280,lon:11.880,type:'赤',daily:true,
+   desc:'イタリアで広く飲まれているデイリーワインのブランド。軽やかで食事に合わせやすい。',
+   ex:[
+    {id:'w-tavernello-r',label:'ロッソ',name:'タヴェルネッロ ロッソ',en:'Tavernello Rosso',cask:'サンジョヴェーゼなど',grapes:['sangiovese'],color:'ruby',price:800,
+     p:[4,3,2,2,0,0,0,0],tags:['さくらんぼ','いちご','プラム'],desc:'さくらんぼのような果実味の、軽やかな赤。'},
+    {id:'w-tavernello-b',label:'ビアンコ',name:'タヴェルネッロ ビアンコ',en:'Tavernello Bianco',type:'白',cask:'トレッビアーノなど',grapes:[],color:'pale',price:800,
+     p:[3,3,0,1,0,0,1,0],tags:['青りんご','柑橘'],desc:'すっきり軽やかな辛口の白。'},
+   ]},
+  {id:'w-santero',name:'サンテロ',en:'Santero',region:'piemonte',lat:44.770,lon:8.150,type:'スパークリング',daily:true,
+   desc:'ピエモンテのスパークリングワインの造り手。甘口の「天使のアスティ」が日本で人気。',
+   ex:[
+    {id:'w-santero-asti',label:'天使のアスティ',name:'サンテロ 天使のアスティ',en:'Santero Asti',type:'スパークリング',abv:'7',cask:'モスカート',grapes:[],color:'pale',price:1500,
+     p:[5,3,0,1,4,0,0,0],tags:['白桃','メロン','白い花','蜂蜜'],desc:'マスカットの華やかな香りと、やさしい甘さの泡。アルコールは低め。'},
+    {id:'w-santero-ps',label:'ピノ・シャルドネ スプマンテ',name:'サンテロ ピノ・シャルドネ スプマンテ',en:'Santero Pinot Chardonnay Spumante',type:'スパークリング',cask:'ピノ・ビアンコ、シャルドネ',grapes:['chardonnay'],color:'pale',price:1200,
+     p:[3,4,0,2,1,0,1,0],tags:['青りんご','柑橘','白い花'],desc:'すっきりした辛口の泡。乾杯にも。'},
+   ]},
+  {id:'w-felixsolis',name:'フェリックス・ソリス',en:'Félix Solís',region:'spain_o',lat:38.760,lon:-3.380,type:'赤',daily:true,
+   desc:'スペイン中部ラ・マンチャを拠点とする大手。「ヴィーニャ・アルバリ」が手頃な定番。',
+   ex:[
+    {id:'w-albali-res',label:'ヴィーニャ・アルバリ レセルバ',name:'ヴィーニャ・アルバリ レセルバ',en:'Viña Albali Reserva',cask:'テンプラニーリョ',grapes:['tempranillo'],color:'garnet',price:1000,
+     p:[4,3,2,3,0,2,0,2],tags:['プラム','さくらんぼ','バニラ'],desc:'樽熟成によるバニラの香りとやわらかな果実。熟成ワインを手頃に楽しめる。'},
+   ]},
+  {id:'w-elcoto',name:'エル・コト',en:'El Coto',region:'rioja',lat:42.470,lon:-2.550,type:'赤',daily:true,
+   desc:'リオハの人気ワイナリー。手頃な価格の樽熟成ワインで知られる。',
+   ex:[
+    {id:'w-elcoto-cr',label:'クリアンサ',name:'エル・コト クリアンサ',en:'El Coto Crianza',cask:'テンプラニーリョ',grapes:['tempranillo'],color:'garnet',price:1600,
+     p:[4,3,2,3,0,3,1,2],tags:['さくらんぼ','バニラ','ココナッツ'],desc:'アメリカンオークのバニラやココナッツのような香り。'},
+   ]},
+  {id:'w-mateus',name:'マテウス',en:'Mateus',region:'douro',lat:41.300,lon:-7.740,type:'ロゼ',daily:true,
+   desc:'丸く平たいボトルでおなじみの、ポルトガルのロゼワイン。',
+   ex:[
+    {id:'w-mateus-rose',label:'マテウス・ロゼ',name:'マテウス・ロゼ',en:'Mateus Rosé',type:'ロゼ',cask:'バガ、トゥーリガ・フランカなど',grapes:[],color:'rose',price:1200,
+     p:[4,3,0,2,2,0,0,0],tags:['いちご','ラズベリー','さくらんぼ'],desc:'やや甘口で、かすかに泡を感じる軽やかなロゼ。よく冷やして。'},
+   ]},
+  {id:'w-schwarzekatz',name:'ツェラー・シュヴァルツェ・カッツ（黒猫）',en:'Zeller Schwarze Katz',region:'mosel',lat:50.030,lon:7.180,type:'白',daily:true,
+   desc:'黒猫のラベルで知られる、モーゼル地方ツェル村のワイン。',
+   ex:[
+    {id:'w-schwarzekatz-qba',label:'ツェラー・シュヴァルツェ・カッツ',name:'ツェラー・シュヴァルツェ・カッツ',en:'Zeller Schwarze Katz',cask:'リースリング、ミュラー・トゥルガウなど',grapes:['riesling'],color:'pale',price:1200,
+     p:[4,3,0,2,3,0,1,0],tags:['青りんご','白桃','蜂蜜'],desc:'やさしい甘さの、飲みやすい白。'},
+   ]},
+  {id:'w-jacobscreek',name:'ジェイコブス・クリーク',en:"Jacob's Creek",region:'australia',lat:-34.560,lon:138.990,type:'赤',daily:true,
+   desc:'オーストラリアのバロッサ・ヴァレーで生まれた、世界的なデイリーワインのブランド。',
+   ex:[
+    {id:'w-jc-sc',label:'シラーズ・カベルネ',name:'ジェイコブス・クリーク シラーズ・カベルネ',en:"Jacob's Creek Shiraz Cabernet",cask:'シラーズ、カベルネ・ソーヴィニヨン',grapes:['syrah','cabernet'],color:'purple',price:1300,
+     p:[5,3,2,3,0,1,0,1],tags:['ブラックベリー','プラム','黒胡椒'],desc:'熟した黒い果実と、ほのかなスパイス。'},
+    {id:'w-jc-ch',label:'シャルドネ',name:'ジェイコブス・クリーク シャルドネ',en:"Jacob's Creek Chardonnay",type:'白',cask:'シャルドネ',grapes:['chardonnay'],color:'lemon',price:1300,
+     p:[4,3,0,3,0,1,1,0],tags:['白桃','メロン','柑橘'],desc:'白桃やメロンの果実味の、まろやかな白。'},
+   ]},
+  {id:'w-oysterbay',name:'オイスター・ベイ',en:'Oyster Bay',region:'marlborough',lat:-41.530,lon:173.950,type:'白',daily:true,
+   desc:'ニュージーランドのマールボロを代表する人気ブランド。',
+   ex:[
+    {id:'w-oysterbay-sb',label:'ソーヴィニヨン・ブラン',name:'オイスター・ベイ ソーヴィニヨン・ブラン',en:'Oyster Bay Sauvignon Blanc',cask:'ソーヴィニヨン・ブラン',grapes:['sauvignon'],color:'pale',price:2000,
+     p:[5,4,0,2,0,0,2,0],tags:['パッションフルーツ','グレープフルーツ','ライム'],desc:'パッションフルーツやライムのはじけるような香り。'},
+   ]},
+  {id:'w-carlorossi',name:'カルロ・ロッシ',en:'Carlo Rossi',region:'california',lat:37.640,lon:-120.990,type:'赤',daily:true,
+   desc:'大容量ボトルでおなじみの、カリフォルニアのデイリーワイン。',
+   ex:[
+    {id:'w-carlorossi-red',label:'レッド',name:'カルロ・ロッシ レッド',en:'Carlo Rossi California Red',cask:'複数の品種のブレンド',grapes:[],color:'ruby',price:1300,priceNote:'1.5Lボトルの国内のおおよその店頭価格です。店舗によって変わります',
+     p:[4,2,1,2,2,0,0,0],tags:['いちご','ジャム','プラム'],desc:'ほんのり甘く、軽やかで飲みやすい赤。'},
+   ]},
+  {id:'w-vieillefe',name:'ラ・ヴィエイユ・フェルム',en:'La Vieille Ferme',region:'rhone',lat:44.080,lon:5.050,type:'赤',daily:true,
+   desc:'ボーカステルのペラン家が手がける、ニワトリのラベルの手頃なワイン。',
+   ex:[
+    {id:'w-vieillefe-r',label:'ルージュ',name:'ラ・ヴィエイユ・フェルム ルージュ',en:'La Vieille Ferme Rouge',cask:'グルナッシュ、シラーなど',grapes:['grenache','syrah'],color:'ruby',price:1400,
+     p:[4,3,2,3,0,0,1,1],tags:['ラズベリー','黒胡椒','ハーブ'],desc:'赤い果実とスパイスの、気取らない南フランスの赤。'},
+    {id:'w-vieillefe-b',label:'ブラン',name:'ラ・ヴィエイユ・フェルム ブラン',en:'La Vieille Ferme Blanc',type:'白',cask:'グルナッシュ・ブランなど',grapes:[],color:'pale',price:1400,
+     p:[3,3,0,2,0,0,2,0],tags:['洋梨','柑橘','白い花'],desc:'すっきりとした爽やかな白。'},
+   ]},
+  {id:'w-suntorydaily',name:'サントリー（デイリーワイン）',en:'Suntory',region:'jdaily',type:'赤',daily:true,
+   desc:'サントリーの手頃なデイリーワイン。輸入したブドウ果汁などから国内で造られる。',
+   ex:[
+    {id:'w-suntory-mutenka-r',label:'酸化防止剤無添加のおいしいワイン。赤',name:'サントリー 酸化防止剤無添加のおいしいワイン。赤',en:'Suntory Oishii Wine (Red)',cask:'',grapes:[],color:'ruby',price:500,
+     p:[4,2,1,2,2,0,0,0],tags:['いちご','ジャム'],desc:'果実味豊かで、渋みが少なく飲みやすい赤。'},
+    {id:'w-suntory-mutenka-w',label:'酸化防止剤無添加のおいしいワイン。白',name:'サントリー 酸化防止剤無添加のおいしいワイン。白',en:'Suntory Oishii Wine (White)',type:'白',cask:'',grapes:[],color:'pale',price:500,
+     p:[4,3,0,1,2,0,0,0],tags:['青りんご','白桃'],desc:'フルーティでやさしい甘さの白。'},
+   ]},
+  {id:'w-merciandaily',name:'メルシャン（デイリーワイン）',en:'Mercian',region:'jdaily',type:'赤',daily:true,
+   desc:'メルシャンの手頃なデイリーワイン。輸入したブドウ果汁などから国内で造られる。',
+   ex:[
+    {id:'w-mercian-mutenka-r',label:'おいしい酸化防止剤無添加 赤ワイン',name:'メルシャン おいしい酸化防止剤無添加 赤ワイン',en:'Mercian Oishii Red Wine',cask:'',grapes:[],color:'ruby',price:500,
+     p:[4,2,1,2,2,0,0,0],tags:['いちご','プラム'],desc:'やわらかな果実味の、毎日飲みやすい赤。'},
    ]},
 ];
 const WINE_ENTRIES = WINE_PRODUCERS.flatMap(d => d.ex.map(x => ({
@@ -719,6 +841,75 @@ const WINE_STORY = {
     '1962年、キッコーマンがワイン事業を始めて山梨県勝沼に設立した。小諸ワイナリーは1973年に開かれた。',
     '冷涼な長野の気候を生かし、ブドウの房に雨よけを付ける独自の栽培方法でブドウを守る。',
     '「ソラリス」は日本ワインの高級シリーズとして、国内外のコンクールで評価されている。']},
+
+  'w-santahelena':{founded:'1942年',owner:'',story:[
+    '1942年、チリ中部のコルチャグア・ヴァレーで創業した老舗。',
+    'チリの温暖で乾いた気候を生かし、果実味豊かで親しみやすいワインを造る。',
+    'アルパカのラベルのシリーズは、日本でもっとも手に取りやすいチリワインのひとつ。']},
+  'w-conosur':{founded:'1993年',owner:'コンチャ・イ・トロ',story:[
+    '1993年、新しい世代のチリワインを目指して創業した。名前は「南の円錐」、南米大陸の形に由来する。',
+    '畑では、働く人たちが自転車で移動している。ラベルの自転車はその象徴。環境に配慮した栽培にも取り組む。',
+    '手頃な価格でも品種ごとの個性がはっきりしたワインとして、世界中で人気を集めている。']},
+  'w-santarita':{founded:'1880年',owner:'',story:[
+    '1880年、マイポ・ヴァレーで創業した名門。',
+    'チリ独立戦争のころ、120人の兵士がこの地の酒蔵にかくまわれたという言い伝えが、「120」シリーズの名の由来。',
+    '手頃な定番から高級ワインまで手がけ、チリを代表する造り手のひとつ。']},
+  'w-losvascos':{founded:'1988年（ロートシルト家が参画）',owner:'ドメーヌ・バロン・ド・ロートシルト',story:[
+    'コルチャグア・ヴァレーの古いワイナリーに、1988年からラフィットのロートシルト家が加わった。',
+    'ボルドーの技術を持ち込み、チリのカベルネ・ソーヴィニヨンを端正なスタイルに仕上げる。',
+    'フランスの名門が南米に進出した先駆けのひとつ。']},
+  'w-trapiche':{founded:'1883年',owner:'',story:[
+    '1883年、メンドーサで創業した。',
+    'アンデス山脈のふもとの、標高の異なるさまざまな畑のブドウを使い分ける。',
+    'アルゼンチン最大級の生産者として、マルベックの魅力を手頃な価格で世界に届けている。']},
+  'w-tavernello':{founded:'',owner:'カヴィロ',story:[
+    'イタリアの大規模な生産者組合カヴィロが手がけるブランド。',
+    '多くのブドウ農家が集まり、安定した品質のワインを手頃な価格で造る。',
+    'イタリアの家庭で日常的に飲まれている、身近なワインのひとつ。']},
+  'w-santero':{founded:'1958年',owner:'サンテロ家',story:[
+    '1958年、ピエモンテのサント・ステファノ・ベルボで、サンテロ家の兄弟が創業した。',
+    'モスカートを使った甘口のアスティなど、スパークリングワインを専門に造る。',
+    '「天使のアスティ」は手頃な甘口の泡として、日本でも長く親しまれている。']},
+  'w-felixsolis':{founded:'1952年',owner:'ソリス家',story:[
+    '1952年、ラ・マンチャ地方のバルデペーニャスで創業した家族経営の会社。',
+    '広大な畑と大規模な醸造設備で、樽熟成のワインも手頃な価格で造る。',
+    'スペインを代表する大手生産者のひとつ。']},
+  'w-elcoto':{founded:'1970年',owner:'',story:[
+    '1970年、リオハで創業した比較的新しいワイナリー。',
+    'アメリカンオークの樽で熟成させ、バニラの香りのやわらかなリオハを造る。',
+    'スペイン国内でもよく売れている、リオハの人気ブランド。']},
+  'w-mateus':{founded:'1942年',owner:'ソグラペ',story:[
+    '1942年、ポルトガルのソグラペ社が発売した。',
+    '第一次世界大戦の水筒をヒントにしたといわれる、丸く平たいボトルが目印。',
+    '世界でもっとも有名なロゼワインのひとつとして、長く愛されている。']},
+  'w-schwarzekatz':{founded:'',owner:'',story:[
+    'モーゼル地方のツェル村で、3つの樽のうちどれが一番よいか迷った商人の前で、黒猫が一つの樽に飛び乗って守ったという伝説から名づけられた。',
+    'リースリングなどを使い、やさしい甘さに仕上げたものが多い。',
+    '黒猫のラベルは、日本でもドイツワインの入門として親しまれている。']},
+  'w-jacobscreek':{founded:'1847年',owner:'ペルノ・リカール',story:[
+    '1847年、ドイツから移住したヨハン・グランプがバロッサ・ヴァレーのジェイコブス・クリークのほとりにブドウを植えたのが始まり。',
+    '南オーストラリアを中心に各地のブドウを組み合わせ、毎年安定した味わいに仕上げる。',
+    'オーストラリアのデイリーワインを世界に広めたブランドのひとつ。']},
+  'w-oysterbay':{founded:'1990年',owner:'',story:[
+    '1990年にマールボロで始まったブランド。',
+    '冷涼な海沿いの畑のブドウから、香り豊かなソーヴィニヨン・ブランを造る。',
+    'ニュージーランドのソーヴィニヨン・ブランを手頃な価格で広めた。']},
+  'w-carlorossi':{founded:'',owner:'E&J ガロ・ワイナリー',story:[
+    'アメリカ最大級のワイン会社、E&Jガロが手がけるブランド。',
+    'カリフォルニアのブドウを使い、毎日気軽に飲める味わいに仕上げる。',
+    '大容量のボトルで、パーティーや料理用としても親しまれている。']},
+  'w-vieillefe':{founded:'1970年',owner:'ペラン家',story:[
+    'シャトー・ド・ボーカステルを営むペラン家が、1970年に始めたブランド。',
+    'ヴァントゥの山のふもとなど、南ローヌ周辺の涼しい畑のブドウを使う。',
+    '「古い農家」という名前のとおり、ニワトリのラベルの親しみやすいワイン。']},
+  'w-suntorydaily':{founded:'',owner:'サントリー',story:[
+    '輸入したブドウ果汁やワインをもとに、国内の工場で造られる「国内製造ワイン」。',
+    '酸化防止剤を加えずに、フレッシュで飲みやすい味わいに仕上げている。',
+    'スーパーやコンビニで手に入りやすい、日本の家庭向けのワイン。']},
+  'w-merciandaily':{founded:'',owner:'キリンホールディングス',story:[
+    '輸入したブドウ果汁やワインをもとに、国内の工場で造られる「国内製造ワイン」。',
+    '酸化防止剤を加えずに、毎日飲みやすい味わいに仕上げている。',
+    'スーパーやコンビニで手に入りやすい、日本の家庭向けのワイン。']},
 };
 
 /* 産地 */
@@ -775,28 +966,37 @@ const WINE_REGIONS = {
     desc:'日本ワイン発祥の地。甲府盆地の勝沼を中心に、日本固有の甲州ブドウの白が造られる。'},
   nagano:     {jp:'長野',en:'NAGANO',pick:'日本',label:[138.2,36.3],
     desc:'冷涼で雨の少ない高地。メルローやシャルドネなど、ヨーロッパ品種の評価が高い。'},
+
+  italy_o:    {jp:'イタリア（その他）',en:'ITALY',pick:'イタリア（その他）',label:[11.9,44.3],
+    desc:'名産地以外にも、イタリアの各地で日常のワインが造られている。'},
+  spain_o:    {jp:'スペイン（その他）',en:'SPAIN',pick:'スペイン（その他）',label:[-3.4,38.8],
+    desc:'中部のラ・マンチャは世界有数のブドウ畑の広さを誇り、手頃なワインの一大産地。'},
+  california: {jp:'カリフォルニア（その他）',en:'CALIFORNIA',pick:'カリフォルニア（その他）',label:[-120.9,37.4],short:'カリフォルニア',
+    desc:'ナパやソノマ以外にも、内陸のセントラル・ヴァレーなどで手頃なワインが大量に造られている。'},
+  jdaily:     {jp:'日本（国内製造ワイン）',en:'JAPAN',pick:'日本',label:[139.6,35.45],short:'国内製造',
+    desc:'輸入したブドウ果汁やワインをもとに国内で造られるワイン。日本で育ったブドウだけで造る「日本ワイン」とは区別される。'},
 };
 
 /* 国（図鑑の地図） */
 const WINE_COUNTRIES = {
   france:    {jp:'フランス',style:'フランス',en:'FRANCE',mark:[2.4,46.6],map:'france',regions:['bordeaux','bourgogne','champagne','rhone','loire','alsace'],
     desc:'ワインの基準をつくってきた国。産地ごとに使う品種や造り方が決められ、ボルドー、ブルゴーニュ、シャンパーニュなどの名産地がひしめく。地図の産地をタップすると、その土地の造り手が表示される。'},
-  italy:     {jp:'イタリア',style:'イタリア',en:'ITALY',mark:[12.5,42.8],map:'italy',regions:['piemonte','toscana','veneto'],
+  italy:     {jp:'イタリア',style:'イタリア',en:'ITALY',mark:[12.5,42.8],map:'italy',regions:['piemonte','toscana','veneto','italy_o'],
     desc:'国じゅうでワインが造られ、土着の品種は数百ともいわれる。北のピエモンテ、中部のトスカーナが二大銘醸地。'},
-  spain:     {jp:'スペイン',style:'スペイン',en:'SPAIN',mark:[-3.7,40.3],map:'spain',regions:['rioja','ribera','catalunya','jerez'],
+  spain:     {jp:'スペイン',style:'スペイン',en:'SPAIN',mark:[-3.7,40.3],map:'spain',regions:['rioja','ribera','catalunya','jerez','spain_o'],
     desc:'ブドウ畑の面積は世界有数。テンプラニーリョの赤、泡のカヴァ、酒精強化のシェリーと、スタイルが幅広い。'},
   portugal:  {jp:'ポルトガル',style:'ポルトガル',en:'PORTUGAL',mark:[-8.0,39.6],map:'portugal',regions:['douro'],
     desc:'ポートワインやマデイラなど、酒精強化ワインの伝統を持つ国。土着品種の豊かさでも知られる。'},
   germany:   {jp:'ドイツ',style:'ドイツ',en:'GERMANY',mark:[8.6,50.4],map:'germany',regions:['mosel','rheingau'],
     desc:'ブドウ栽培の北限に近い冷涼な国。リースリングの白が中心で、辛口から極甘口まで、ブドウの熟度によって造り分ける。'},
-  usa:       {jp:'アメリカ',style:'アメリカ',en:'USA',mark:[-121.5,40.0],map:'usa',regions:['napa','sonoma','oregon'],
+  usa:       {jp:'アメリカ',style:'アメリカ',en:'USA',mark:[-121.5,40.0],map:'usa',regions:['napa','sonoma','california','oregon'],
     desc:'生産量の大半を占めるカリフォルニアと、ピノ・ノワールのオレゴンが主な産地。1976年の「パリスの審判」で世界的な評価を得た。'},
   chile:     {jp:'チリ',style:'チリ',en:'CHILE',mark:[-71.0,-33.8],map:'chile',regions:['chile']},
   argentina: {jp:'アルゼンチン',style:'アルゼンチン',en:'ARGENTINA',mark:[-68.5,-33.5],map:'argentina',regions:['mendoza']},
   australia: {jp:'オーストラリア',style:'オーストラリア',en:'AUSTRALIA',mark:[139.0,-34.3],map:'australia',regions:['australia']},
   nz:        {jp:'ニュージーランド',style:'ニュージーランド',en:'NEW ZEALAND',mark:[172.5,-42.0],map:'nz',regions:['marlborough','otago'],
     desc:'冷涼な島国。マールボロのソーヴィニヨン・ブランと、セントラル・オタゴのピノ・ノワールで世界に知られる。'},
-  japan:     {jp:'日本',style:'日本',en:'JAPAN',mark:[138.5,36.0],map:'japan',regions:['yamanashi','nagano'],
+  japan:     {jp:'日本',style:'日本',en:'JAPAN',mark:[138.5,36.0],map:'japan',regions:['yamanashi','nagano','jdaily'],
     desc:'日本で育ったブドウだけで造る「日本ワイン」が評価を高めている。山梨の甲州と、長野のメルローやシャルドネが代表的。'},
 };
 const WINE_MAIN = ['france','italy','spain','portugal','germany','usa','chile','argentina','australia','nz','japan'];

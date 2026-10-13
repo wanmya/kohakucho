@@ -410,6 +410,23 @@ body.kinds-on{overflow:hidden}
 .cmap .rpin .dot2{fill:var(--surface);stroke:var(--amber)}
 .cmap .rpin.sel .dot2{fill:var(--amber)}
 .cmap .rpin.dim{opacity:.45}
+
+.daily-btn{display:grid;gap:2px;text-align:left;width:100%;background:var(--amber-soft);border:1px solid var(--amber);border-radius:12px;padding:12px 14px;cursor:pointer;color:var(--ink)}
+.daily-btn .en{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--amber)}
+.daily-btn b{font-family:var(--display);font-size:17px}
+.dp-title{font-family:var(--display);font-weight:800;font-size:22px;margin:0}
+.daypick{display:grid;gap:10px}
+.dp{display:grid;gap:3px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;cursor:pointer;color:var(--ink)}
+.dp b{font-size:16px}
+.dp span{font-size:13px;color:var(--muted)}
+.dp.main{border-color:var(--amber);background:var(--amber-soft)}
+.daystep{display:flex;align-items:center;gap:14px}
+.daystep button{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--surface);font-size:20px;cursor:pointer;color:var(--ink)}
+.daystep output{font-size:15px;min-width:7.5em;text-align:center}
+.daystep output b{font-family:var(--mono);font-size:24px;color:var(--amber);margin:0 2px}
+.dbadge{display:inline-block;font-size:11px;font-weight:500;background:var(--amber-soft);color:var(--ink);border-radius:999px;padding:0 8px;margin-left:6px;vertical-align:2px}
+.dayb .bar{grid-template-columns:6.4em 1fr 6.6em}
+.bar em small.up{color:var(--peat)} .bar em small.down{color:var(--danger)}
 </style>
 </head>
 <body>
@@ -481,7 +498,7 @@ body.kinds-on{overflow:hidden}
 
 <script>
 (() => {
-const APP_VERSION = '2026.10.13b';
+const APP_VERSION = '2026.10.13c';
 
 /* ---------- お酒の種類ごとの設定（ウイスキー／ワイン。日本酒・ビール・カクテルは今後ここに足す） ---------- */
 const STORY_HEADS = [['はじまり','HISTORY'],['造りのこだわり','CRAFT'],['ウイスキー界での存在感','STANDING']];
@@ -574,7 +591,7 @@ const KINDS = {
     Z: () => ({ D:WINE_PRODUCERS, E:WINE_ENTRIES, R:WINE_REGIONS, S:WINE_STORY, W:{ ...WINE_MAPS, japan:ZUKAN_WORLD.japan } }),
     ZK_TYPES: ['赤','白','ロゼ','スパークリング','甘口・デザート','酒精強化'],
     ZK_TAGS: ['カシス','ブラックベリー','ブラックチェリー','プラム','いちご','ラズベリー','さくらんぼ','柑橘','グレープフルーツ','青りんご','白桃','パイナップル','白い花','バラ','スミレ','ハーブ','黒胡椒','バニラ','トースト','ナッツ','トリュフ','なめし革','ミネラル','蜂蜜'],
-    ZK_PRICES: [['p1','〜2,000円台',0,3000],['p2','3,000〜4,000円台',3000,5000],['p3','5,000〜9,000円台',5000,10000],['p4','1万〜4万円台',10000,50000],['p5','5万円〜',50000,1e12]],
+    ZK_PRICES: [['p0','〜999円',0,1000],['p1','1,000〜2,000円台',1000,3000],['p2','3,000〜4,000円台',3000,5000],['p3','5,000〜9,000円台',5000,10000],['p4','1万〜4万円台',10000,50000],['p5','5万円〜',50000,1e12]],
     COUNTRIES: (typeof WINE_COUNTRIES!=='undefined') ? WINE_COUNTRIES : {},
     BIG: (typeof WINE_MAIN!=='undefined') ? WINE_MAIN : [], MINOR: [],
     WORLD_LABEL: { germany:[63,7,'end'], france:[63,13.5,'end'], spain:[63,20,'end'], portugal:[63,26.5,'end'], italy:[101,22,'start'],
@@ -919,7 +936,7 @@ async function insertBottle(row){
 }
 async function tasteZukan(z){
   if(!myId) return;
-  try{ const b = await bottleFromZukan(z); openTastingForm(b, null, true); }
+  try{ const b = await bottleFromZukan(z); startTasting(b, true); }
   catch(e){ toast('銘柄を用意できませんでした：'+e.message); }
 }
 
@@ -1114,7 +1131,7 @@ function renderFeed(list){
     const b=bottles.find(x=>x.id===t.bottleId); if(!b) return '';
     const tags=[...(t.nose?.tags||[]),...(t.palate?.tags||[])].filter((x,i,arr)=>arr.indexOf(x)===i).slice(0,4);
     return `<button class="card feed-card" data-bottle="${esc(b.id)}">
-      <div class="info"><h3>${esc(b.name)}</h3><div class="by">${esc(nameOf(t))}・${fmtDate(t.createdAt)}${t.serve?'・'+esc(t.serve):''}</div>
+      <div class="info"><h3>${esc(b.name)}</h3><div class="by">${esc(nameOf(t))}・${fmtDate(t.createdAt)}${t.day?'・開栓'+t.day+'日目':''}${t.serve?'・'+esc(t.serve):''}</div>
         ${tags.length?`<div class="tagline">${tags.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}
         ${t.comment?`<div class="meta" style="margin-top:6px">${esc(t.comment.length>60?t.comment.slice(0,60)+'…':t.comment)}</div>`:''}
         ${(likesBy.get(t.id)?.size||commentsBy.get(t.id)?.length)?`<div class="feed-soc">${likesBy.get(t.id)?.size?`${ICON_HEART(likesBy.get(t.id).has(myId))}<span>${likesBy.get(t.id).size}</span>`:''}${commentsBy.get(t.id)?.length?`${ICON_BUBBLE}<span>${commentsBy.get(t.id).length}</span>`:''}</div>`:''}</div>
@@ -1152,7 +1169,7 @@ function openBottle(id, keepScroll){
     const phases=PHASES.map(([k,jp])=>{ const p=t[k]||{}; if(!(p.tags?.length||p.note)) return '';
       return `<div class="t-phase"><b>${jp}</b>${esc((p.tags||[]).join('・'))}${p.note?`<div class="t-note">${esc(p.note)}</div>`:''}</div>`; }).join('');
     return `<article class="tasting${me?' me':''}">
-      <div class="t-head"><strong>${esc(nameOf(t))}</strong><span class="small">${fmtDate(t.createdAt)}${t.serve?'・'+esc(t.serve):''}${t.finishLength?'・余韻 '+esc(t.finishLength):''}</span><span class="s">${t.score??'–'}</span></div>
+      <div class="t-head"><strong>${esc(nameOf(t))}${t.day?`<span class="dbadge">開栓${t.day}日目</span>`:''}</strong><span class="small">${fmtDate(t.createdAt)}${t.serve?'・'+esc(t.serve):''}${t.finishLength?'・余韻 '+esc(t.finishLength):''}</span><span class="s">${t.score??'–'}</span></div>
       ${phases}
       ${t.comment?`<div class="t-note">${esc(t.comment)}</div>`:''}
       ${me?`<div class="t-actions" data-tid="${esc(t.id)}"><button class="btn small" data-act="edit-t">編集</button><button class="btn small danger" data-act="askdel-t">削除</button></div>`:''}
@@ -1185,6 +1202,7 @@ function openBottle(id, keepScroll){
       ${a.avgProfile?`<section class="sec"><h3>フレーバープロファイル<small>PROFILE</small></h3><div class="radar-wrap">${radarSVG({avg:a.avgProfile, others, mine:myProfile})}
         <div class="legend"><span><i style="border-color:var(--amber)"></i>${a.profs.length>1?'みんなの平均':'記録'}</span>${others.length?`<span><i style="border-color:var(--muted)"></i>一人ひとり</span>`:''}${myProfile?`<span><i style="border-color:var(--peat);border-top-style:dashed"></i>あなた</span>`:''}</div></div></section>`:''}
 
+      ${afterOpening(a)}
       ${tagSection?`<section class="sec"><h3>みんなが感じた香りと味<small>NOTES</small></h3><p class="small" style="margin:0 0 8px">何人が同じ表現を選んだか${myId&&a.mine.length?'（緑はあなたも選んだもの）':''}</p><div style="display:grid;gap:10px">${tagSection}</div>${finVotes}</section>`:''}
       ${colorVotes}
 
@@ -1200,7 +1218,7 @@ function openBottle(id, keepScroll){
     const el=e.target.closest('[data-act]'); if(!el) return; const act=el.dataset.act;
     const tid=el.closest('[data-tid]')?.dataset.tid;
     if(act==='close') goBack();
-    if(act==='taste') openTastingForm(b, null);
+    if(act==='taste') startTasting(b, false);
     if(act==='zukan'){ const z=zukanFor(b); if(z) openZukan(z.id); }
     if(act==='edit-b') openBottleForm(b, null, ()=>{ nav.replaceNext=true; openBottle(b.id); });
     if(act==='edit-t'){ const t=tastings.find(x=>x.id===tid); if(t) openTastingForm(b,t); }
@@ -1220,6 +1238,35 @@ function openBottle(id, keepScroll){
       allBottles=allBottles.filter(x=>x.id!==b.id); refilter(); currentBottle=null; renderList(); goBack(); toast('銘柄を削除しました');
     }
   };
+}
+
+/* ワイン：開栓後の変化（日ごとの点数・味わい・香りの違い） */
+function afterOpening(a){
+  if(KIND!=='wine' || !a.list.some(t=>(t.day||1)>1)) return '';
+  const g=new Map(); a.list.forEach(t=>{ const d=t.day||1; if(!g.has(d)) g.set(d,[]); g.get(d).push(t); });
+  const days=[...g.keys()].sort((x,y)=>x-y), first=days[0], lastD=days[days.length-1];
+  const avgOf=l=>{ const sc=l.map(t=>t.score).filter(x=>typeof x==='number'); return sc.length?sc.reduce((p,c)=>p+c,0)/sc.length:null; };
+  const profOf=l=>{ const ps=l.map(t=>t.profile).filter(p=>p&&AXES.some(x=>p[x[0]]>0)); return ps.length?Object.fromEntries(AXES.map(([k])=>[k,ps.reduce((s,p)=>s+(+p[k]||0),0)/ps.length])):null; };
+  const tagsOf=l=>new Set(l.flatMap(t=>PHASES.flatMap(([k])=>t[k]?.tags||[])));
+  const base=avgOf(g.get(first));
+  const rows=days.map(d=>{ const l=g.get(d), av=avgOf(l), diff=(d!==first&&av!=null&&base!=null)?av-base:null;
+    return `<div class="bar"><span>開栓${d}日目</span><div class="track"><div class="fill${d===first?'':' mine'}" style="width:${av!=null?Math.max(4,(av-50)*2):0}%"></div></div><em>${av!=null?fmt1(av):'–'}${diff!=null?`<small class="${diff>=0?'up':'down'}"> ${diff>=0?'+':''}${fmt1(diff)}</small>`:''}</em></div>`; }).join('');
+  const p1=profOf(g.get(first)), pN=profOf(g.get(lastD));
+  const t1=tagsOf(g.get(first)), tN=tagsOf(g.get(lastD));
+  const added=[...tN].filter(t=>!t1.has(t)), gone=[...t1].filter(t=>!tN.has(t));
+  // あなたの直近のボトル（最後に1日目をつけたところから）
+  const mine=a.list.filter(t=>t.author===myId).sort((x,y)=>x.createdAt-y.createdAt);
+  let start=0; mine.forEach((t,i)=>{ if((t.day||1)===1) start=i; });
+  const sess=mine.slice(start);
+  const mySess = sess.length>1 ? `<p class="small" style="margin:10px 0 0">あなたの記録：${sess.map(t=>`${t.day||1}日目 <b style="font-family:var(--mono);color:var(--amber)">${t.score??'–'}</b>点`).join(' → ')}</p>` : '';
+  return `<section class="sec"><h3>開栓後の変化<small>AFTER OPENING</small></h3>
+    <p class="small" style="margin:0 0 8px">開けた日からの日数ごとの、みんなの平均点（${a.list.length}件）</p>
+    <div class="bars dayb">${rows}</div>${mySess}
+    ${p1&&pN?`<div class="radar-wrap" style="margin-top:10px">${radarSVG({ avg:p1, mine:pN })}
+      <div class="legend"><span><i style="border-color:var(--amber)"></i>開栓${first}日目</span><span><i style="border-color:var(--peat);border-top-style:dashed"></i>開栓${lastD}日目</span></div></div>`:''}
+    ${added.length?`<div class="group-name">開栓${lastD}日目に感じられた香り</div><div class="chips">${added.slice(0,8).map(t=>`<span class="chip" aria-pressed="true">${esc(t)}</span>`).join('')}</div>`:''}
+    ${gone.length?`<div class="group-name">開栓${first}日目だけの香り</div><div class="chips">${gone.slice(0,8).map(t=>`<span class="chip">${esc(t)}</span>`).join('')}</div>`:''}
+  </section>`;
 }
 
 /* ---------- 投稿の流れ：銘柄を選ぶ → （新しければ登録）→ テイスティング ---------- */
@@ -1253,7 +1300,7 @@ function openPicker(){
   root.onclick=e=>{
     const el=e.target.closest('button'); if(!el) return;
     if(el.dataset.act==='close') goBack();
-    if(el.dataset.pick){ const b=bottles.find(x=>x.id===el.dataset.pick); if(b) openTastingForm(b,null,true); }
+    if(el.dataset.pick){ const b=bottles.find(x=>x.id===el.dataset.pick); if(b) startTasting(b,true); }
     if(el.dataset.pickz){ const z=ZE.find(x=>x.id===el.dataset.pickz); if(z){ el.disabled=true; tasteZukan(z); } }
     if(el.dataset.act==='new') openBottleForm(null, $('#pk-q').value.trim(), b=>{ nav.replaceNext=true; openTastingForm(b,null,true); });
   };
@@ -1330,11 +1377,42 @@ function openBottleForm(existing, prefill, onDone, onCancel){
 function blankTasting(){ return {serve:K.defServe,color:'',nose:{tags:[],note:''},palate:{tags:[],note:''},finish:{tags:[],note:''},finishLength:'',
   profile:Object.fromEntries(AXES.map(a=>[a[0],0])),score:85,comment:''}; }
 
-function openTastingForm(bottle, existing, fromPicker){
-  curSheet={t:'taste', b:bottle.id, tid:existing?.id||null, fp:!!fromPicker};
+/* ワイン：開栓後の日数 */
+const dayDiff = (a,b) => { const d=x=>{ const t=new Date(x); return Date.UTC(t.getFullYear(),t.getMonth(),t.getDate()); }; return Math.round((d(b)-d(a))/864e5); };
+const myTastingsOf = bid => tastings.filter(t=>t.bottleId===bid && t.author===myId).sort((x,y)=>y.createdAt-x.createdAt);
+function startTasting(b, fromPicker){
+  if(KIND!=='wine' || !myId || !myTastingsOf(b.id).length) return openTastingForm(b, null, fromPicker, 1);
+  openDayPick(b, fromPicker);
+}
+function openDayPick(b, fromPicker){
+  curSheet={t:'daypick', b:b.id, fp:!!fromPicker};
+  const last=myTastingsOf(b.id)[0]; const lastDay=last.day||1;
+  const gap=dayDiff(last.createdAt, Date.now()); const next=lastDay+Math.max(1,gap);
+  const nextBtn=`<button class="dp${gap>0?' main':''}" data-day="${next}"><b>開栓${next}日目として記録する</b><span>${gap>0?`前回の記録から${gap}日後です。`:'同じボトルの続きとして記録します。'}開けてからの味の変化を残せます。</span></button>`;
+  const editBtn=`<button class="dp${gap>0?'':' main'}" data-edit="${esc(last.id)}"><b>開栓${lastDay}日目の記録を編集する</b><span>追記や書き間違いの修正はこちら。</span></button>`;
+  mount(`<div class="sheet" role="dialog" aria-modal="true" aria-label="どの記録をつけますか">
+    <div class="sheet-bar"><button class="btn ghost" data-act="close">${fromPicker?'‹ 戻る':'キャンセル'}</button><h2>${esc(b.name)}</h2><span style="width:60px"></span></div>
+    <div class="sheet-body">
+      <div><h1 class="dp-title">開栓何日目の記録ですか？</h1>
+        <p class="small" style="margin:6px 0 0">あなたの前回の記録：${fmtDate(last.createdAt)}・開栓${lastDay}日目・${last.score??'–'}点</p></div>
+      <div class="daypick">${gap>0?nextBtn+editBtn:editBtn+nextBtn}
+        <button class="dp" data-day="1"><b>新しいボトルを開けた</b><span>開栓1日目として、新しく記録します。</span></button></div>
+      <p class="note-small">ワインは空気に触れると香りや味わいが変わっていきます。日ごとに記録すると、銘柄のページで「開栓後の変化」として比べられます。</p>
+    </div></div>`);
+  $('#sheet-root').onclick=e=>{
+    const el=e.target.closest('[data-act],[data-day],[data-edit]'); if(!el) return;
+    if(el.dataset.act==='close') return goBack();
+    if(el.dataset.day) return openTastingForm(b, null, true, +el.dataset.day);
+    if(el.dataset.edit){ const t=tastings.find(x=>x.id===el.dataset.edit); if(t) openTastingForm(b, t, true); }
+  };
+}
+function openTastingForm(bottle, existing, fromPicker, day){
+  curSheet={t:'taste', b:bottle.id, tid:existing?.id||null, fp:!!fromPicker, day:day||null};
   const f = existing ? JSON.parse(JSON.stringify(existing)) : blankTasting();
   ['nose','palate','finish'].forEach(k=>{ f[k]=f[k]||{tags:[],note:''}; f[k].tags=f[k].tags||[]; });
   f.profile = Object.assign(Object.fromEntries(AXES.map(a=>[a[0],0])), f.profile||{});
+  const isWine = KIND==='wine';
+  f.day = existing ? (existing.day||1) : (day||1);
   let phase='nose', saving=false;
   const nick = existing?.authorName || myName() || '';
 
@@ -1342,6 +1420,9 @@ function openTastingForm(bottle, existing, fromPicker){
     <div class="sheet-bar"><button class="btn ghost" data-act="cancel">${fromPicker&&!existing?'‹ 戻る':'キャンセル'}</button><h2>${esc(bottle.name)}</h2><button class="btn primary" data-act="save" id="savebtn">保存</button></div>
     <form class="sheet-body" novalidate>
       <p class="hint">ほかの人の記録は見ずに、自分が感じたままを残してください。感じ方の違いも、この銘柄の大切な情報になります。</p>
+      ${isWine?`<fieldset><legend>開栓からの日数</legend>
+        <div class="daystep"><button type="button" data-dstep="-1" aria-label="1日減らす">−</button><output id="o-day">開栓 <b>${f.day}</b> 日目</output><button type="button" data-dstep="1" aria-label="1日増やす">＋</button></div>
+        <p class="small" style="margin:6px 0 0">ボトルを開けた日を1日目として数えます。</p></fieldset>`:''}
       <fieldset><legend>${L.serveLbl}</legend>
         <div class="chips">${SERVES.map(s=>`<button type="button" class="chip" data-serve="${s}" aria-pressed="${f.serve===s}">${s}</button>`).join('')}</div>
       </fieldset>
@@ -1393,6 +1474,7 @@ function openTastingForm(bottle, existing, fromPicker){
     if(b.dataset.tag){ const arr=f[phase].tags, i=arr.indexOf(b.dataset.tag); i<0?arr.push(b.dataset.tag):arr.splice(i,1); drawPhase(); return; }
     if(b.dataset.len){ f.finishLength = f.finishLength===b.dataset.len?'':b.dataset.len; drawPhase(); return; }
     if(b.dataset.serve){ f.serve = f.serve===b.dataset.serve?'':b.dataset.serve; root.querySelectorAll('[data-serve]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.serve===f.serve)); return; }
+    if(b.dataset.dstep){ f.day=Math.min(30,Math.max(1,f.day+(+b.dataset.dstep))); $('#o-day').innerHTML=`開栓 <b>${f.day}</b> 日目`; return; }
     if(b.dataset.color){ f.color = f.color===b.dataset.color?'':b.dataset.color; root.querySelectorAll('[data-color]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.color===f.color)); return; }
     const a=b.dataset.act;
     if(a==='addtag') addTag();
@@ -1406,7 +1488,7 @@ function openTastingForm(bottle, existing, fromPicker){
     saving=true; btn.disabled=true; btn.textContent='保存中…'; err.hidden=true;
     try{
       if(nickname) store.set('kohaku.nickname',nickname);
-      const data={ serve:f.serve, color:f.color, nose:f.nose, palate:f.palate, finish:f.finish, finishLength:f.finishLength, profile:f.profile, score:f.score, comment:f.comment, name:bottle.name };
+      const data={ serve:f.serve, color:f.color, nose:f.nose, palate:f.palate, finish:f.finish, finishLength:f.finishLength, profile:f.profile, score:f.score, comment:f.comment, name:bottle.name, ...(isWine?{day:f.day}:{}) };
       const row={ data, score:f.score, author_name:nickname||myName()||null, bottle_id:bottle.id };
       const res = existing
         ? await sb.from('reviews').update({...row, updated_at:new Date().toISOString()}).eq('id',existing.id).select().single()
@@ -1421,7 +1503,7 @@ function openTastingForm(bottle, existing, fromPicker){
 
 /* ---------- 図鑑 ---------- */
 const zk = { mode:'region', country:null, region:null, axes:[], types:[], tags:[], prices:[], q:'' };
-const priceBand = v => !v ? '' : v>=10000 ? `${Math.floor(v/10000)}万円台` : `${Math.floor(v/1000).toLocaleString('ja-JP')},000円台`;
+const priceBand = v => !v ? '' : v>=10000 ? `${Math.floor(v/10000)}万円台` : v<1000 ? `${Math.round(v/100)*100}円` : `${Math.floor(v/1000).toLocaleString('ja-JP')},000円台`;
 const keyNorm = s => norm(s).replace(/^(ザ|the)/,'').replace(/(年|years?old|years?|yo)$/,'');
 const profArr = obj => AXES.map(a=>+(obj?.[a[0]]||0));
 const arrProf = arr => Object.fromEntries(AXES.map((a,i)=>[a[0],arr[i]]));
@@ -1554,6 +1636,7 @@ function regionPanel(){
     return `<div class="mapcard world-card"><span class="caption">${L.worldCap}</span>${worldSVG()}</div>
       <div class="ccards">${BIG5.map(k=>{ const x=ZK_COUNTRIES[k]; return `<button class="ccard" data-country="${k}"><span class="en">${x.en}</span><b>${x.style}</b><span class="small">${x.style!==x.jp?x.jp+'・':''}${countDist(k)}${L.makerCount}／${countEx(k)}銘柄</span></button>`; }).join('')}</div>
       ${MINOR.length?`<div class="world"><span class="lbl">そのほかの国</span>${MINOR.map(k=>`<button class="chip" data-country="${k}">${ZK_COUNTRIES[k].jp}</button>`).join('')}</div>`:''}
+      ${KIND==='wine'?`<button class="daily-btn" data-act="daily"><span class="en">DAILY WINE</span><b>スーパーでも買える手頃なワイン</b><span class="small">2,000円台までのワインを一覧で見る ›</span></button>`:''}
       <p class="small" style="margin:0">${L.worldHint}</p>`;
   }
   const back = `<div class="cbar"><button class="btn small ghost" data-act="world">‹ 世界地図</button><span><b>${c.style}</b><small>${c.en}</small></span></div>`;
@@ -1607,6 +1690,7 @@ function zkFlavorResults(){
   });
   if(zk.tags.length) rows = rows.filter(r=>zk.tags.some(t=>r.z.tags.includes(t)));
   if(has) rows = rows.filter(r=>r.score>=0.45).sort((a,b)=>b.score-a.score || (a.z.price||0)-(b.z.price||0));
+  else if(zk.prices.length) rows.sort((a,b)=>(a.z.price||0)-(b.z.price||0) || a.z.name.localeCompare(b.z.name,'ja'));
   else rows.sort((a,b)=>a.z.name.localeCompare(b.z.name,'ja'));
   return { items:rows, scored:has };
 }
@@ -1677,7 +1761,7 @@ function drawZkResults(){
     return;
   }
   const { items, scored } = zkFlavorResults();
-  const title = zk.q ? `「${esc(zk.q)}」` : scored ? '条件に合う銘柄' : 'すべての銘柄';
+  const title = zk.q ? `「${esc(zk.q)}」` : (scored || zk.prices.length || zk.types.length) ? '条件に合う銘柄' : 'すべての銘柄';
   el.innerHTML = `<div class="zk-head"><b>${title}</b><span>${items.length}銘柄</span></div>
     <div class="list" style="padding-top:8px">${items.length?items.map(it=>zCard(it,scored)).join(''):`<div class="empty" style="padding:24px 8px"><p>該当する銘柄がありません。条件を減らしてみてください。</p></div>`}</div>`;
 }
@@ -1695,6 +1779,7 @@ $('#list').addEventListener('click',e=>{
   const tg=t.closest('[data-tag-pick]'); if(tg){ tog(zk.tags,tg.dataset.tagPick); renderZukan($('#list')); return; }
   const ty=t.closest('[data-type-pick]'); if(ty){ tog(zk.types,ty.dataset.typePick); renderZukan($('#list')); return; }
   const pr=t.closest('[data-price-pick]'); if(pr){ tog(zk.prices,pr.dataset.pricePick); renderZukan($('#list')); return; }
+  if(t.closest('[data-act="daily"]')){ zk.mode='flavor'; zk.axes=[]; zk.tags=[]; zk.types=[]; zk.prices=['p0','p1']; zk.q=''; renderZukan($('#list')); navCommit(); window.scrollTo(0,0); return; }
   if(t.closest('[data-act="zk-clear"]')){ zk.axes=[]; zk.tags=[]; zk.types=[]; zk.prices=[]; renderZukan($('#list')); return; }
   if(t.closest('[data-act="cmp-open"]')){ openCompare(); return; }
   const d=t.closest('[data-d]'); if(d){ openDistillery(d.dataset.d); return; }
@@ -2033,7 +2118,7 @@ window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); instal
    端末の戻るボタン → popstate → 1つ前の画面を復元。最初の画面なら終了の確認を出す。 */
 let curSheet = null;
 const nav = { stack:[], restoring:false, replaceNext:false, guarded:false, exitOpen:false };
-const FORM_SHEETS = ['picker','bform','taste','cpick'];
+const FORM_SHEETS = ['picker','bform','taste','cpick','daypick'];
 const snapKey = s => JSON.stringify({ k:s.kind, v:s.view, z:s.zk, s:s.sheet });
 function snap(){ return { kind: kindOpen() ? null : KIND, view, zk:{ mode:zk.mode, country:zk.country, region:zk.region }, sheet: curSheet ? { ...curSheet } : null }; }
 function ensureGuard(){ if(!nav.guarded){ try{ history.pushState({ hc:'guard' }, ''); nav.guarded=true; }catch(e){} } }
@@ -2075,7 +2160,8 @@ function restore(s){
     else if(sh.t==='picker') openPicker();
     else if(sh.t==='menu') openMenu();
     else if(sh.t==='taste'){ const b=bottles.find(x=>x.id===sh.b); const t=sh.tid?tastings.find(x=>x.id===sh.tid):null;
-      if(b && (!sh.tid || t)) openTastingForm(b,t,sh.fp); else ok=false; }
+      if(b && (!sh.tid || t)) openTastingForm(b,t,sh.fp,sh.day); else ok=false; }
+    else if(sh.t==='daypick'){ const b=bottles.find(x=>x.id===sh.b); if(b && myTastingsOf(b.id).length) openDayPick(b,sh.fp); else ok=false; }
     else if(sh.t==='bform'){ const b=sh.id?bottles.find(x=>x.id===sh.id):null;
       if(sh.id && !b) ok=false;
       else openBottleForm(b, sh.prefill, b ? ()=>{ nav.replaceNext=true; openBottle(b.id); } : nb=>{ nav.replaceNext=true; openTastingForm(nb,null,true); }); }
