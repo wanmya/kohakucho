@@ -284,6 +284,37 @@ const SAKE_BREWERIES = [
 "白い花"
 ],
 "desc": "穏やかな果実の香りとやわらかな口当たり。"
+},
+{
+"id": "s-yukinobosha-yamahai",
+"label": "雪の茅舎 山廃純米",
+"name": "雪の茅舎 山廃純米",
+"en": "Yukinobosha Yamahai Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "秋田酒こまちなど",
+"grapes": [
+"akitasakekomachi"
+],
+"color": "clear",
+"price": 1600,
+"p": [
+3,
+2,
+3,
+3,
+4,
+3,
+2,
+0
+],
+"tags": [
+"りんご",
+"ヨーグルト",
+"米粉"
+],
+"desc": "櫂入れをしないなど、独自の手法で知られる秋田の蔵。山廃ながら軽やかで、果実の香りとやわらかな酸。"
 }
 ]
 },
@@ -570,6 +601,35 @@ const SAKE_BREWERIES = [
 "炊きたてご飯"
 ],
 "desc": "米の旨みと、やわらかな口当たり。"
+},
+{
+"id": "s-urakasumi-jg",
+"label": "浦霞 純米吟醸",
+"name": "浦霞 純米吟醸",
+"en": "Urakasumi Junmai Ginjo",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "ササニシキなど",
+"grapes": [],
+"color": "clear",
+"price": 1800,
+"p": [
+3,
+2,
+3,
+2,
+3,
+3,
+2,
+0
+],
+"tags": [
+"りんご",
+"米粉",
+"白い花"
+],
+"desc": "宮城・塩竈の蔵。穏やかな吟醸香と、米の旨みのやわらかさ。三陸の魚介と合わせたい。"
 }
 ]
 },
@@ -655,6 +715,38 @@ const SAKE_BREWERIES = [
 ],
 "desc": "やわらかな甘みと米の旨みのバランス。入手困難な人気銘柄。",
 "priceNote": "定価のおおよその目安です。品薄で、店頭では手に入りにくく、販売価格が大きく上下することがあります"
+},
+{
+"id": "s-hiroki-jg",
+"label": "飛露喜 純米吟醸",
+"name": "飛露喜 純米吟醸",
+"en": "Hiroki Junmai Ginjo",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "山田錦・五百万石",
+"grapes": [
+"yamadanishiki",
+"gohyakumangoku"
+],
+"color": "clear",
+"price": 2200,
+"p": [
+3,
+3,
+3,
+2,
+3,
+3,
+3,
+0
+],
+"tags": [
+"洋梨",
+"米粉",
+"白い花"
+],
+"desc": "透明感のある甘みと旨み、きれいな後味。入手が難しいことで知られる人気銘柄。"
 }
 ]
 },
@@ -698,6 +790,35 @@ const SAKE_BREWERIES = [
 ],
 "desc": "果実のような香りと、きれいな甘み。",
 "priceNote": "定価のおおよその目安です。品薄で、店頭では手に入りにくく、販売価格が大きく上下することがあります"
+},
+{
+"id": "s-sharaku-junmai",
+"label": "写楽 純米",
+"name": "写楽 純米",
+"en": "Sharaku Junmai",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "夢の香など",
+"grapes": [],
+"color": "clear",
+"price": 1600,
+"p": [
+3,
+3,
+3,
+3,
+3,
+3,
+3,
+0
+],
+"tags": [
+"りんご",
+"米粉",
+"ガス感"
+],
+"desc": "会津の蔵の定番。果実のような香りと、透明感のある米の甘み。"
 }
 ]
 },
@@ -740,6 +861,37 @@ const SAKE_BREWERIES = [
 "ヨーグルト"
 ],
 "desc": "生酛らしい厚みのある旨みと酸。燗でふくらむ。"
+},
+{
+"id": "s-daishichi-minowamon",
+"label": "大七 純米吟醸 皆伝",
+"name": "大七 純米吟醸 皆伝",
+"en": "Daishichi Junmai Ginjo Kaiden",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "五百万石など",
+"grapes": [
+"gohyakumangoku"
+],
+"color": "paleyellow",
+"price": 2000,
+"p": [
+2,
+2,
+3,
+3,
+4,
+4,
+1,
+2
+],
+"tags": [
+"米粉",
+"ナッツ",
+"ヨーグルト"
+],
+"desc": "生酛造りを守り続ける福島の蔵の純米吟醸。穏やかな香りと、生酛らしい厚みのある旨み。"
 }
 ]
 },
@@ -811,6 +963,34 @@ const SAKE_BREWERIES = [
 ],
 "desc": "瓶内で発酵させた、甘酸っぱい泡の日本酒。",
 "priceNote": "300mlのおおよその店頭価格です"
+},
+{
+"id": "s-ichinokura-tj-karakuchi",
+"label": "一ノ蔵 特別純米酒 辛口",
+"name": "一ノ蔵 特別純米酒 辛口",
+"en": "Ichinokura Tokubetsu Junmai Karakuchi",
+"type": "特別純米",
+"age": "",
+"abv": "",
+"cask": "ササニシキなど",
+"grapes": [],
+"color": "clear",
+"price": 1400,
+"p": [
+2,
+2,
+5,
+3,
+3,
+3,
+1,
+0
+],
+"tags": [
+"米粉",
+"ミネラル"
+],
+"desc": "宮城の蔵の、旨みとキレを両立した辛口の特別純米。燗でも冷やでも。"
 }
 ]
 },
@@ -1276,6 +1456,35 @@ const SAKE_BREWERIES = [
 "米粉"
 ],
 "desc": "みずみずしい香りと、きれいな甘み。"
+},
+{
+"id": "s-akabu-jg",
+"label": "AKABU 純米吟醸",
+"name": "AKABU 純米吟醸",
+"en": "Akabu Junmai Ginjo",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "吟ぎんがなど",
+"grapes": [],
+"color": "clear",
+"price": 2000,
+"p": [
+4,
+3,
+3,
+3,
+3,
+3,
+4,
+0
+],
+"tags": [
+"マスカット",
+"白桃",
+"ガス感"
+],
+"desc": "岩手の若手杜氏が造る人気の銘柄。フレッシュな果実の香りとみずみずしい甘み。"
 }
 ]
 },
@@ -1317,6 +1526,34 @@ const SAKE_BREWERIES = [
 "米粉"
 ],
 "desc": "すっきりとした辛口。燗にしてもおいしい。"
+},
+{
+"id": "s-sawanoi-junmai-ok",
+"label": "澤乃井 純米 大辛口",
+"name": "澤乃井 純米 大辛口",
+"en": "Sawanoi Junmai Ohkarakuchi",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "",
+"grapes": [],
+"color": "clear",
+"price": 1300,
+"p": [
+1,
+2,
+5,
+3,
+3,
+3,
+1,
+0
+],
+"tags": [
+"ミネラル",
+"米粉"
+],
+"desc": "東京・青梅の蔵の、キレのある辛口純米。冷やでも燗でもすっきりしていて、食事を引き立てる。"
 }
 ]
 },
@@ -1486,6 +1723,37 @@ const SAKE_BREWERIES = [
 "炊きたてご飯"
 ],
 "desc": "熟成させた純米酒の、深い旨み。燗がおすすめ。"
+},
+{
+"id": "s-shinkame-hikomago",
+"label": "神亀 ひこ孫",
+"name": "神亀 ひこ孫",
+"en": "Shinkame Hikomago",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "山田錦",
+"grapes": [
+"yamadanishiki"
+],
+"color": "yellow",
+"price": 2800,
+"p": [
+1,
+2,
+4,
+3,
+5,
+5,
+0,
+4
+],
+"tags": [
+"カラメル",
+"ナッツ",
+"米粉"
+],
+"desc": "3年以上熟成させた純米酒。熟成による深い旨みと香ばしさがあり、燗酒にすると料理を選ばない。"
 }
 ]
 },
@@ -1630,6 +1898,98 @@ const SAKE_BREWERIES = [
 "米粉"
 ],
 "desc": "ふくらみのある香りと、なめらかで深い味わい。贈り物の定番。"
+},
+{
+"id": "s-kubota-hyakuju",
+"label": "久保田 百寿",
+"name": "久保田 百寿",
+"en": "Kubota Hyakuju",
+"type": "本醸造",
+"age": "",
+"abv": "",
+"cask": "五百万石など",
+"grapes": [
+"gohyakumangoku"
+],
+"color": "clear",
+"price": 1000,
+"p": [
+1,
+2,
+4,
+2,
+2,
+2,
+2,
+0
+],
+"tags": [
+"ミネラル",
+"米粉"
+],
+"desc": "久保田のなかでもっとも気軽な一本。すっきりとした淡麗辛口で、晩酌や燗酒にも向く。"
+},
+{
+"id": "s-kubota-koju",
+"label": "久保田 紅寿",
+"name": "久保田 紅寿",
+"en": "Kubota Koju",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "五百万石など",
+"grapes": [
+"gohyakumangoku"
+],
+"color": "clear",
+"price": 1800,
+"p": [
+2,
+3,
+3,
+2,
+3,
+3,
+2,
+0
+],
+"tags": [
+"米粉",
+"りんご",
+"炊きたてご飯"
+],
+"desc": "久保田のすっきりした味わいに、純米ならではのふくらみを加えた純米吟醸。冷やでもぬる燗でも。"
+},
+{
+"id": "s-kubota-hekiju",
+"label": "久保田 碧寿",
+"name": "久保田 碧寿",
+"en": "Kubota Hekiju",
+"type": "純米大吟醸",
+"age": "",
+"abv": "",
+"cask": "五百万石など",
+"grapes": [
+"gohyakumangoku"
+],
+"color": "clear",
+"price": 2800,
+"p": [
+2,
+2,
+3,
+3,
+4,
+4,
+1,
+1
+],
+"tags": [
+"米粉",
+"ナッツ",
+"ヨーグルト"
+],
+"desc": "山廃仕込みの純米大吟醸。山廃らしい酸と旨みの厚みがあり、ぬる燗にすると味わいがふくらむ。"
 }
 ]
 },
@@ -1728,6 +2088,70 @@ const SAKE_BREWERIES = [
 "ミネラル"
 ],
 "desc": "穏やかな香りと、すっきりとした八海山らしい味わい。"
+},
+{
+"id": "s-hakkaisan-daiginjo",
+"label": "八海山 大吟醸",
+"name": "八海山 大吟醸",
+"en": "Hakkaisan Daiginjo",
+"type": "大吟醸",
+"age": "",
+"abv": "",
+"cask": "山田錦・五百万石など",
+"grapes": [
+"yamadanishiki",
+"gohyakumangoku"
+],
+"color": "clear",
+"price": 2800,
+"p": [
+3,
+2,
+4,
+2,
+2,
+2,
+2,
+0
+],
+"tags": [
+"メロン",
+"洋梨",
+"ミネラル"
+],
+"desc": "精米歩合45%まで磨いた大吟醸。穏やかで上品な香りと、八海山らしいすっきりとした後味。"
+},
+{
+"id": "s-hakkaisan-yukimuro",
+"label": "八海山 雪室貯蔵三年",
+"name": "八海山 雪室貯蔵三年",
+"en": "Hakkaisan Yukimuro 3 Years",
+"type": "純米大吟醸",
+"age": "",
+"abv": "",
+"cask": "山田錦・五百万石など",
+"grapes": [
+"yamadanishiki",
+"gohyakumangoku"
+],
+"color": "paleyellow",
+"price": 3500,
+"p": [
+2,
+3,
+3,
+2,
+3,
+3,
+1,
+3
+],
+"tags": [
+"ナッツ",
+"蜂蜜",
+"米粉"
+],
+"desc": "雪の力で低温に保たれた貯蔵庫「雪室」で3年間ゆっくり熟成させた純米大吟醸。角がとれた、まろやかで落ち着いた味わい。"
 }
 ]
 },
@@ -1770,6 +2194,36 @@ const SAKE_BREWERIES = [
 "白い花"
 ],
 "desc": "穏やかな香りと、やわらかく上品な味わい。"
+},
+{
+"id": "s-shimeharitsuru-tsuki",
+"label": "〆張鶴 月",
+"name": "〆張鶴 月",
+"en": "Shimeharitsuru Tsuki",
+"type": "本醸造",
+"age": "",
+"abv": "",
+"cask": "五百万石など",
+"grapes": [
+"gohyakumangoku"
+],
+"color": "clear",
+"price": 1200,
+"p": [
+1,
+2,
+4,
+2,
+2,
+2,
+1,
+0
+],
+"tags": [
+"ミネラル",
+"米粉"
+],
+"desc": "新潟・村上の蔵の本醸造。やわらかく穏やかな淡麗辛口で、燗にしてもきれい。"
 }
 ]
 },
@@ -1811,6 +2265,67 @@ const SAKE_BREWERIES = [
 "米粉"
 ],
 "desc": "淡麗辛口の代名詞。すっきりとしたキレ。"
+},
+{
+"id": "s-koshinokanbai-bessen",
+"label": "越乃寒梅 別撰",
+"name": "越乃寒梅 別撰",
+"en": "Koshinokanbai Bessen",
+"type": "吟醸",
+"age": "",
+"abv": "",
+"cask": "五百万石など",
+"grapes": [
+"gohyakumangoku"
+],
+"color": "clear",
+"price": 1900,
+"p": [
+2,
+2,
+5,
+2,
+2,
+2,
+1,
+0
+],
+"tags": [
+"ミネラル",
+"米粉"
+],
+"desc": "淡麗辛口ブームを牽引した新潟の銘柄の、吟醸酒。すっきりとした飲み口とキレ。"
+},
+{
+"id": "s-koshinokanbai-sai",
+"label": "越乃寒梅 灑",
+"name": "越乃寒梅 灑",
+"en": "Koshinokanbai Sai",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "五百万石など",
+"grapes": [
+"gohyakumangoku"
+],
+"color": "clear",
+"price": 1600,
+"p": [
+3,
+3,
+4,
+2,
+3,
+2,
+2,
+0
+],
+"tags": [
+"りんご",
+"米粉",
+"ミネラル"
+],
+"desc": "越乃寒梅初の純米吟醸として生まれた。淡麗さのなかに、純米らしい米のふくらみ。"
 }
 ]
 },
@@ -2008,6 +2523,37 @@ const SAKE_BREWERIES = [
 "米粉"
 ],
 "desc": "華やかな香りと、ふくよかな味わい。"
+},
+{
+"id": "s-tengumai-yamahai-jdg",
+"label": "天狗舞 山廃仕込 純米大吟醸",
+"name": "天狗舞 山廃仕込 純米大吟醸",
+"en": "Tengumai Yamahai Junmai Daiginjo",
+"type": "純米大吟醸",
+"age": "",
+"abv": "",
+"cask": "山田錦",
+"grapes": [
+"yamadanishiki"
+],
+"color": "paleyellow",
+"price": 4000,
+"p": [
+3,
+3,
+3,
+3,
+4,
+4,
+1,
+2
+],
+"tags": [
+"ナッツ",
+"蜂蜜",
+"米粉"
+],
+"desc": "山廃仕込みの名手として知られる蔵の純米大吟醸。上品な香りのなかに、山廃らしい力強い旨みと酸。"
 }
 ]
 },
@@ -2081,6 +2627,37 @@ const SAKE_BREWERIES = [
 "米粉"
 ],
 "desc": "穏やかな香りと、なめらかでキレのよい味わい。"
+},
+{
+"id": "s-kokuryu-ryu",
+"label": "黒龍 大吟醸 龍",
+"name": "黒龍 大吟醸 龍",
+"en": "Kokuryu Daiginjo Ryu",
+"type": "大吟醸",
+"age": "",
+"abv": "",
+"cask": "山田錦",
+"grapes": [
+"yamadanishiki"
+],
+"color": "clear",
+"price": 4500,
+"p": [
+4,
+2,
+4,
+2,
+2,
+2,
+2,
+1
+],
+"tags": [
+"洋梨",
+"メロン",
+"ミネラル"
+],
+"desc": "1975年に誕生した、日本酒の熟成という考え方を広めた大吟醸。低温でじっくり寝かせ、上品な香りとなめらかさ。"
 }
 ]
 },
@@ -2168,6 +2745,37 @@ const SAKE_BREWERIES = [
 "白い花"
 ],
 "desc": "低温で熟成させた、なめらかで上品な純米大吟醸。"
+},
+{
+"id": "s-born-tokishirazu",
+"label": "梵 ときしらず",
+"name": "梵 ときしらず",
+"en": "Born Tokishirazu",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "山田錦",
+"grapes": [
+"yamadanishiki"
+],
+"color": "paleyellow",
+"price": 1900,
+"p": [
+3,
+3,
+3,
+2,
+3,
+3,
+1,
+3
+],
+"tags": [
+"洋梨",
+"蜂蜜",
+"ナッツ"
+],
+"desc": "低温で長く熟成させた純米吟醸。名は「時を知らず」熟成を続けることから。まろやかで香り穏やか。"
 }
 ]
 },
@@ -2244,6 +2852,37 @@ const SAKE_BREWERIES = [
 "蜂蜜"
 ],
 "desc": "熟成させた吟醸酒。香りは穏やかで、味わいに厚みがある。"
+},
+{
+"id": "s-kikuhime-tsurunosato",
+"label": "菊姫 鶴乃里",
+"name": "菊姫 鶴乃里",
+"en": "Kikuhime Tsurunosato",
+"type": "純米",
+"age": "",
+"abv": "",
+"cask": "山田錦",
+"grapes": [
+"yamadanishiki"
+],
+"color": "yellow",
+"price": 2800,
+"p": [
+2,
+3,
+3,
+3,
+5,
+5,
+1,
+3
+],
+"tags": [
+"米粉",
+"ナッツ",
+"カラメル"
+],
+"desc": "特A地区の山田錦を使い、山廃仕込みで熟成させた純米酒。濃厚な旨みと酸で、燗にすると本領を発揮する。"
 }
 ]
 },
@@ -2443,6 +3082,37 @@ const SAKE_BREWERIES = [
 "米粉"
 ],
 "desc": "7号酵母らしい落ち着いた香りと、上品な旨み。"
+},
+{
+"id": "s-masumi-kuro",
+"label": "真澄 純米吟醸 漆黒 KURO",
+"name": "真澄 純米吟醸 漆黒 KURO",
+"en": "Masumi Kuro",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "美山錦など",
+"grapes": [
+"miyamanishiki"
+],
+"color": "clear",
+"price": 1800,
+"p": [
+2,
+2,
+4,
+3,
+4,
+4,
+1,
+0
+],
+"tags": [
+"米粉",
+"ナッツ",
+"穀物"
+],
+"desc": "真澄のなかでも旨みとキレのあるタイプ。しっかりした味わいで、肉料理や燗にも向く。"
 }
 ]
 },
@@ -2867,6 +3537,37 @@ const SAKE_BREWERIES = [
 "炊きたてご飯"
 ],
 "desc": "まろやかで飲みやすい、燗にも向く定番の日本酒。"
+},
+{
+"id": "s-gekkeikan-horin",
+"label": "月桂冠 鳳麟 純米大吟醸",
+"name": "月桂冠 鳳麟 純米大吟醸",
+"en": "Gekkeikan Horin Junmai Daiginjo",
+"type": "純米大吟醸",
+"age": "",
+"abv": "",
+"cask": "山田錦など",
+"grapes": [
+"yamadanishiki"
+],
+"color": "clear",
+"price": 2000,
+"p": [
+4,
+3,
+3,
+2,
+2,
+2,
+2,
+0
+],
+"tags": [
+"メロン",
+"りんご",
+"白い花"
+],
+"desc": "京都・伏見の大手蔵の純米大吟醸。手頃な価格で、華やかな香りとなめらかな口当たり。"
 }
 ]
 },
@@ -3092,6 +3793,38 @@ const SAKE_BREWERIES = [
 "米粉"
 ],
 "desc": "熟成させた酒を合わせた、山吹色の濃い旨み。燗がおすすめ。"
+},
+{
+"id": "s-kenbishi-mizuho",
+"label": "瑞穂黒松剣菱",
+"name": "瑞穂黒松剣菱",
+"en": "Mizuho Kuromatsu Kenbishi",
+"type": "普通酒",
+"age": "",
+"abv": "",
+"cask": "山田錦・愛山など",
+"grapes": [
+"yamadanishiki",
+"aiyama"
+],
+"color": "yellow",
+"price": 2000,
+"p": [
+1,
+3,
+3,
+3,
+5,
+5,
+0,
+4
+],
+"tags": [
+"カラメル",
+"ナッツ",
+"米粉"
+],
+"desc": "黒松剣菱の原酒をさらに長く熟成させた上位品。山吹色で、濃い旨みとカラメルのような熟成香。燗酒で。"
 }
 ]
 },
@@ -3830,6 +4563,68 @@ const SAKE_BREWERIES = [
 "白い花"
 ],
 "desc": "米を23%まで磨いた、繊細で上品な香り。"
+},
+{
+"id": "s-dassai-sparkling",
+"label": "獺祭 スパークリング45",
+"name": "獺祭 スパークリング45",
+"en": "Dassai Sparkling 45",
+"type": "スパークリング",
+"age": "",
+"abv": "",
+"cask": "山田錦",
+"grapes": [
+"yamadanishiki"
+],
+"color": "cloudy",
+"price": 2000,
+"p": [
+4,
+4,
+2,
+3,
+2,
+2,
+5,
+0
+],
+"tags": [
+"白桃",
+"りんご",
+"ガス感"
+],
+"desc": "瓶の中で二次発酵させた、うすにごりのスパークリング。白桃のような甘い香りと、きめ細かい泡。乾杯や前菜に。"
+},
+{
+"id": "s-dassai-beyond",
+"label": "獺祭 磨き その先へ",
+"name": "獺祭 磨き その先へ",
+"en": "Dassai Beyond",
+"type": "純米大吟醸",
+"age": "",
+"abv": "",
+"cask": "山田錦",
+"grapes": [
+"yamadanishiki"
+],
+"color": "clear",
+"price": 35000,
+"p": [
+5,
+3,
+3,
+2,
+3,
+3,
+2,
+0
+],
+"tags": [
+"白桃",
+"メロン",
+"白い花"
+],
+"desc": "精米歩合の数字を明かさず、「磨き二割三分」を超える酒を目指した獺祭の最上位。華やかで奥行きのある香りが長く続く。"
 }
 ]
 },
@@ -3914,6 +4709,37 @@ const SAKE_BREWERIES = [
 "米粉"
 ],
 "desc": "金箔入りの華やかな大吟醸。祝いの席に。"
+},
+{
+"id": "s-kamotsuru-ittekinyukon",
+"label": "賀茂鶴 純米吟醸 一滴入魂",
+"name": "賀茂鶴 純米吟醸 一滴入魂",
+"en": "Kamotsuru Junmai Ginjo Itteki Nyukon",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "広島八反など",
+"grapes": [
+"hattannishiki"
+],
+"color": "clear",
+"price": 1700,
+"p": [
+3,
+3,
+3,
+2,
+3,
+3,
+2,
+0
+],
+"tags": [
+"りんご",
+"米粉",
+"白い花"
+],
+"desc": "酒どころ・広島の西条の蔵。米の旨みとやさしい香りが調和した、食中酒向きの純米吟醸。"
 }
 ]
 },
@@ -4335,6 +5161,35 @@ const SAKE_BREWERIES = [
 "米粉"
 ],
 "desc": "酸の効いたキレのよい辛口。カツオのたたきに。"
+},
+{
+"id": "s-suigei-ginrei",
+"label": "酔鯨 純米吟醸 吟麗",
+"name": "酔鯨 純米吟醸 吟麗",
+"en": "Suigei Junmai Ginjo Ginrei",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "松山三井など",
+"grapes": [],
+"color": "clear",
+"price": 1800,
+"p": [
+3,
+2,
+4,
+3,
+2,
+2,
+2,
+0
+],
+"tags": [
+"柑橘",
+"ミネラル",
+"米粉"
+],
+"desc": "土佐の辛口らしいキレと、穏やかな香りの純米吟醸。カツオのたたきなど高知の料理と好相性。"
 }
 ]
 },
@@ -4546,6 +5401,68 @@ const SAKE_BREWERIES = [
 ],
 "desc": "フレッシュな果実の香りと、きれいな甘み。",
 "priceNote": "定価のおおよその目安です。品薄で、店頭では手に入りにくく、販売価格が大きく上下することがあります"
+},
+{
+"id": "s-nabeshima-jgy",
+"label": "鍋島 純米吟醸 山田錦",
+"name": "鍋島 純米吟醸 山田錦",
+"en": "Nabeshima Junmai Ginjo Yamadanishiki",
+"type": "純米吟醸",
+"age": "",
+"abv": "",
+"cask": "山田錦",
+"grapes": [
+"yamadanishiki"
+],
+"color": "clear",
+"price": 2400,
+"p": [
+4,
+4,
+3,
+3,
+3,
+3,
+4,
+0
+],
+"tags": [
+"メロン",
+"マスカット",
+"ガス感"
+],
+"desc": "国際的な品評会で最高賞を受けて名が広がった佐賀の蔵。フレッシュな果実の香りと甘み、軽いガス感。"
+},
+{
+"id": "s-nabeshima-jdg",
+"label": "鍋島 純米大吟醸",
+"name": "鍋島 純米大吟醸",
+"en": "Nabeshima Junmai Daiginjo",
+"type": "純米大吟醸",
+"age": "",
+"abv": "",
+"cask": "山田錦",
+"grapes": [
+"yamadanishiki"
+],
+"color": "clear",
+"price": 3800,
+"p": [
+5,
+4,
+3,
+3,
+3,
+3,
+3,
+0
+],
+"tags": [
+"白桃",
+"メロン",
+"白い花"
+],
+"desc": "鍋島の華やかさを極めた純米大吟醸。白桃やメロンの香りと、上品な甘み。"
 }
 ]
 },
