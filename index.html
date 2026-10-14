@@ -22,9 +22,11 @@
 <script src="zukan-data.js"></script>
 <script src="wine-data.js"></script>
 <script src="sake-data.js"></script>
+<script src="spirits-data.js"></script>
 <script src="coffee-data.js"></script>
 <script src="cheese-data.js"></script>
 <script src="chinmi-data.js"></script>
+<script src="cocktail-data.js"></script>
 <script src="food-data.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.104.1/dist/umd/supabase.js"></script>
 <style>
@@ -394,7 +396,7 @@ input[type=range]{accent-color:var(--amber);width:100%}
 .kinds{position:fixed;inset:0;z-index:35;background:var(--bg);overflow-y:auto;display:grid;place-items:center;
   padding:calc(28px + env(safe-area-inset-top,0px)) 16px calc(28px + env(safe-area-inset-bottom,0px))}
 body.kinds-on{overflow:hidden}
-.kinds-in{width:100%;max-width:440px;display:grid;gap:26px}
+.kinds-in{width:100%;max-width:440px;display:grid;gap:22px}
 .kinds-head{text-align:center;display:grid;gap:8px}
 .kinds-head .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.34em;color:var(--muted)}
 .kinds-head h1{font-family:var(--display);font-weight:800;font-size:clamp(26px,8.4vw,36px);letter-spacing:.08em;margin:0;line-height:1.1}
@@ -453,6 +455,39 @@ body.kinds-on{overflow:hidden}
 .kcard.k-cheese{--c:#9A7310} .kcard.k-chinmi{--c:#8E3B2A}
 @media (prefers-color-scheme: dark){.kcard.k-cheese{--c:#E6C35C}.kcard.k-chinmi{--c:#E39A86}}
 .pchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+
+/* 選択画面：分類ごとのまとまり */
+.kgroup{display:grid;gap:10px}
+.kg-head{display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.kg-head b{font-family:var(--display);font-size:19px}
+.kg-head .en{font-family:var(--mono);font-size:10px;letter-spacing:.28em;color:var(--muted);order:2}
+.kind-cards .kcard:last-child:nth-child(odd){grid-column:span 2;min-height:132px}
+.kcard{min-height:150px}
+.kcard .kglass{width:50px;height:50px}
+.kcard .en{margin-top:14px}
+.kgroup .soon-row{justify-content:flex-start;align-items:center}
+.kgroup .soon-row .lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;color:var(--muted);border:0;padding:0 4px 0 0}
+:root[data-kind="brandy"]{--amber:#7B3B22;--amber-soft:#F1DED3}
+@media (prefers-color-scheme: dark){:root[data-kind="brandy"]{--amber:#E3A07A;--amber-soft:#3A2419}}
+:root[data-kind="rum"]{--amber:#1F7A6A;--amber-soft:#D6EDE7}
+@media (prefers-color-scheme: dark){:root[data-kind="rum"]{--amber:#74C9B6;--amber-soft:#16302A}}
+:root[data-kind="tequila"]{--amber:#3F7590;--amber-soft:#DAE8EF}
+@media (prefers-color-scheme: dark){:root[data-kind="tequila"]{--amber:#8DC0DA;--amber-soft:#1B2C35}}
+.kcard.k-brandy{--c:#7B3B22} .kcard.k-rum{--c:#1F7A6A} .kcard.k-tequila{--c:#3F7590} .kcard.k-cocktail{--c:#A3346B}
+@media (prefers-color-scheme: dark){.kcard.k-cocktail{--c:#E68AB5}}
+:root[data-kind="cocktail"]{--amber:#A3346B;--amber-soft:#F5DCE7}
+@media (prefers-color-scheme: dark){:root[data-kind="cocktail"]{--amber:#E68AB5;--amber-soft:#3A1F2C}}
+.cings{display:grid;border-top:1px solid var(--line)}
+.cing{padding:9px 2px;border-bottom:1px solid var(--line);display:grid;gap:6px}
+.cing-h{display:flex;justify-content:space-between;gap:12px;font-size:14.5px}
+.cing-h em{font-style:normal;color:var(--muted);white-space:nowrap}
+.cing .pchips{margin:0}
+.ckt-tools{display:grid;gap:8px}
+.ckt-tool{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;gap:3px}
+.ckt-tool b{font-size:15px;display:flex;gap:8px;align-items:baseline}
+.ckt-tool b small{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);font-weight:500}
+.ckt-tool p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.6}
+@media (prefers-color-scheme: dark){.kcard.k-brandy{--c:#E3A07A}.kcard.k-rum{--c:#74C9B6}.kcard.k-tequila{--c:#8DC0DA}}
 .pchips .chip{display:inline-flex;align-items:center;gap:6px}
 .pchips .chip i{width:14px;height:14px;border-radius:50%;display:inline-block;border:1px solid rgba(0,0,0,.1)}
 .roastbar{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
@@ -470,7 +505,7 @@ body.kinds-on{overflow:hidden}
 /* 料理・酒の肴 */
 :root[data-kind="food"]{--amber:#6B7A1F;--amber-soft:#E9EDCF}
 @media (prefers-color-scheme: dark){:root[data-kind="food"]{--amber:#B9C66A;--amber-soft:#2A2F14}}
-:root[data-kind="food"] .tabs{grid-template-columns:1.3fr 1fr 1fr}
+:root[data-kind="food"] .tabs,:root[data-kind="cocktail"] .tabs{grid-template-columns:1.3fr 1.2fr 1fr}
 .kcard.k-food{--c:#6B7A1F}
 @media (prefers-color-scheme: dark){.kcard.k-food{--c:#B9C66A}}
 .badge.shun{background:#E3EAC2;color:#4F5B12}
@@ -560,6 +595,7 @@ body.kinds-on{overflow:hidden}
 <div class="kinds" id="kinds" hidden>
   <div class="kinds-in">
     <header class="kinds-head"><span class="eyebrow">TASTING NOTES</span><h1>HIDEOUT CARTER</h1><p>今日はなにを記録しますか？</p></header>
+    <section class="kgroup"><div class="kg-head"><span class="en">LIQUOR</span><b>お酒</b></div>
     <div class="kind-cards">
       <button class="kcard k-whisky" data-kind="whisky">
         <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M17.5 33.5h29l-2 19.2a2.6 2.6 0 0 1-2.6 2.3H22.1a2.6 2.6 0 0 1-2.6-2.3z" fill="currentColor" opacity=".38"/><rect x="25" y="27" width="12" height="12" rx="2.2" transform="rotate(-12 31 33)" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".8"/><path d="M14 13h36l-4.4 40.4a3.4 3.4 0 0 1-3.4 3H21.8a3.4 3.4 0 0 1-3.4-3z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M17 33.5h30" stroke="currentColor" stroke-width="1.4"/></svg>
@@ -570,9 +606,31 @@ body.kinds-on{overflow:hidden}
       <button class="kcard k-sake" data-kind="sake">
         <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M24 6h10v6c0 3 6 6 7 13 1.2 8-1.5 18-2.4 24.5-.4 2.6-2.4 4.5-5 4.5h-5.2c-2.6 0-4.6-1.9-5-4.5C22.5 43 19.8 33 21 25c1-7 7-10 7-13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" transform="translate(-6 0)"/><path d="M38 40h20l-2.2 11.4a3 3 0 0 1-3 2.6H43.2a3 3 0 0 1-3-2.6z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M40.6 45.5h14.8l-1.1 5.8a1.6 1.6 0 0 1-1.6 1.3h-9.4a1.6 1.6 0 0 1-1.6-1.3z" fill="currentColor" opacity=".38"/><circle cx="48" cy="47.5" r="2.3" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".7"/></svg>
         <span class="en">SAKE</span><b>日本酒</b><span class="kc" id="kc-sake"></span></button>
+      <button class="kcard k-brandy" data-kind="brandy">
+        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M17 33c0-8 6-17 15-17s15 9 15 17c0 9-6.7 15-15 15s-15-6-15-15z" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M18.5 36h27c-1.2 6.6-6.6 10.5-13.5 10.5S19.7 42.6 18.5 36z" fill="currentColor" opacity=".4"/><path d="M32 48v7M23 57h18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        <span class="en">BRANDY</span><b>ブランデー</b><span class="kc" id="kc-brandy"></span></button>
+      <button class="kcard k-rum" data-kind="rum">
+        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M23 6h10v9c5 2 8 6 8 12v26a3 3 0 0 1-3 3H18a3 3 0 0 1-3-3V27c0-6 3-10 8-12z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M15.5 34h25v18.5a2 2 0 0 1-2 2h-21a2 2 0 0 1-2-2z" fill="currentColor" opacity=".38"/><path d="M50 8v48M50 20l7-6M50 32l-6-5M50 44l7-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span class="en">RUM</span><b>ラム</b><span class="kc" id="kc-rum"></span></button>
+      <button class="kcard k-tequila" data-kind="tequila">
+        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M20 30h20l-2.5 24a2.5 2.5 0 0 1-2.5 2.2h-10A2.5 2.5 0 0 1 22.5 54z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M21.3 40h17.4l-1.3 13a1.6 1.6 0 0 1-1.6 1.4h-11.6a1.6 1.6 0 0 1-1.6-1.4z" fill="currentColor" opacity=".38"/><path d="M44 26a9 9 0 0 1 12 9" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M45.5 29a6 6 0 0 1 7.6 6.3" fill="currentColor" opacity=".38"/><path d="M30 26c-2-6-6-10-11-12M30 26c0-7 2-13 5-17M30 26c3-5 8-8 13-9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span class="en">TEQUILA</span><b>テキーラ</b><span class="kc" id="kc-tequila"></span></button>
+      <button class="kcard k-cocktail" data-kind="cocktail">
+        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 12h40L32 34z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M17.5 17h29L32 30.5z" fill="currentColor" opacity=".38"/><path d="M32 34v20M22 56h20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="45" cy="13" r="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M40 8l9-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span class="en">COCKTAIL</span><b>カクテル</b><span class="kc" id="kc-cocktail"></span></button>
+    </div>
+    <div class="soon-row"><span class="lbl">COMING SOON</span><span>ビール</span><span>焼酎</span></div>
+    </section>
+    <section class="kgroup"><div class="kg-head"><span class="en">SOFT DRINKS</span><b>ソフトドリンク</b></div>
+    <div class="kind-cards">
       <button class="kcard k-coffee" data-kind="coffee">
         <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 26h34v14a13 13 0 0 1-13 13h-8a13 13 0 0 1-13-13z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M14.5 31h29v9a10.5 10.5 0 0 1-10.5 10.5h-8A10.5 10.5 0 0 1 14.5 40z" fill="currentColor" opacity=".38"/><path d="M46 30h3.5a6 6 0 0 1 0 12H45" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M8 57h44" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M22 20c-2.5-3 2.5-5 0-9M31 20c-2.5-3 2.5-5 0-9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".7"/></svg>
         <span class="en">COFFEE</span><b>コーヒー</b><span class="kc" id="kc-coffee"></span></button>
+    </div>
+    <div class="soon-row"><span class="lbl">COMING SOON</span><span>紅茶</span><span>日本茶</span></div>
+    </section>
+    <section class="kgroup"><div class="kg-head"><span class="en">FOOD</span><b>食べ物</b></div>
+    <div class="kind-cards">
       <button class="kcard k-cheese" data-kind="cheese">
         <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 40l40-20 8 6v18H8z" fill="currentColor" opacity=".3"/><path d="M8 40l40-20 8 6M8 40v12h48V26M8 40h48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="20" cy="47" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="36" cy="45.5" r="3.4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="48" cy="48" r="2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="40" cy="31" r="2.2" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".8"/></svg>
         <span class="en">CHEESE</span><b>チーズ</b><span class="kc" id="kc-cheese"></span></button>
@@ -583,7 +641,7 @@ body.kinds-on{overflow:hidden}
         <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M17 40.5c1.4-7.4 6.6-11.5 13-11.5s11.6 4.1 13 11.5z" fill="currentColor" opacity=".38"/><ellipse cx="30" cy="42" rx="23" ry="8.5" fill="none" stroke="currentColor" stroke-width="2.2"/><ellipse cx="30" cy="41" rx="14" ry="4" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".7"/><path d="M38 9.5l15.5 25M45.5 7l12 27" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
         <span class="en">DISH &amp; PAIRING</span><b>料理・酒の肴</b><span class="kc" id="kc-food"></span></button>
     </div>
-    <div class="kind-soon"><span class="lbl">COMING SOON</span><div class="soon-row"><span>ビール</span><span>カクテル</span></div></div>
+    </section>
   </div>
 </div>
 <div class="exit-dlg" id="exit-dlg" role="alertdialog" aria-modal="true" aria-labelledby="exit-t" hidden>
@@ -593,7 +651,7 @@ body.kinds-on{overflow:hidden}
 
 <script>
 (() => {
-const APP_VERSION = '2026.10.14f';
+const APP_VERSION = '2026.10.15b';
 
 /* ---------- お酒の種類ごとの設定（ウイスキー／ワイン。日本酒・ビール・カクテルは今後ここに足す） ---------- */
 const STORY_HEADS = [['はじまり','HISTORY'],['造りのこだわり','CRAFT'],['ウイスキー界での存在感','STANDING']];
@@ -821,6 +879,157 @@ const KINDS = {
       modes:[['region','地方'],['grape','酒米'],['flavor','味・香り']],
     },
   },
+  brandy: {
+    key:'brandy', jp:'ブランデー', en:'BRANDY',
+    COLORS: [['clear','無色透明','#F4F1E6'],['gold','ゴールド','#E0B04C'],['amber','アンバー','#C27A2C'],['copper','カッパー','#A55A22'],['mahogany','マホガニー','#6E3216']],
+    AXES: [['fruity','フルーティ'],['floral','フローラル'],['sweet','甘み'],['woody','樽・ウッディ'],['spicy','スパイシー'],['nutty','ナッツ・ランシオ'],['dried','ドライフルーツ'],['strength','力強さ']],
+    TAGS: [
+      ['果実',['ブドウ','りんご','洋梨','白桃','アプリコット','オレンジ','柑橘','マスカット']],
+      ['ドライフルーツ',['レーズン','プルーン','いちじく','ドライフルーツ']],
+      ['花',['花','スミレ','ジャスミン','蜂蜜']],
+      ['甘み・樽',['バニラ','キャラメル','トフィー','チョコレート','オーク','トースト','シダー']],
+      ['スパイス',['シナモン','クローブ','甘草','黒胡椒','スパイス']],
+      ['熟成',['ナッツ','ランシオ','タバコ','革','シェリー']]],
+    PHASES: [['nose','香り','NOSE'],['palate','味わい','PALATE'],['finish','余韻','FINISH']],
+    TYPES: ['コニャック','アルマニャック','カルヴァドス','ブランデー・デ・ヘレス','グラッパ','ピスコ','そのほかのブランデー'],
+    REGIONS: ['フランス','スペイン','イタリア','ドイツ','アルメニア','ペルー','日本','その他'],
+    SERVES: ['ストレート','少量加水','ロック','ソーダ割り','カクテル'], defServe:'ストレート', defType:'コニャック',
+    FINLEN: ['ショート','ミディアム','ロング'],
+    Z: () => ({ D:(typeof BRANDY_MAKERS!=='undefined'?BRANDY_MAKERS:[]), E:(typeof BRANDY_ENTRIES!=='undefined'?BRANDY_ENTRIES:[]), R:(typeof BRANDY_REGIONS!=='undefined'?BRANDY_REGIONS:{}), S:{},
+      W:{ ...(typeof CHEESE_MAPS!=='undefined'?{ world:CHEESE_MAPS.world }:{}), ...(typeof WINE_MAPS!=='undefined'?{ france:WINE_MAPS.france, italy:WINE_MAPS.italy, spain:WINE_MAPS.spain }:{}) } }),
+    ZK_TYPES: ['コニャック','アルマニャック','カルヴァドス','ブランデー・デ・ヘレス','グラッパ','ピスコ'],
+    ZK_TAGS: ['ブドウ','りんご','アプリコット','オレンジ','レーズン','プルーン','花','スミレ','バニラ','キャラメル','チョコレート','オーク','シナモン','ナッツ','ランシオ','シェリー'],
+    ZK_PRICES: [['p1','〜4,999円',0,5000],['p2','5,000〜9,999円',5000,10000],['p3','1万〜2万円台',10000,30000],['p4','3万円〜',30000,1e12]],
+    COUNTRIES: (typeof BRANDY_COUNTRIES!=='undefined') ? BRANDY_COUNTRIES : {},
+    BIG: (typeof BRANDY_MAIN!=='undefined') ? BRANDY_MAIN : [], MINOR: ['armenia','peru','japan'],
+    WORLD_LABEL: { france:[3,100,'start'], spain:[3,150,'start'], italy:[112,112,'start'], germany:[104,70,'start'] },
+    ageFmt: v => v||'',
+    exMeta: z => [z.type, z.age, z.abv?z.abv+'%':''],
+    zFacts: z => [['造り手',z.distillery],['産地',[ZR[z.region]?.jp, ZK_COUNTRIES[countryOfRegion(z.region)]?.jp].filter((v,i,a)=>v && a.indexOf(v)===i).join('・')],['タイプ',z.type],['熟成',z.age],['度数',z.abv?z.abv+'%':''],['原料',z.cask]],
+    cmpRows: (A,B) => [['造り手',A.distillery,B.distillery],['タイプ',A.type,B.type],['熟成',A.age||'—',B.age||'—'],['度数',A.abv?A.abv+'%':'—',B.abv?B.abv+'%':'—'],['原料',A.cask||'—',B.cask||'—']],
+    heads: () => [],
+    daily: { en:'EVERYDAY BRANDY', title:'手頃なブランデー', sub:'5,000円未満のブランデーを一覧で見る ›', prices:['p1'] },
+    G: { list:()=>(typeof BRANDY_TYPES!=='undefined'?BRANDY_TYPES:[]), name:'タイプ', en:'TYPES', unit:'タイプ', countUnit:'本',
+      groups:[['ブドウのブランデー','ブドウのブランデー'],['ブドウの搾りかすのブランデー','ブドウの搾りかすのブランデー'],['果実のブランデー','果実のブランデー']], sub:g=>g.kind,
+      glass:g=>({grappa:'clear',pisco:'clear',calvados:'gold',jerez:'mahogany'})[g.id]||'amber',
+      intro:'ブランデーは、果実の酒を蒸留したお酒の総称。産地と原料によっていくつかのタイプに分かれます。',
+      itemsTitle:'このタイプのブランデー', itemsEn:'BOTTLES',
+      note:'コニャックやアルマニャックのV.S・V.S.O.P・X.Oは熟成期間の目安を表す等級で、X.Oは10年以上の熟成が条件です。' },
+    L: {
+      maker:'造り手', makerForm:'造り手（メゾン）', makerPh:'例：ヘネシー', makerCount:'造り手',
+      typeLbl:'タイプ', age:'熟成', ageForm:'熟成・等級', agePh:'X.O', cask:'原料', caskPh:'ユニ・ブラン', abvPh:'40', tagPh:'例：焼きりんご、葉巻',
+      namePh:'例：ヘネシー V.S.O.P', search:'銘柄・造り手・香りで検索', zkSearch:'図鑑を検索（造り手・銘柄・産地・香り）',
+      pickLbl:'銘柄名・造り手で探す', pickPh:'例：レミーマルタン', cpPh:'造り手・銘柄名で探す',
+      serveLbl:'飲み方', commentPh:'例：手のひらで温めると、ドライフルーツとバニラの香りが開く。',
+      worldCap:'BRANDY OF EUROPE', worldAria:'ブランデーの産地', worldHint:'国を選ぶと、その国のブランデーを見られます。',
+      lineupEn:'BOTTLES', mapSec:'造り手の場所', back:'図鑑',
+      priceNote:'国内の店頭価格（700ml前後）のおおよその目安です。時期や店舗によって変わります。',
+      simNote:'ほかの造り手のブランデーから、味わいの傾向と香りの重なりで選んでいます。',
+      zkNote:'図鑑の味わいは、一般的に語られる傾向をもとにした目安です。参考価格は国内のおおよその目安です。',
+      distNote:'味わいは一般的に語られる傾向をもとにした目安です。創業年や逸話は一般に伝えられている内容です。',
+      modes:[['region','産地'],['grape','タイプ'],['flavor','味・香り']],
+    },
+  },
+
+  rum: {
+    key:'rum', jp:'ラム', en:'RUM',
+    COLORS: [['white','ホワイト（無色）','#F4F1E6'],['gold','ゴールド','#E0B04C'],['amber','アンバー','#C27A2C'],['copper','カッパー','#9C561F'],['dark','ダーク','#4A2410']],
+    AXES: [['sweet','甘み'],['fruity','フルーティ'],['grassy','サトウキビ・草'],['funky','エステリー'],['spicy','スパイス'],['woody','樽・ウッディ'],['vanilla','バニラ・キャラメル'],['strength','力強さ']],
+    TAGS: [
+      ['果実',['バナナ','パイナップル','トロピカル','ココナッツ','オレンジ','柑橘','ドライフルーツ','レーズン']],
+      ['甘み',['バニラ','キャラメル','黒糖','蜂蜜','トフィー','チョコレート','コーヒー']],
+      ['サトウキビ・草',['サトウキビ','草','ハーブ','ミネラル']],
+      ['スパイス・樽',['シナモン','クローブ','黒胡椒','オーク','タバコ','スパイス']],
+      ['その他',['ファンキー','クリーン','オイリー']]],
+    PHASES: [['nose','香り','NOSE'],['palate','味わい','PALATE'],['finish','余韻','FINISH']],
+    TYPES: ['ホワイトラム','ゴールドラム','ダークラム（熟成ラム）','アグリコール','ジャマイカン（ハイエステル）','スパイスド・リキュール','その他'],
+    REGIONS: ['キューバ','ジャマイカ','ハイチ','ドミニカ共和国','プエルトリコ','マルティニーク','バルバドス','トリニダード・トバゴ','ガイアナ','ベネズエラ','グアテマラ','ニカラグア','フィリピン','インド','日本','その他'],
+    SERVES: ['ストレート','ロック','ソーダ割り','コーラ割り','カクテル'], defServe:'ストレート', defType:'ダークラム（熟成ラム）',
+    FINLEN: ['ショート','ミディアム','ロング'],
+    Z: () => ({ D:(typeof RUM_MAKERS!=='undefined'?RUM_MAKERS:[]), E:(typeof RUM_ENTRIES!=='undefined'?RUM_ENTRIES:[]), R:(typeof RUM_REGIONS!=='undefined'?RUM_REGIONS:{}), S:{}, W:(typeof RUM_MAPS!=='undefined'?RUM_MAPS:{}) }),
+    ZK_TYPES: ['ホワイトラム','ゴールドラム','ダークラム（熟成ラム）','アグリコール','ジャマイカン（ハイエステル）','スパイスド・リキュール'],
+    ZK_TAGS: ['バナナ','パイナップル','ココナッツ','オレンジ','ドライフルーツ','バニラ','キャラメル','黒糖','チョコレート','コーヒー','サトウキビ','草','シナモン','オーク','ファンキー'],
+    ZK_PRICES: [['p1','〜2,999円',0,3000],['p2','3,000〜4,999円',3000,5000],['p3','5,000〜9,999円',5000,10000],['p4','1万円〜',10000,1e12]],
+    COUNTRIES: (typeof RUM_COUNTRIES!=='undefined') ? RUM_COUNTRIES : {},
+    BIG: (typeof RUM_MAIN!=='undefined') ? RUM_MAIN : [], MINOR: ['philippines','india','japan'],
+    WORLD_LABEL: { caribbean:[6,8,'start'] },
+    ageFmt: v => !v ? '' : /^\d+$/.test(String(v).trim()) ? `${v}年` : String(v),
+    exMeta: z => [z.type, z.age, z.abv?z.abv+'%':''],
+    zFacts: z => [['造り手',z.distillery],['産地',ZR[z.region]?.jp],['タイプ',z.type],['熟成',z.age],['度数',z.abv?z.abv+'%':''],['原料',z.cask]],
+    cmpRows: (A,B) => [['造り手',A.distillery,B.distillery],['産地',ZR[A.region]?.jp,ZR[B.region]?.jp],['タイプ',A.type,B.type],['熟成',A.age||'—',B.age||'—'],['度数',A.abv?A.abv+'%':'—',B.abv?B.abv+'%':'—'],['原料',A.cask||'—',B.cask||'—']],
+    heads: () => [],
+    daily: { en:'EVERYDAY RUM', title:'手頃なラム', sub:'3,000円未満のラムを一覧で見る ›', prices:['p1'] },
+    G: { list:()=>(typeof RUM_TYPES!=='undefined'?RUM_TYPES:[]), name:'スタイル', en:'STYLES', unit:'スタイル', countUnit:'本',
+      groups:[['糖蜜のラム','糖蜜のラム'],['サトウキビ汁のラム','サトウキビの汁のラム'],['そのほか','そのほか']], sub:g=>g.kind,
+      glass:g=>({white:'white',gold:'gold',dark:'dark',agricole:'gold',jamaican:'copper',spiced:'amber'})[g.id]||'amber',
+      intro:'ラムは、サトウキビからできるお酒。原料（糖蜜かサトウキビの汁か）と、熟成の長さや蒸留の方法によってスタイルが分かれます。',
+      itemsTitle:'このスタイルのラム', itemsEn:'BOTTLES',
+      note:'ラムの熟成年数の表示ルールは国によって異なり、ソレラ方式の場合は最も古い原酒の年数を表示することもあります。' },
+    L: {
+      maker:'造り手', makerForm:'造り手（ブランド）', makerPh:'例：アプルトン・エステート', makerCount:'造り手',
+      typeLbl:'スタイル', age:'熟成', ageForm:'熟成年数', agePh:'12', cask:'原料', caskPh:'糖蜜', abvPh:'40', tagPh:'例：焼きバナナ、葉巻',
+      namePh:'例：ロン・サカパ 23', search:'銘柄・造り手・香りで検索', zkSearch:'図鑑を検索（造り手・銘柄・国・香り）',
+      pickLbl:'銘柄名・造り手で探す', pickPh:'例：サカパ', cpPh:'造り手・銘柄名で探す',
+      serveLbl:'飲み方', commentPh:'例：黒糖とバナナの香り。ロックで甘さが引き締まる。',
+      worldCap:'WORLD RUM', worldAria:'ラムの産地', worldHint:'ラムの故郷カリブ海の国々から選んでください。',
+      lineupEn:'BOTTLES', mapSec:'造り手の場所', back:'図鑑',
+      priceNote:'国内の店頭価格（700ml前後）のおおよその目安です。時期や店舗によって変わります。',
+      simNote:'ほかの造り手のラムから、味わいの傾向と香りの重なりで選んでいます。',
+      zkNote:'図鑑の味わいは、一般的に語られる傾向をもとにした目安です。参考価格は国内のおおよその目安です。',
+      distNote:'味わいは一般的に語られる傾向をもとにした目安です。創業年や逸話は一般に伝えられている内容です。',
+      modes:[['region','産地'],['grape','スタイル'],['flavor','味・香り']],
+    },
+  },
+
+  tequila: {
+    key:'tequila', jp:'テキーラ', en:'TEQUILA',
+    COLORS: [['blanco','ブランコ（無色）','#F4F2EA'],['joven','ホーベン（淡い黄）','#F1E3A8'],['reposado','レポサド（淡い金色）','#E6C266'],['anejo','アネホ（琥珀）','#C98A34'],['extra','エクストラアネホ','#8E4E1C']],
+    AXES: [['agave','アガベ'],['citrus','柑橘'],['herbal','ハーブ・青さ'],['pepper','黒胡椒'],['sweet','甘み'],['woody','樽・ウッディ'],['smoky','スモーク'],['mineral','ミネラル・土']],
+    TAGS: [
+      ['アガベ・野菜',['アガベ','焼き芋','ピーマン','オリーブ','ハーブ','ミント']],
+      ['果実',['柑橘','ライム','グレープフルーツ','バナナ','パイナップル','ドライフルーツ']],
+      ['スパイス',['黒胡椒','シナモン','スパイス']],
+      ['甘み・樽',['バニラ','キャラメル','蜂蜜','トフィー','チョコレート','オーク']],
+      ['スモーク・土',['スモーク','土','ミネラル','バター','花']]],
+    PHASES: [['nose','香り','NOSE'],['palate','味わい','PALATE'],['finish','余韻','FINISH']],
+    TYPES: ['ブランコ（シルバー）','レポサド','アネホ','エクストラアネホ','クリスタリーノ','メスカル','その他'],
+    REGIONS: ['ハリスコ州（渓谷）','ハリスコ州（高地）','オアハカ州','そのほかの州'],
+    SERVES: ['ストレート（ショット）','ストレート（グラス）','ロック','ソーダ割り','カクテル'], defServe:'ストレート（グラス）', defType:'ブランコ（シルバー）',
+    FINLEN: ['ショート','ミディアム','ロング'],
+    Z: () => ({ D:(typeof TEQUILA_MAKERS!=='undefined'?TEQUILA_MAKERS:[]), E:(typeof TEQUILA_ENTRIES!=='undefined'?TEQUILA_ENTRIES:[]), R:(typeof TEQUILA_REGIONS!=='undefined'?TEQUILA_REGIONS:{}), S:{}, W:(typeof TEQUILA_MAPS!=='undefined'?TEQUILA_MAPS:{}) }),
+    ZK_TYPES: ['ブランコ（シルバー）','レポサド','アネホ','エクストラアネホ','クリスタリーノ','メスカル'],
+    ZK_TAGS: ['アガベ','柑橘','ライム','ハーブ','黒胡椒','バニラ','キャラメル','チョコレート','オーク','スモーク','土','ミネラル'],
+    ZK_PRICES: [['p1','〜2,999円',0,3000],['p2','3,000〜6,999円',3000,7000],['p3','7,000〜14,999円',7000,15000],['p4','1万5千円〜',15000,1e12]],
+    COUNTRIES: (typeof TEQUILA_COUNTRIES!=='undefined') ? TEQUILA_COUNTRIES : {},
+    BIG: [], MINOR: [], WORLD_LABEL: {}, single:'mexico',
+    ageFmt: v => v||'',
+    exMeta: z => [z.type, z.age && z.age!=='—' ? z.age : '', z.abv?z.abv+'%':''],
+    zFacts: z => [['造り手',z.distillery],['産地',ZR[z.region]?.jp],['タイプ',z.type],['熟成',z.age],['度数',z.abv?z.abv+'%':''],['アガベ',z.cask]],
+    cmpRows: (A,B) => [['造り手',A.distillery,B.distillery],['産地',ZR[A.region]?.jp,ZR[B.region]?.jp],['タイプ',A.type,B.type],['熟成',A.age||'—',B.age||'—'],['度数',A.abv?A.abv+'%':'—',B.abv?B.abv+'%':'—'],['アガベ',A.cask||'—',B.cask||'—']],
+    heads: () => [],
+    daily: { en:'EVERYDAY TEQUILA', title:'手頃なテキーラ', sub:'3,000円未満のテキーラを一覧で見る ›', prices:['p1'] },
+    G: { list:()=>(typeof TEQUILA_TYPES!=='undefined'?TEQUILA_TYPES:[]), name:'タイプ', en:'TYPES', unit:'タイプ', countUnit:'本',
+      groups:[['テキーラ','テキーラ'],['メスカル','メスカル']], sub:g=>g.kind,
+      glass:g=>({blanco:'blanco',reposado:'reposado',anejo:'anejo',extra:'extra',cristalino:'blanco',mezcal:'joven'})[g.id]||'reposado',
+      intro:'テキーラは熟成期間によって呼び名が変わります。テキーラの仲間でスモーキーなメスカルも紹介しています。',
+      itemsTitle:'このタイプの銘柄', itemsEn:'BOTTLES',
+      note:'テキーラは、ブルーアガベだけで造る「100%アガベ」と、ほかの糖を加えた「ミクスト」があります。図鑑の銘柄は一般的な仕様の目安です。' },
+    L: {
+      maker:'造り手', makerForm:'造り手（ブランド）', makerPh:'例：パトロン', makerCount:'造り手',
+      typeLbl:'タイプ', age:'熟成', ageForm:'熟成期間', agePh:'8か月', cask:'アガベ', caskPh:'ブルーアガベ', abvPh:'40', tagPh:'例：焼き芋、ライム',
+      namePh:'例：ドン・フリオ レポサド', search:'銘柄・造り手・香りで検索', zkSearch:'図鑑を検索（造り手・銘柄・タイプ・香り）',
+      pickLbl:'銘柄名・造り手で探す', pickPh:'例：パトロン', cpPh:'造り手・銘柄名で探す',
+      serveLbl:'飲み方', commentPh:'例：グラスでゆっくり。蒸したアガベと黒胡椒、余韻にバニラ。',
+      worldCap:'MEXICO', worldAria:'テキーラとメスカルの産地', worldHint:'',
+      lineupEn:'BOTTLES', mapSec:'造り手の場所', back:'図鑑',
+      priceNote:'国内の店頭価格（700〜750ml）のおおよその目安です。時期や店舗によって変わります。',
+      simNote:'ほかの造り手の銘柄から、味わいの傾向と香りの重なりで選んでいます。',
+      zkNote:'図鑑の味わいは、一般的に語られる傾向をもとにした目安です。参考価格は国内のおおよその目安です。',
+      distNote:'味わいは一般的に語られる傾向をもとにした目安です。',
+      modes:[['region','産地'],['grape','タイプ'],['flavor','味・香り']],
+    },
+  },
+
   coffee: {
     key:'coffee', jp:'コーヒー', en:'COFFEE',
     COLORS: [['light','ライト','#C9A26B'],['cinnamon','シナモン','#B38049'],['medium','ミディアム','#946033'],['high','ハイ','#7A4C27'],
@@ -982,6 +1191,27 @@ const KINDS = {
     },
   },
 
+  cocktail: {
+    key:'cocktail', jp:'カクテル', en:'COCKTAIL', isFood:true, book:'cocktail',
+    COLORS: [['c','カクテル','#C9A0B8']],
+    AXES:[], TAGS:[], PHASES:[], TYPES:['シェイク','ステア','ビルド','ブレンド'], REGIONS:['ジン','ウォッカ','ラム','テキーラ','ウイスキー','ブランデー','ワイン・シャンパン','日本酒・焼酎','リキュール','ノンアルコール'], SERVES:[], defServe:'', defType:'', FINLEN:[],
+    Z: () => ({ D:[], E:[], R:{}, S:{}, W:{} }),
+    ZK_TYPES:[], ZK_TAGS:[], ZK_PRICES:[], COUNTRIES:{}, BIG:[], MINOR:[], WORLD_LABEL:{},
+    exMeta: () => [], zFacts: () => [], cmpRows: () => [], heads: () => [],
+    tabs:['みんなのカクテル','','カクテル図鑑','マイ'], fab:'＋ カクテルを記録',
+    quick:['ウイスキー','ジン','ウォッカ','ラム','テキーラ','ブランデー','リキュール','シャンパン'],
+    L: {
+      maker:'', makerForm:'', makerPh:'', makerCount:'品', typeLbl:'作り方', age:'', ageForm:'', agePh:'', cask:'', caskPh:'', abvPh:'', tagPh:'',
+      namePh:'例：モヒート', search:'カクテル名・お酒・ひとことで検索', zkSearch:'カクテルを検索（名前・お酒・材料）',
+      pickLbl:'', pickPh:'', cpPh:'', serveLbl:'', commentPh:'', worldCap:'', worldAria:'', worldHint:'', lineupEn:'', mapSec:'', back:'カクテル図鑑',
+      priceNote:'', simNote:'', distNote:'',
+      drinkLbl:'使ったお酒（銘柄）', drinksAll:'みんなが使ったお酒', drinksTop:'よく使うお酒', drinkPh:'例：ビーフィーター ジン、カンパリ',
+      dishCommentPh:'例：ライムを多めにしたら、ジンの香りが引き立った。', bookUnit:'品のカクテル',
+      zkNote:'分量は一般的なレシピの目安です。材料のお酒の下には、ウイスキーやラムなどの図鑑から選んだおすすめの銘柄が表示されます。お酒は20歳になってから。',
+      modes:[['list','カクテル']],
+    },
+  },
+
   food: {
     key:'food', jp:'料理', en:'DISH', isFood:true,
     COLORS: FOOD_MAINS.map(([k,c])=>[k,k,c]),
@@ -1000,7 +1230,7 @@ const KINDS = {
     },
   },
 };
-const KIND_LIST = ['whisky','wine','sake','coffee','cheese','chinmi','food'];
+const KIND_LIST = ['whisky','wine','sake','brandy','rum','tequila','cocktail','coffee','cheese','chinmi','food'];
 const KIND_SOON = [['日本酒','SAKE'],['ビール','BEER'],['カクテル','COCKTAIL']];
 let KIND = 'whisky', K = KINDS.whisky, L = K.L;
 let COLORS, AXES, TAGS, PHASES, TYPES, REGIONS, SERVES, FINLEN;
@@ -1421,8 +1651,8 @@ function renderMine(list){
       ${A.recs.length?`<section class="mcard"><h3>あなたへのおすすめ<small>FOR YOU</small></h3><p class="small" style="margin:0">まだ記録していない図鑑の銘柄から、あなたが高く評価した味わいに近いものを選びました。</p>
         <div class="list" style="padding-top:6px">${A.recs.map(s=>{ const o=s.z; const meta=[ZR[o.region]?.jp, o.price?'約'+priceBand(o.price):''].filter(Boolean).join(' · ');
           return `<button class="zcard" data-z="${esc(o.id)}"><span class="gl" style="background:${glassColor(o.color)}"></span><span class="info"><h3>${esc(o.name)}</h3><div class="meta">${esc(meta)}</div>${s.shared.length?`<div class="tagline">${s.shared.slice(0,4).map(t=>`<span>${esc(t)}</span>`).join('')}</div>`:''}</span><span class="right"><b>${Math.round(s.score*100)}<small style="font-size:11px">%</small></b><i>好みに近い</i></span></button>`; }).join('')}</div></section>`:''}`;
-  const wl = [...wishlist].map(k=>{ if(k.startsWith('r:')){ if(!K.isFood) return null; const r=recipeById(k.slice(2)); if(!r) return null;
-      return {k, name:r.name, sub:[r.cook, r.genre, r.time?`約${r.time}分`:''].filter(Boolean).join(' · '), bg:recipeColor(r), open:k, done:!!allBottles.find(b=>b.kind==='food' && b.zukanId===r.id && aggs.get(b.id)?.mine.length)}; }
+  const wl = [...wishlist].map(k=>{ if(k.startsWith('r:')){ if(!K.isFood) return null; const r=bkById(k.slice(2)); if(!r) return null;
+      return {k, name:r.name, sub:(isCk()?[r.base, r.method]:[r.cook, r.genre, r.time?`約${r.time}分`:'']).filter(Boolean).join(' · '), bg:bkColor(r), open:k, done:!!allBottles.find(b=>b.kind===KIND && b.zukanId===r.id && aggs.get(b.id)?.mine.length)}; }
     if(K.isFood) return null;
     if(k.startsWith('z:')){ const z=zEntry(k.slice(2)); if(!z) return null; const b=bottleForZ(z); return {k, name:z.name, sub:[ZR[z.region]?.jp, z.price?'約'+priceBand(z.price):''].filter(Boolean).join(' · '), color:z.color, open:'z:'+z.id, done: !!(b && aggs.get(b.id)?.mine.length)}; }
     const b=bottles.find(x=>x.id===k.slice(2)); if(!b) return null; return {k, name:b.name, sub:[b.distillery,b.region].filter(Boolean).join(' · '), color:'', open:'b:'+b.id, done: !!aggs.get(b.id)?.mine.length}; }).filter(Boolean);
@@ -1446,7 +1676,7 @@ $('#list').addEventListener('click', async e=>{
     profiles.set(myId,data); renderMine($('#list')); return toast('名前を保存しました');
   }
   const uw=t.closest('[data-unwish]'); if(uw){ await toggleWish(uw.dataset.unwish); renderMine($('#list')); return; }
-  const op=t.closest('[data-open]'); if(op){ const k=op.dataset.open; return k.startsWith('z:') ? openZukan(k.slice(2)) : k.startsWith('r:') ? openRecipe(k.slice(2)) : openBottle(k.slice(2)); }
+  const op=t.closest('[data-open]'); if(op){ const k=op.dataset.open; return k.startsWith('z:') ? openZukan(k.slice(2)) : k.startsWith('r:') ? (isCk()?openCocktail(k.slice(2)):openRecipe(k.slice(2))) : openBottle(k.slice(2)); }
   const z=t.closest('[data-z]'); if(z) return openZukan(z.dataset.z);
 });
 
@@ -1501,7 +1731,7 @@ function renderList(){
   $('#sortbar').hidden = view!=='bottles' || !!K.isFood;
   $('#toolbar').hidden = view==='zukan' || view==='mine';
   if(view==='mine') return renderMine(list);
-  if(view==='zukan'){ $('#count').textContent = K.isFood ? `${FR().length}品のレシピ` : `${ZE.length}銘柄`; return renderZukan(list); }
+  if(view==='zukan'){ $('#count').textContent = K.isFood ? `${bkList().length}${K.L.bookUnit||'品のレシピ'}` : `${ZE.length}銘柄`; return renderZukan(list); }
   if(K.isFood) return renderDishes(list);
   return view==='bottles' ? renderBottles(list) : renderFeed(list);
 }
@@ -2137,7 +2367,7 @@ function zCard({z,score}, scored){
 }
 
 function renderZukan(list){
-  if(K.isFood) return renderRecipes(list);
+  if(K.isFood) return isCk() ? renderCocktails(list) : renderRecipes(list);
   const r = zk.region && ZR[zk.region];
   const panel = zk.mode==='region' ? regionPanel() : zk.mode==='grape' ? grapePanel()
     : `
@@ -2165,7 +2395,7 @@ function renderZukan(list){
   drawZkResults();
 }
 function drawZkResults(){
-  if(K.isFood) return drawRecipeResults();
+  if(K.isFood) return isCk() ? drawCocktailResults() : drawRecipeResults();
   const el=$('#zk-results'); if(!el) return;
   if(zk.mode==='grape'){ const g=$('#grape-list'); if(g) g.innerHTML=grapeCards(); el.innerHTML=''; return; }
   if(zk.mode==='region'){
@@ -2188,6 +2418,12 @@ document.addEventListener('input',e=>{ if(e.target.id==='zk-q'){ zk.q=e.target.v
 $('#list').addEventListener('click',e=>{
   if(view!=='zukan') return;
   const t=e.target;
+  if(K.isFood && isCk()){
+    const f=t.closest('[data-cf]'); if(f){ const arr=cz[f.dataset.cf], v=f.dataset.v, i=arr.indexOf(v); i<0?arr.push(v):arr.splice(i,1); renderCocktails($('#list')); return; }
+    const m=t.closest('[data-cmode]'); if(m){ cz.mode=m.dataset.cmode; renderCocktails($('#list')); return; }
+    if(t.closest('[data-act="cz-clear"]')){ Object.assign(cz,{ bases:[], methods:[], strength:[], time:[], taste:[] }); renderCocktails($('#list')); return; }
+    return;
+  }
   if(K.isFood){
     const f=t.closest('[data-f]'); if(f){ const arr=fz[f.dataset.f], v=f.dataset.v, i=arr.indexOf(v); i<0?arr.push(v):arr.splice(i,1); renderRecipes($('#list')); return; }
     const ig=t.closest('[data-ing]'); if(ig){ fz.ing = fz.ing===ig.dataset.ing ? '' : ig.dataset.ing; renderRecipes($('#list')); if(fz.ing) setTimeout(()=>$('#zk-results')?.scrollIntoView({behavior:'smooth',block:'start'}),50); return; }
@@ -2377,6 +2613,33 @@ function tasteDetail(z){
     if(price && price<=2500) body.push('手頃な価格で、毎日の一杯や焙煎の練習にも向く。');
     else if(price>=10000) body.push('特別な日に味わいたい豆。');
     return body.length ? `<div class="z-detail"><p>${esc(body.join(''))}</p></div>` : '';
+  } else if(KIND==='brandy' || KIND==='rum' || KIND==='tequila'){
+    const G = GL().find(g=>(z.grapes||[]).includes(g.id));
+    const PHS = {
+      brandy:{ fruity:'熟した果実の香り', floral:'花のような華やかさ', sweet:'まろやかな甘み', woody:'樽由来のウッディな厚み', spicy:'スパイスの刺激', nutty:'ナッツや熟成香（ランシオ）', dried:'ドライフルーツの濃い甘さ', strength:'力強い飲みごたえ' },
+      rum:{ sweet:'黒糖のような甘み', fruity:'南国の果実の香り', grassy:'サトウキビや草の青い香り', funky:'熟したバナナのような強い香り（エステル）', spicy:'スパイスの刺激', woody:'樽由来のウッディな厚み', vanilla:'バニラやキャラメルの甘い香り', strength:'力強い飲みごたえ' },
+      tequila:{ agave:'蒸したアガベの甘い香り', citrus:'柑橘のさわやかさ', herbal:'ハーブやピーマンのような青さ', pepper:'黒胡椒のようなスパイス', sweet:'まろやかな甘み', woody:'樽由来のバニラや樽の香り', smoky:'焼いたアガベのスモーキーさ', mineral:'ミネラルや土の香り' } };
+    const PH = PHS[KIND];
+    if(G) body.push(`${G.name}は、${G.desc.split('。')[0]}。`);
+    const strong = top.filter(k=>v[k]>=4).slice(0,3);
+    if(strong.length) body.push(`この銘柄は、${strong.map(k=>PH[k]).join('、')}が持ち味。`);
+    else if(top.length) body.push(`${top.slice(0,3).map(k=>PH[k]).join('、')}がバランスよくまとまっている。`);
+    if(tags.length) body.push(`香りや味わいでは、${tags.join('、')}などがよく挙げられる。`);
+    const t=G?.id;
+    serve = KIND==='brandy' ? (t==='grappa'||t==='pisco' ? 'よく冷やした小さなグラスで、食後に少しずつ。ピスコはカクテルのピスコ・サワーにも。'
+        : /X\.O|XO|ルイ|コルドン/.test(z.name) ? '大ぶりのブランデーグラスに少量注ぎ、手のひらで温めながら香りの変化を楽しみたい。'
+        : t==='calvados' ? 'ストレートで食後に。トニックやソーダで割ると、りんごの香りが軽やかに広がる。'
+        : 'ストレートで食後にゆっくり。若いものはソーダ割りやカクテルにも向く。')
+      : KIND==='rum' ? (t==='white' ? 'モヒートやダイキリなど、カクテルのベースに。ソーダとライムで割るだけでも爽やか。'
+        : t==='agricole' ? 'ライムと砂糖を加える「ティ・パンチ」が本場の飲み方。ストレートでサトウキビの香りを確かめても。'
+        : t==='spiced' ? 'コーラやジンジャーエールで割って気軽に。'
+        : 'ストレートやロックで、ウイスキーのようにゆっくり。チョコレートや葉巻とも合う。')
+      : (t==='blanco' ? 'ショットで一気にではなく、小さなグラスでゆっくり味わうとアガベの甘さがわかる。マルガリータやパロマなどのカクテルにも。'
+        : t==='mezcal' ? '小さなグラスで少しずつ。オレンジのスライスとチリ塩を添えるのがオアハカ流。'
+        : 'グラスに注いで、ブランデーのようにゆっくり。樽の甘さとアガベの香りの重なりを楽しみたい。');
+    if(price && price<=2500) body.push('手頃な価格で、カクテルにも気兼ねなく使える。');
+    else if(price>=30000) body.push('特別な日に開けたい一本。');
+    return `<div class="z-detail">${body.length?`<p>${esc(body.join(''))}</p>`:''}${serve?`<p><b>おすすめの飲み方</b>${esc(serve)}</p>`:''}</div>`;
   } else if(KIND==='cheese' || KIND==='chinmi'){
     const G = GL().find(g=>(z.grapes||[]).includes(g.id));
     const PH = KIND==='cheese'
@@ -2451,6 +2714,7 @@ function openZukan(id){
       </section>
 
       ${pairSection(drinkWeights(KIND, arrProf(z.p), z.type))}
+      ${DRINK_KINDS.includes(KIND)||KIND==='coffee' ? cocktailSection(KIND, z) : ''}
 
       <section class="sec"><h3>みんなの記録<small>TASTINGS</small></h3>
         ${a?.n ? `<p style="margin:0 0 8px">${a.people}人が記録しています。平均 <b style="font-family:var(--mono);color:var(--amber)">${a.n>1?fmt1(a.avg):a.avg}</b> 点</p><button class="btn" data-act="open-b">みんなの記録を見る</button>`
@@ -2553,6 +2817,15 @@ function drinkWeights(kind, p, type){
     else if(/甘口|酒精/.test(t)){ w.dessert=1; if(/酒精/.test(t)) w.w_sherry=.5; }
     else if(/白|オレンジ/.test(t)){ w.wh_crisp=(v('acid')+v('mineral'))/2*(1-v('oak')*.5); w.wh_rich=(v('body')+v('oak'))/2; }
     else { const b=(v('body')+v('tannin'))/2; w.r_full=b; w.r_light=Math.max(.15,1-b)*(.6+v('fruit')*.4); }
+  } else if(kind==='brandy'){
+    w.w_sherry=(v('dried')+v('nutty'))/2; w.w_rich=(v('sweet')+v('woody'))/2; w.w_light=((v('fruity')+v('floral'))/2)*(1-v('woody')*.6);
+    if(v('sweet')>=.8 || /ヘレス/.test(t)) w.dessert=v('sweet');
+  } else if(kind==='rum'){
+    w.w_rich=(v('vanilla')+v('sweet')+v('woody'))/3; w.w_light=((v('grassy')+v('fruity'))/2)*(1-v('woody')*.6);
+    if(v('sweet')>=.8) w.dessert=v('sweet')*.9;
+    if(v('funky')>=.8) w.w_sherry=v('funky')*.5;
+  } else if(kind==='tequila'){
+    w.w_light=(v('citrus')+v('herbal'))/2; w.w_smoky=v('smoky'); w.w_rich=(v('sweet')+v('woody'))/2;
   } else if(kind==='sake'){
     if(/スパークリング/.test(t)){ w.spark=1; w.s_aroma=.4; }
     else { w.s_dry=v('dry'); w.s_rich=(v('umami')+v('body'))/2; w.s_aroma=(v('aroma')*2+v('fresh'))/3; w.s_aged=v('aged'); }
@@ -2626,6 +2899,8 @@ function openDrink(kind, id){ enterKind(kind, 'zukan'); openZukan(id); }
 
 /* チーズ・珍味：お酒との相性と、使う料理 */
 const ITEM_KINDS = ['cheese','chinmi'];
+const MAIN_DRINKS = ['whisky','wine','sake'];
+const DRINK_KINDS = ['whisky','wine','sake','brandy','rum','tequila'];
 const kEntries = k => { try{ return KINDS[k].Z().E||[]; }catch(e){ return []; } };
 function itemCard(kind, z, right){
   return `<button class="zcard" data-dk="${kind}" data-dz="${esc(z.id)}"><span class="gl" style="background:${kGlass(kind,z.color)}"></span>
@@ -2636,7 +2911,7 @@ function itemCard(kind, z, right){
 function itemPairSection(z){
   const cats=Object.entries(z.pairs||{}).filter(([k,v])=>v>=2 && PAIR_CATS[k]).sort((a,b)=>b[1]-a[1]);
   if(!cats.length) return '';
-  const picks=['whisky','wine','sake'].map(k=>({ k, items:drinkPicks(k,{pairs:z.pairs},2).filter(x=>x.score>=.35) })).filter(x=>x.items.length);
+  const picks=DRINK_KINDS.map(k=>({ k, items:drinkPicks(k,{pairs:z.pairs},2).filter(x=>x.score>=(MAIN_DRINKS.includes(k)?.35:.5)) })).filter(x=>x.items.length);
   return `<section class="sec"><h3>お酒との相性<small>PAIRING</small></h3>
     ${cats.map(([k,v])=>`<div class="pcat"><b>${esc(PAIR_CATS[k].jp)}<small>${v>=3?'とてもよく合う':'よく合う'}</small></b><p>${esc(PAIR_CATS[k].why)}</p></div>`).join('')}
     ${picks.map(p=>`<div class="group-name">図鑑から選んだ${esc(KINDS[p.k].jp)}</div><div class="list" style="padding-top:0">${p.items.map(x=>drinkCard(p.k,x)).join('')}</div>`).join('')}
@@ -2713,9 +2988,9 @@ function drawRecipeResults(){
 /* みんなの料理（一覧） */
 function dishCard(t){
   const b=bottles.find(x=>x.id===t.bottleId); if(!b) return '';
-  const r=b.zukanId?recipeById(b.zukanId):null; const likes=likesBy.get(t.id)?.size||0;
+  const r=b.zukanId?bkById(b.zukanId):null; const likes=likesBy.get(t.id)?.size||0;
   return `<button class="dcard" data-bottle="${esc(b.id)}">
-    ${t.photo?`<img src="${esc(photoUrl(t.photo))}" alt="" loading="lazy">`:`<span class="dph" style="background:${r?recipeColor(r):'var(--amber)'}">${esc(b.name.slice(0,1))}</span>`}
+    ${t.photo?`<img src="${esc(photoUrl(t.photo))}" alt="" loading="lazy">`:`<span class="dph" style="background:${r?bkColor(r):'var(--amber)'}">${esc(b.name.slice(0,1))}</span>`}
     <span class="dinfo"><b>${esc(b.name)}</b><span class="small">${esc(nameOf(t))}・${fmtDate(t.createdAt)}</span>${t.drink?`<span class="ddrink">${esc(t.drink)}</span>`:''}</span>
     <span class="dscore">${t.score??''}${likes?`<i>${ICON_HEART(likesBy.get(t.id).has(myId))}${likes}</i>`:''}</span></button>`;
 }
@@ -2725,9 +3000,12 @@ function renderDishes(list){
   if(query){ const q=norm(query); rows=rows.filter(t=>{ const b=bottles.find(x=>x.id===t.bottleId); return norm([b?.name,t.comment,t.drink,nameOf(t)].join(' ')).includes(q); }); }
   rows.sort((a,b)=>b.createdAt-a.createdAt);
   if(!tastings.length){
-    const picks=FR().filter(r=>inSeason(r,[nowMonth()])).slice(0,4);
-    list.innerHTML=`<div class="empty"><h2>料理の記録はまだありません</h2><p>作った料理を、写真と合わせたお酒と一緒に記録しましょう。<br>右下の「料理を記録」から始められます。</p><p><button class="btn" data-act="to-recipes">レシピ図鑑を見る</button></p></div>
-      ${picks.length?`<div class="zk-head"><b>${nowMonth()}月が旬のレシピ</b></div><div class="list" style="padding-top:8px">${picks.map(r=>rCard(r)).join('')}</div>`:''}`;
+    if(isCk()){ const picks=['k-highball','k-gintonic','k-mojito','k-margarita'].map(cocktailById).filter(Boolean);
+      list.innerHTML=`<div class="empty"><h2>カクテルの記録はまだありません</h2><p>作ったカクテルを、写真と使ったお酒と一緒に記録しましょう。<br>右下の「カクテルを記録」から始められます。</p><p><button class="btn" data-act="to-recipes">カクテル図鑑を見る</button></p></div>
+        <div class="zk-head"><b>まずはこの定番から</b></div><div class="list" style="padding-top:8px">${picks.map(c=>cCard(c)).join('')}</div>`; return; }
+    const picks=bkList().filter(r=>inSeason(r,[nowMonth()])).slice(0,4);
+    list.innerHTML=`<div class="empty"><h2>${K.jp}の記録はまだありません</h2><p>作った${K.jp}を、写真と合わせたお酒と一緒に記録しましょう。<br>右下の「${K.jp}を記録」から始められます。</p><p><button class="btn" data-act="to-recipes">レシピ図鑑を見る</button></p></div>
+      ${picks.length?`<div class="zk-head"><b>${nowMonth()}月が旬のレシピ</b></div><div class="list" style="padding-top:8px">${picks.map(r=>bkCard(r)).join('')}</div>`:''}`;
     return;
   }
   if(!rows.length){ list.innerHTML=`<div class="empty"><h2>該当する記録がありません</h2><p>検索語や表示の切り替えを変えてみてください。</p></div>`; return; }
@@ -2735,13 +3013,13 @@ function renderDishes(list){
 }
 function foodMine(){
   const mine=tastings.filter(t=>t.author===myId).sort((a,b)=>b.createdAt-a.createdAt);
-  if(!mine.length) return `<section class="mcard"><h3>あなたの料理<small>MY DISHES</small></h3><p class="small">作った料理を記録すると、ここに並びます。</p></section>`;
+  if(!mine.length) return `<section class="mcard"><h3>あなたの${K.jp}<small>MY DISHES</small></h3><p class="small">作った${K.jp}を記録すると、ここに並びます。</p></section>`;
   const sc=mine.map(t=>t.score).filter(x=>typeof x==='number'); const avg=sc.reduce((a,b)=>a+b,0)/Math.max(1,sc.length);
   const dc=new Map(); mine.forEach(t=>{ if(t.drink) dc.set(t.drink,(dc.get(t.drink)||0)+1); });
   const drinks=[...dc.entries()].sort((a,b)=>b[1]-a[1]).slice(0,6);
-  return `<section class="mcard"><h3>あなたの料理<small>MY DISHES</small></h3>
-    <dl class="stat-row"><div class="stat"><dt>記録</dt><dd>${mine.length}<small>件</small></dd></div><div class="stat"><dt>料理</dt><dd>${new Set(mine.map(t=>t.bottleId)).size}<small>品</small></dd></div><div class="stat"><dt>平均点</dt><dd>${sc.length?fmt1(avg):'–'}</dd></div></dl>
-    ${drinks.length?`<div class="group-name">よく合わせたお酒</div><div class="chips">${drinks.map(([d,n])=>`<span class="chip" aria-pressed="true">${esc(d)}${n>1?' '+n:''}</span>`).join('')}</div>`:''}
+  return `<section class="mcard"><h3>あなたの${K.jp}<small>MY DISHES</small></h3>
+    <dl class="stat-row"><div class="stat"><dt>記録</dt><dd>${mine.length}<small>件</small></dd></div><div class="stat"><dt>${K.jp}</dt><dd>${new Set(mine.map(t=>t.bottleId)).size}<small>品</small></dd></div><div class="stat"><dt>平均点</dt><dd>${sc.length?fmt1(avg):'–'}</dd></div></dl>
+    ${drinks.length?`<div class="group-name">${K.L.drinksTop||'よく合わせたお酒'}</div><div class="chips">${drinks.map(([d,n])=>`<span class="chip" aria-pressed="true">${esc(d)}${n>1?' '+n:''}</span>`).join('')}</div>`:''}
     <div class="dgrid">${mine.slice(0,8).map(dishCard).join('')}</div></section>`;
 }
 
@@ -2751,13 +3029,13 @@ function openDish(id, keepScroll){
   const b=bottles.find(x=>x.id===id); if(!b){ unmount(); return; }
   currentBottle=id;
   const a=aggs.get(id) || aggregate(id);
-  const r=b.zukanId ? recipeById(b.zukanId) : FR().find(x=>norm(x.name)===norm(b.name)) || null;
+  const r=b.zukanId ? bkById(b.zukanId) : bkList().find(x=>norm(x.name)===norm(b.name)) || null;
   const prevScroll = keepScroll ? $('#sheet-root .sheet')?.scrollTop : 0;
   const posts=a.list.map(t=>{ const me=t.author===myId;
     return `<article class="tasting dpost${me?' me':''}">
       ${t.photo?`<div class="hero"><img src="${esc(photoUrl(t.photo))}" alt="${esc(b.name)}の写真" loading="lazy"></div>`:''}
       <div class="t-head"><strong>${esc(nameOf(t))}</strong><span class="small">${fmtDate(t.createdAt)}</span><span class="s">${t.score??'–'}</span></div>
-      ${t.drink?`<div class="t-phase"><b>合わせたお酒</b>${esc(t.drink)}</div>`:''}
+      ${t.drink?`<div class="t-phase"><b>${K.L.drinkLbl||'合わせたお酒'}</b>${esc(t.drink)}</div>`:''}
       ${t.comment?`<div class="t-note">${esc(t.comment)}</div>`:''}
       ${me?`<div class="t-actions" data-tid="${esc(t.id)}"><button class="btn small" data-act="edit-t">編集</button><button class="btn small danger" data-act="askdel-t">削除</button></div>`:''}
       ${socialRow(t)}</article>`; }).join('');
@@ -2768,12 +3046,12 @@ function openDish(id, keepScroll){
     <div class="sheet-body">
       <div class="d-head"><div><h1>${esc(b.name)}</h1><div class="meta">${esc([b.type,b.region].filter(Boolean).join(' · '))}</div></div>
         <div class="d-score"><b>${a.avg==null?'–':a.n>1?fmt1(a.avg):a.avg}</b><div>${a.n>1?'みんなの平均':a.n?'1件の記録':''}</div></div></div>
-      ${r?`<div class="list" style="padding:0">${rCard(r,{ right:'<i>レシピ ›</i>' })}</div>`:''}
-      ${drinks.length?`<section class="sec"><h3>みんなが合わせたお酒<small>PAIRED WITH</small></h3><div class="chips">${drinks.map(d=>`<span class="chip" aria-pressed="true">${esc(d)}</span>`).join('')}</div></section>`:''}
+      ${r?`<div class="list" style="padding:0">${bkCard(r,{ right:'<i>レシピ ›</i>' })}</div>`:''}
+      ${drinks.length?`<section class="sec"><h3>${K.L.drinksAll||'みんなが合わせたお酒'}<small>PAIRED WITH</small></h3><div class="chips">${drinks.map(d=>`<span class="chip" aria-pressed="true">${esc(d)}</span>`).join('')}</div></section>`:''}
       ${a.n?`<section class="sec"><h3>みんなの記録<small>${a.n} POSTS</small></h3><div style="display:grid;gap:12px">${posts}</div></section>`:`<div class="notice">まだ記録がありません。作ったら写真と一緒に記録しましょう。</div>`}
-      ${canDel?`<div class="t-actions" id="delbottle"><button class="btn small danger" data-act="askdel-b">この料理を削除</button></div>`:''}
+      ${canDel?`<div class="t-actions" id="delbottle"><button class="btn small danger" data-act="askdel-b">この${K.jp}を削除</button></div>`:''}
     </div>
-    ${myId?`<div class="cta"><button class="btn primary" data-act="post">この料理を記録</button></div>`:''}
+    ${myId?`<div class="cta"><button class="btn primary" data-act="post">この${K.jp}を記録</button></div>`:''}
   </div>`);
   if(prevScroll) $('#sheet-root .sheet').scrollTop=prevScroll;
   $('#sheet-root').onclick=async e=>{
@@ -2792,20 +3070,20 @@ function openDish(id, keepScroll){
       if(t?.photo) sb.storage.from('photos').remove([t.photo]).catch(()=>{});
       allTastings=allTastings.filter(x=>x.id!==tid); refilter(); renderList(); openDish(b.id,true); toast('記録を削除しました');
     }
-    if(act==='askdel-b'){ $('#delbottle').innerHTML=`<span>この料理を削除しますか？</span><button class="btn small" data-act="nodel-b">やめる</button><button class="btn small danger" data-act="del-b">削除する</button>`; }
-    if(act==='nodel-b'){ $('#delbottle').innerHTML=`<button class="btn small danger" data-act="askdel-b">この料理を削除</button>`; }
+    if(act==='askdel-b'){ $('#delbottle').innerHTML=`<span>この${K.jp}を削除しますか？</span><button class="btn small" data-act="nodel-b">やめる</button><button class="btn small danger" data-act="del-b">削除する</button>`; }
+    if(act==='nodel-b'){ $('#delbottle').innerHTML=`<button class="btn small danger" data-act="askdel-b">この${K.jp}を削除</button>`; }
     if(act==='del-b'){
       const { error } = await sb.from('bottles').delete().eq('id',b.id);
       if(error){ toast('削除できませんでした：'+error.message); return; }
-      allBottles=allBottles.filter(x=>x.id!==b.id); refilter(); currentBottle=null; renderList(); goBack(); toast('料理を削除しました');
+      allBottles=allBottles.filter(x=>x.id!==b.id); refilter(); currentBottle=null; renderList(); goBack(); toast(`${K.jp}を削除しました`);
     }
   };
 }
 
-/* 料理の記録（写真・評価・合わせたお酒） */
+/* 料理の記録（写真・評価・${K.L.drinkLbl||'合わせたお酒'}） */
 function openDishForm(bottle, existing, rid){
   curSheet={t:'dform', b:bottle?.id||null, tid:existing?.id||null, rid:rid||null};
-  let recipe = rid ? recipeById(rid) : bottle?.zukanId ? recipeById(bottle.zukanId) : null;
+  let recipe = rid ? bkById(rid) : bottle?.zukanId ? bkById(bottle.zukanId) : null;
   const f = existing ? { score:existing.score??85, comment:existing.comment||'', drink:existing.drink||'', photo:existing.photo||'' } : { score:85, comment:'', drink:'', photo:'' };
   let newPhoto=null, saving=false; const oldPhoto=f.photo;
   const nick = existing?.authorName || myName() || '';
@@ -2813,28 +3091,28 @@ function openDishForm(bottle, existing, rid){
   // 最近記録したお酒（ウイスキー・ワイン・日本酒）から選べるように
   const recent=[]; allTastings.filter(t=>t.author===myId).sort((a,b)=>b.createdAt-a.createdAt).forEach(t=>{ const bb=allBottles.find(x=>x.id===t.bottleId);
     if(bb && bb.kind!=='food' && !recent.includes(bb.name) && recent.length<4) recent.push(bb.name); });
-  const QUICK=['ハイボール','ウイスキー','赤ワイン','白ワイン','スパークリング','日本酒','ビール','レモンサワー'];
-  mount(`<div class="sheet" role="dialog" aria-modal="true" aria-label="料理を記録">
-    <div class="sheet-bar"><button class="btn ghost" data-act="cancel">キャンセル</button><h2>${existing?'記録を編集':'料理を記録'}</h2><button class="btn primary" data-act="save" id="savebtn">保存</button></div>
+  const QUICK=K.quick||['ハイボール','ウイスキー','赤ワイン','白ワイン','スパークリング','日本酒','ビール','レモンサワー'];
+  mount(`<div class="sheet" role="dialog" aria-modal="true" aria-label="${K.jp}を記録">
+    <div class="sheet-bar"><button class="btn ghost" data-act="cancel">キャンセル</button><h2>${existing?'記録を編集':K.jp+'を記録'}</h2><button class="btn primary" data-act="save" id="savebtn">保存</button></div>
     <form class="sheet-body" novalidate>
-      <fieldset><legend>料理</legend>
-        ${fixed?`<div class="d-name">${esc(bottle.name)}</div>`:`<div class="field"><label class="lbl" for="d-name">料理名（必須）</label><input id="d-name" value="${esc(recipe?.name||'')}" placeholder="${L.namePh}" autocomplete="off"></div>
+      <fieldset><legend>${K.jp}</legend>
+        ${fixed?`<div class="d-name">${esc(bottle.name)}</div>`:`<div class="field"><label class="lbl" for="d-name">${K.jp}の名前（必須）</label><input id="d-name" value="${esc(recipe?.name||'')}" placeholder="${L.namePh}" autocomplete="off"></div>
         <div id="d-sug"></div>`}
         <div id="d-recipe"></div>
       </fieldset>
       <fieldset><legend>写真</legend>
-        <label class="photo-drop" id="pdrop">${f.photo?`<img src="${esc(photoUrl(f.photo))}" alt="">`:`<span>タップして料理を撮影<br>またはライブラリから選択</span>`}
+        <label class="photo-drop" id="pdrop">${f.photo?`<img src="${esc(photoUrl(f.photo))}" alt="">`:`<span>タップして${K.jp}を撮影<br>またはライブラリから選択</span>`}
           <input type="file" id="d-photo" accept="image/*" aria-label="写真を選ぶ"></label>
       </fieldset>
-      <fieldset><legend>合わせたお酒</legend>
-        <div class="field"><input id="d-drink" value="${esc(f.drink)}" placeholder="例：ラフロイグ 10年のハイボール" autocomplete="off" aria-label="合わせたお酒"></div>
+      <fieldset><legend>${K.L.drinkLbl||'合わせたお酒'}</legend>
+        <div class="field"><input id="d-drink" value="${esc(f.drink)}" placeholder="${K.L.drinkPh||'例：ラフロイグ 10年のハイボール'}" autocomplete="off" aria-label="${K.L.drinkLbl||'合わせたお酒'}"></div>
         ${recent.length?`<div class="group-name">最近記録したお酒</div><div class="chips">${recent.map(d=>`<button type="button" class="chip" data-dq="${esc(d)}">${esc(d)}</button>`).join('')}</div>`:''}
         <div class="group-name">お酒の種類</div><div class="chips">${QUICK.map(d=>`<button type="button" class="chip" data-dq="${esc(d)}">${esc(d)}</button>`).join('')}</div>
       </fieldset>
       <fieldset><legend>評価</legend>
         <div class="scorebox"><output id="o-score">${f.score}</output>
           <div><input type="range" id="f-score" min="50" max="100" step="1" value="${f.score}" aria-label="評価"><div class="word" id="w-score">${scoreWord(f.score)}</div></div></div>
-        <div class="field"><label class="lbl" for="f-comment">ひとこと</label><textarea id="f-comment" placeholder="例：山椒を足したら、スモーキーなハイボールにぴったりだった。">${esc(f.comment)}</textarea></div>
+        <div class="field"><label class="lbl" for="f-comment">ひとこと</label><textarea id="f-comment" placeholder="${K.L.dishCommentPh||'例：山椒を足したら、スモーキーなハイボールにぴったりだった。'}">${esc(f.comment)}</textarea></div>
         <div class="field"><label class="lbl" for="f-nick">記録者の名前（みんなに表示されます）</label><input id="f-nick" value="${esc(nick)}" placeholder="例：南雲" autocomplete="nickname"></div>
         <div class="err" id="err" hidden></div>
       </fieldset>
@@ -2843,7 +3121,7 @@ function openDishForm(bottle, existing, rid){
     el.innerHTML = recipe ? `<div class="linked"><span class="small">レシピ</span><b>${esc(recipe.name)}</b>${fixed?'':'<button type="button" class="btn small ghost" data-act="unlink">外す</button>'}</div>` : ''; };
   const drawSug=()=>{ const el=$('#d-sug'); if(!el) return; const q=norm($('#d-name').value);
     if(!q || (recipe && norm(recipe.name)===q)){ el.innerHTML=''; return; }
-    const rs=FR().filter(r=>norm(r.name+r.ings.map(i=>i[0]).join('')).includes(q)).slice(0,5);
+    const rs=bkList().filter(r=>norm(r.name+r.ings.map(i=>i[0]).join('')).includes(q)).slice(0,5);
     const ds=bottles.filter(b=>norm(b.name).includes(q) && !rs.some(r=>norm(r.name)===norm(b.name))).slice(0,3);
     el.innerHTML = rs.length||ds.length ? `<div class="dsug">${rs.map(r=>`<button type="button" class="chip" data-rsel="${esc(r.id)}">レシピ：${esc(r.name)}</button>`).join('')}${ds.map(b=>`<button type="button" class="chip" data-dsel="${esc(b.id)}">記録あり：${esc(b.name)}</button>`).join('')}</div>` : ''; };
   drawRecipe();
@@ -2861,8 +3139,8 @@ function openDishForm(bottle, existing, rid){
   root.onclick=async e=>{
     const el=e.target.closest('button'); if(!el) return;
     if(el.dataset.dq){ const inp=$('#d-drink'); const v=inp.value.trim(); inp.value = v && !v.includes(el.dataset.dq) ? `${v}、${el.dataset.dq}` : el.dataset.dq; return; }
-    if(el.dataset.rsel){ recipe=recipeById(el.dataset.rsel); $('#d-name').value=recipe.name; drawRecipe(); drawSug(); return; }
-    if(el.dataset.dsel){ const b=bottles.find(x=>x.id===el.dataset.dsel); if(b){ $('#d-name').value=b.name; recipe=b.zukanId?recipeById(b.zukanId):recipe; drawRecipe(); drawSug(); } return; }
+    if(el.dataset.rsel){ recipe=bkById(el.dataset.rsel); $('#d-name').value=recipe.name; drawRecipe(); drawSug(); return; }
+    if(el.dataset.dsel){ const b=bottles.find(x=>x.id===el.dataset.dsel); if(b){ $('#d-name').value=b.name; recipe=b.zukanId?bkById(b.zukanId):recipe; drawRecipe(); drawSug(); } return; }
     const a=el.dataset.act;
     if(a==='unlink'){ recipe=null; drawRecipe(); drawSug(); return; }
     if(a==='cancel') return goBack();
@@ -2872,13 +3150,13 @@ function openDishForm(bottle, existing, rid){
     const err=$('#err'); const nickname=$('#f-nick').value.trim();
     const name = fixed ? bottle.name : $('#d-name').value.trim();
     if(!myId){ err.textContent='ログインできていないため保存できません。通信状態を確認してアプリを開き直してください。'; err.hidden=false; return; }
-    if(!name){ err.textContent='料理名を入力してください。'; err.hidden=false; $('#d-name')?.focus(); return; }
+    if(!name){ err.textContent=K.jp+'の名前を入力してください。'; err.hidden=false; $('#d-name')?.focus(); return; }
     saving=true; btn.disabled=true; btn.textContent='保存中…'; err.hidden=true;
     try{
       if(nickname) store.set('kohaku.nickname',nickname);
       let b=bottle || bottles.find(x=>norm(x.name)===norm(name)) || null;
       if(!b){
-        const row={ name, distillery:'', type:recipe?.cook||'', region:recipe?.main||'', age:'', abv:'', cask:'', kind:'food', ...(recipe?{ zukan_id:recipe.id }:{}) };
+        const row={ name, distillery:'', type:(recipe?.cook||recipe?.method||''), region:(recipe?.main||recipe?.base||''), age:'', abv:'', cask:'', kind:KIND, ...(recipe?{ zukan_id:recipe.id }:{}) };
         let res=await insertBottle(row);
         if(res.error && /zukan_id/.test(res.error.message||'')){ delete row.zukan_id; res=await insertBottle(row); }
         if(res.error && res.error.code==='23505'){ await loadAll(); b=bottles.find(x=>norm(x.name)===norm(name)); if(!b) throw new Error('同じ名前の料理がすでに登録されています。'); }
@@ -2901,9 +3179,162 @@ function openDishForm(bottle, existing, rid){
       if(newPhoto && oldPhoto) sb.storage.from('photos').remove([oldPhoto]).catch(()=>{});
       const t=rowToTasting(res.data);
       allTastings=[t,...allTastings.filter(x=>x.id!==t.id)]; refilter(); renderList();
-      nav.replaceNext=true; openBottle(b.id); toast(existing?'記録を更新しました':'料理を記録しました');
+      nav.replaceNext=true; openBottle(b.id); toast(existing?'記録を更新しました':K.jp+'を記録しました');
     }catch(x){ saving=false; btn.disabled=false; btn.textContent='保存'; err.textContent=x.message+' 通信状態を確認して、もう一度保存してください。'; err.hidden=false; }
   }
+}
+
+/* ---------- カクテル ---------- */
+const CL = () => (typeof COCKTAILS!=='undefined' ? COCKTAILS : []);
+const cocktailById = id => CL().find(c=>c.id===id) || null;
+const CTOOLS = () => (typeof COCKTAIL_TOOLS!=='undefined' ? COCKTAIL_TOOLS : []);
+const CGLASS = () => (typeof COCKTAIL_GLASSES!=='undefined' ? COCKTAIL_GLASSES : []);
+const CLINKS = () => (typeof COCKTAIL_LINKS!=='undefined' ? COCKTAIL_LINKS : {});
+const glassName = id => CGLASS().find(g=>g.id===id)?.name || '';
+const isCk = () => K.book==='cocktail';
+const bkList = () => isCk() ? CL() : FR();
+const bkById = id => isCk() ? cocktailById(id) : recipeById(id);
+const bkColor = r => isCk() ? (r?.color||'var(--amber)') : recipeColor(r);
+const bkCard = (r,o) => isCk() ? cCard(r,o) : rCard(r,o);
+const CK_BASES = ['ジン','ウォッカ','ラム','テキーラ','ウイスキー','ブランデー','ワイン・シャンパン','日本酒・焼酎','リキュール','ノンアルコール'];
+const CK_METHODS = ['シェイク','ステア','ビルド','ブレンド'];
+const CK_STRENGTH = ['ノンアルコール','弱め','中くらい','強め'];
+const CK_TIME = ['食前','食後','いつでも'];
+const CK_TASTE = ['爽快','甘い','甘酸っぱい','ほろ苦い','ドライ','フルーティ','柑橘','ハーブ','ミント','クリーミー','スパイシー','コーヒー','スモーキー','泡'];
+function cCard(c, o={}){
+  const meta=[c.base, c.method, glassName(c.glass)].filter(Boolean).join(' · ');
+  return `<button class="zcard rcard" data-cocktail="${esc(c.id)}"><span class="gl" style="background:${c.color}"></span>
+    <span class="info"><h3>${esc(c.name)}</h3><div class="en">${esc(c.en)}</div><div class="meta">${esc(meta)}</div>
+      <div class="tagline">${(o.why?[o.why]:c.taste.slice(0,3)).map(t=>`<span>${esc(t)}</span>`).join('')}</div></span>
+    <span class="right">${o.right ?? `<b style="font-size:13px">${esc(c.strength)}</b><i>${c.abv?`約${c.abv}%`:'0%'}</i>`}</span></button>`;
+}
+// 材料のお酒 → 図鑑のおすすめ銘柄
+function linkPicks(key, n=3){
+  const l=CLINKS()[key]; if(!l || !KINDS[l.k]) return [];
+  const E=kEntries(l.k); const out=[];
+  (l.ids||[]).forEach(id=>{ const z=E.find(x=>x.id===id); if(z && out.length<n) out.push(z); });
+  if(out.length<n) E.filter(z=>!out.includes(z) && (!l.t || l.t.includes(z.type)) && (!l.r || l.r.includes(z.region)) && z.price)
+    .sort((a,b)=>a.price-b.price).slice(0,n-out.length).forEach(z=>out.push(z));
+  return out;
+}
+const linkMatches = (l, kind, z) => l.k===kind && ((l.ids||[]).includes(z.id) || ((l.t||l.r) && (!l.t || l.t.includes(z.type)) && (!l.r || l.r.includes(z.region))));
+// お酒の銘柄 → 作れるカクテル
+function cocktailsFor(kind, z){
+  const keys=Object.entries(CLINKS()).filter(([,l])=>linkMatches(l,kind,z)).map(([k])=>k);
+  if(!keys.length) return [];
+  return CL().filter(c=>c.ings.some(i=>keys.includes(i[2])));
+}
+function cocktailSection(kind, z){
+  const cs=cocktailsFor(kind, z); if(!cs.length) return '';
+  return `<section class="sec"><h3>この${esc(KINDS[kind].jp)}で作れるカクテル<small>COCKTAILS</small></h3>
+    <p class="small" style="margin:0 0 8px">カクテル図鑑のレシピで、材料のおすすめ銘柄に入っているものや、同じタイプのお酒を使うカクテルです。</p>
+    <div class="pchips">${cs.slice(0,10).map(c=>`<button class="chip" data-cocktail="${esc(c.id)}"><i style="background:${c.color}"></i>${esc(c.name)}</button>`).join('')}</div></section>`;
+}
+
+/* カクテル図鑑 */
+const cz = { mode:'list', bases:[], methods:[], strength:[], time:[], taste:[] };
+const czCount = () => cz.bases.length+cz.methods.length+cz.strength.length+cz.time.length+cz.taste.length;
+function renderCocktails(list){
+  const chips=(arr,key,items)=>`<div class="chips">${items.map(v=>`<button class="chip" data-cf="${key}" data-v="${esc(v)}" aria-pressed="${arr.includes(v)}">${esc(v)}</button>`).join('')}</div>`;
+  const used=new Set(CL().map(c=>c.base));
+  list.innerHTML = `<div class="zk">
+    <input class="search" id="zk-q" type="search" placeholder="${L.zkSearch}" aria-label="カクテルを検索" value="${esc(zk.q)}">
+    <div class="zk-mode" role="group" aria-label="表示" style="grid-template-columns:1fr 1fr"><button data-cmode="list" aria-pressed="${cz.mode==='list'}">カクテル</button><button data-cmode="tools" aria-pressed="${cz.mode==='tools'}">器具とグラス</button></div>
+    ${cz.mode==='list'?`<div class="zk-filter">
+      <div class="group-name">ベースのお酒</div>${chips(cz.bases,'bases',CK_BASES.filter(b=>used.has(b)))}
+      <div class="group-name">作り方</div>${chips(cz.methods,'methods',CK_METHODS)}
+      <div class="group-name">味わい</div>${chips(cz.taste,'taste',CK_TASTE)}
+      <div class="group-name">強さ</div>${chips(cz.strength,'strength',CK_STRENGTH)}
+      <div class="group-name">飲むタイミング</div>${chips(cz.time,'time',CK_TIME)}
+      ${czCount()?`<div><button class="btn small ghost" data-act="cz-clear">条件をクリア</button></div>`:''}
+    </div>`:''}
+    <div id="zk-results"></div>
+    <p class="note-small">${L.zkNote}</p>
+  </div>`;
+  drawCocktailResults();
+}
+function drawCocktailResults(){
+  const el=$('#zk-results'); if(!el) return;
+  const q=norm(zk.q);
+  if(cz.mode==='tools'){
+    const tl=CTOOLS().filter(t=>!q || norm(t.name+t.desc).includes(q)), gl=CGLASS().filter(g=>!q || norm(g.name+g.desc).includes(q));
+    const n = (id, f) => CL().filter(f).length;
+    el.innerHTML = `<div class="zk-head"><b>器具</b><span>${tl.length}種類</span></div>
+      <div class="ckt-tools">${tl.map(t=>`<div class="ckt-tool"><b>${esc(t.name)}<small>${esc(t.en)}</small></b><p>${esc(t.desc)}</p><span class="small">使うカクテル ${n(t.id,c=>c.tools.includes(t.id))}品</span></div>`).join('')}</div>
+      <div class="zk-head" style="margin-top:14px"><b>グラス</b><span>${gl.length}種類</span></div>
+      <div class="ckt-tools">${gl.map(g=>`<div class="ckt-tool"><b>${esc(g.name)}<small>${esc(g.en)}</small></b><p>${esc(g.desc)}</p><span class="small">使うカクテル ${n(g.id,c=>c.glass===g.id)}品</span></div>`).join('')}</div>
+      <div class="zk-head" style="margin-top:14px"><b>4つの作り方</b></div>
+      <div class="ckt-tools">${[['シェイク','シェーカーで材料と氷を激しく振る。一気に冷えて、空気を含んだまろやかな口当たりになる。果汁や卵、クリームなど混ざりにくい材料に向く。'],
+        ['ステア','ミキシンググラスで氷と材料を静かに混ぜる。お酒どうしを合わせる、透明感のあるカクテルに。'],
+        ['ビルド','グラスに直接材料を注いで作る。ハイボールやジントニックなど、炭酸で割るカクテルの基本。'],
+        ['ブレンド','ブレンダーで氷ごと混ぜ、シャーベット状にする。フローズン・カクテルに。']].map(([m,d])=>`<div class="ckt-tool"><b>${m}</b><p>${d}</p><span class="small">${CL().filter(c=>c.method===m).length}品</span></div>`).join('')}</div>`;
+    return;
+  }
+  let rs=CL().filter(c=>{
+    if(q && !norm([c.name,c.en,c.base,c.method,glassName(c.glass),c.desc,...c.taste,...c.ings.map(i=>i[0])].join(' ')).includes(q)) return false;
+    if(cz.bases.length && !cz.bases.includes(c.base)) return false;
+    if(cz.methods.length && !cz.methods.includes(c.method)) return false;
+    if(cz.strength.length && !cz.strength.includes(c.strength)) return false;
+    if(cz.time.length && !cz.time.includes(c.time)) return false;
+    if(cz.taste.length && !cz.taste.some(t=>c.taste.includes(t))) return false;
+    return true;
+  });
+  const title = zk.q ? `「${esc(zk.q)}」` : czCount() ? '条件に合うカクテル' : 'すべてのカクテル';
+  el.innerHTML = `<div class="zk-head"><b>${title}</b><span>${rs.length}品</span></div>
+    <div class="list" style="padding-top:8px">${rs.length?rs.map(c=>cCard(c)).join(''):`<div class="empty" style="padding:24px 8px"><p>該当するカクテルがありません。条件を減らしてみてください。</p></div>`}</div>`;
+}
+
+/* カクテルのページ */
+function openCocktail(id){
+  const c=cocktailById(id); if(!c) return;
+  curSheet={t:'cocktail',id};
+  currentBottle=null;
+  const fb=allBottles.find(b=>b.kind==='cocktail' && b.zukanId===c.id) || allBottles.find(b=>b.kind==='cocktail' && norm(b.name)===norm(c.name));
+  const posts=fb ? allTastings.filter(t=>t.bottleId===fb.id).sort((a,b)=>b.createdAt-a.createdAt) : [];
+  const ps=posts.map(t=>t.score).filter(x=>typeof x==='number'); const pavg=ps.length?ps.reduce((a,b)=>a+b,0)/ps.length:null;
+  const pdrinks=[...new Set(posts.map(t=>t.drink).filter(Boolean))].slice(0,8);
+  const g=CGLASS().find(x=>x.id===c.glass);
+  const facts=[['ベース',c.base],['作り方',c.method],['グラス',g?.name],['強さ',c.strength+(c.abv?`（約${c.abv}%）`:'')],['飲むタイミング',c.time],['飾り',c.garnish]];
+  const ingRow = i => { const picks=i[2]?linkPicks(i[2]):[]; const l=i[2]&&CLINKS()[i[2]];
+    return `<div class="cing"><div class="cing-h"><span>${esc(i[0])}</span><em>${esc(i[1])}</em></div>
+      ${picks.length?`<div class="pchips">${picks.map(z=>`<button class="chip" data-dk="${l.k}" data-dz="${esc(z.id)}"><i style="background:${kGlass(l.k,z.color)}"></i>${esc(z.name)}</button>`).join('')}</div>`:''}</div>`; };
+  mount(`<div class="sheet" data-view="recipe" role="dialog" aria-modal="true" aria-label="${esc(c.name)}">
+    <div class="sheet-bar"><button class="btn ghost" data-act="back">‹ 戻る</button><h2>${esc(c.name)}</h2><span style="width:60px"></span></div>
+    <div class="sheet-body">
+      <div class="z-hero"><span class="gl" style="background:${c.color}"></span>
+        <div><div class="small">${esc(c.base)} · ${esc(c.method)}</div><h1>${esc(c.name)}</h1><div class="en">${esc(c.en)}</div></div></div>
+      ${myId?`<div>${wishBtn('r:'+c.id)}</div>`:''}
+      <p class="z-desc">${esc(c.desc)}</p>
+      <dl class="facts">${facts.filter(f=>f[1]).map(f=>`<div><dt>${f[0]}</dt><dd>${esc(f[1])}</dd></div>`).join('')}</dl>
+      <div class="chips">${c.taste.map(t=>`<span class="chip" aria-pressed="true">${esc(t)}</span>`).join('')}</div>
+      <section class="sec"><h3>材料<small>1 GLASS</small></h3>
+        <p class="small" style="margin:0 0 8px">お酒の材料の下にあるのは、図鑑から選んだおすすめの銘柄です。タップすると図鑑のページを開きます。</p>
+        <div class="cings">${c.ings.map(ingRow).join('')}</div></section>
+      <section class="sec"><h3>作り方<small>STEPS</small></h3>
+        <ol class="rsteps">${c.steps.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>
+        ${c.tip?`<p class="rtip"><b>コツ</b>${esc(c.tip)}</p>`:''}</section>
+      <section class="sec"><h3>使う器具<small>TOOLS</small></h3>
+        <div class="ckt-tools">${c.tools.map(id=>CTOOLS().find(t=>t.id===id)).filter(Boolean).map(t=>`<div class="ckt-tool"><b>${esc(t.name)}</b><p>${esc(t.desc)}</p></div>`).join('')}
+          ${g?`<div class="ckt-tool"><b>${esc(g.name)}<small>GLASS</small></b><p>${esc(g.desc)}</p></div>`:''}</div></section>
+      <section class="sec"><h3>みんなのカクテル<small>POSTS</small></h3>
+        ${posts.length?`<div class="pthumbs">${posts.slice(0,6).map(t=>t.photo?`<img src="${esc(photoUrl(t.photo))}" alt="" loading="lazy">`:`<span style="background:${c.color}"></span>`).join('')}</div>
+          <p style="margin:0 0 8px">${posts.length}件の記録${pavg!=null?`・平均 <b style="font-family:var(--mono);color:var(--amber)">${posts.length>1?fmt1(pavg):pavg}</b> 点`:''}</p>
+          ${pdrinks.length?`<div class="group-name">みんなが使ったお酒</div><div class="chips" style="margin-bottom:10px">${pdrinks.map(d=>`<span class="chip" aria-pressed="true">${esc(d)}</span>`).join('')}</div>`:''}
+          <button class="btn" data-act="open-dish">みんなの記録を見る</button>`
+          :`<p class="small" style="margin:0">まだ誰も記録していません。作ったら写真と一緒に記録しましょう。</p>`}
+      </section>
+      <p class="note-small">分量は一般的なレシピの目安です。お酒は20歳になってから。飲酒運転は絶対にしないでください。</p>
+    </div>
+    ${myId?`<div class="cta"><button class="btn primary" data-act="post">作ったカクテルを記録</button></div>`:''}
+  </div>`);
+  $('#sheet-root').onclick=e=>{
+    const el=e.target.closest('[data-act],[data-dz]'); if(!el) return;
+    if(el.dataset.dz) return openDrink(el.dataset.dk, el.dataset.dz);
+    const act=el.dataset.act;
+    if(act==='back') goBack();
+    if(act==='open-dish' && fb){ enterKind('cocktail','bottles'); openBottle(fb.id); }
+    if(act==='post'){ enterKind('cocktail','bottles'); const b=fb && bottles.find(x=>x.id===fb.id); openDishForm(b||null, null, c.id); }
+  };
 }
 
 /* レシピのページ */
@@ -2913,7 +3344,7 @@ function openRecipe(id){
   currentBottle=null;
   const shun=inSeason(r,[nowMonth()]);
   const cats=Object.entries(r.pairs||{}).filter(([k,v])=>v>=2 && PAIR_CATS[k]).sort((a,b)=>b[1]-a[1]);
-  const picks=['whisky','wine','sake'].map(k=>({ k, items:drinkPicks(k,r,2) })).filter(x=>x.items.length);
+  const picks=DRINK_KINDS.map(k=>({ k, items:drinkPicks(k,r,2).filter(x=>MAIN_DRINKS.includes(k) || x.score>=.5) })).filter(x=>x.items.length);
   const fb=allBottles.find(b=>b.kind==='food' && b.zukanId===r.id) || allBottles.find(b=>b.kind==='food' && norm(b.name)===norm(r.name));
   const posts=fb ? allTastings.filter(t=>t.bottleId===fb.id).sort((a,b)=>b.createdAt-a.createdAt) : [];
   const ps=posts.map(t=>t.score).filter(x=>typeof x==='number'); const pavg=ps.length?ps.reduce((a,b)=>a+b,0)/ps.length:null;
@@ -2966,6 +3397,7 @@ function drawKindCounts(){
     if(!loaded || setupError){ el.textContent=''; return; }
     const c=kindCount(k);
     if(k==='food'){ el.textContent = c.t ? `レシピ${FR().length}品・${c.t}件の記録` : `レシピ${FR().length}品`; return; }
+    if(k==='cocktail'){ el.textContent = c.t ? `レシピ${CL().length}品・${c.t}件の記録` : `レシピ${CL().length}品`; return; }
     el.textContent = c.b ? `${c.b}銘柄・${c.t}件の記録` : 'まだ記録はありません'; });
 }
 function setKindsVisible(on){ $('#kinds').hidden=!on; document.body.classList.toggle('kinds-on', on); if(on) drawKindCounts(); }
@@ -3169,6 +3601,7 @@ function restore(s){
     else if(sh.t==='picker') openPicker();
     else if(sh.t==='menu') openMenu();
     else if(sh.t==='recipe'){ if(recipeById(sh.id)) openRecipe(sh.id); else ok=false; }
+    else if(sh.t==='cocktail'){ if(cocktailById(sh.id)) openCocktail(sh.id); else ok=false; }
     else if(sh.t==='dform'){ const b=sh.b?bottles.find(x=>x.id===sh.b):null; const t=sh.tid?tastings.find(x=>x.id===sh.tid):null;
       if((sh.b && !b) || (sh.tid && !t)) ok=false; else openDishForm(b, t, sh.rid); }
     else if(sh.t==='taste'){ const b=bottles.find(x=>x.id===sh.b); const t=sh.tid?tastings.find(x=>x.id===sh.tid):null;
@@ -3228,12 +3661,14 @@ $('#add').onclick=()=> K.isFood ? openDishForm(null, null, null) : openPicker();
 $('#list').addEventListener('click',e=>{
   const r=e.target.closest('[data-recipe]'); if(r) return openRecipe(r.dataset.recipe);
   const dz=e.target.closest('[data-dz]'); if(dz) return openDrink(dz.dataset.dk, dz.dataset.dz);
+  const ck=e.target.closest('[data-cocktail]'); if(ck) return openCocktail(ck.dataset.cocktail);
   if(e.target.closest('[data-act="to-recipes"]')) tab('zukan');
 });
 $('#menu').onclick=openMenu;
 
 $('#sheet-root').addEventListener('click', async e=>{
   const w=e.target.closest('[data-wish]'); if(w){ const k=w.dataset.wish; if(await toggleWish(k)) w.outerHTML=wishBtn(k); return; }
+  const ck=e.target.closest('[data-cocktail]'); if(ck) return openCocktail(ck.dataset.cocktail);
   const s=e.target.closest('[data-rid] [data-act]'); if(s) handleSocialClick(s);
 });
 $('#gate-form').addEventListener('submit',e=>{ e.preventDefault(); submitGate(); });
