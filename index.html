@@ -24,8 +24,11 @@
 <script src="sake-data.js"></script>
 <script src="spirits-data.js"></script>
 <script src="coffee-data.js"></script>
+<script src="tea-data.js"></script>
 <script src="cheese-data.js"></script>
 <script src="chinmi-data.js"></script>
+<script src="meat-data.js"></script>
+<script src="herb-data.js"></script>
 <script src="cocktail-data.js"></script>
 <script src="mixer-data.js"></script>
 <script src="wineglass-data.js"></script>
@@ -444,7 +447,7 @@ body.kinds-on{overflow:hidden}
 @media (prefers-color-scheme: dark){:root[data-kind="sake"]{--amber:#93AEDD;--amber-soft:#1D2739}}
 .kcard.k-sake{--c:#2C4C7C}
 @media (prefers-color-scheme: dark){.kcard.k-sake{--c:#93AEDD}}
-.kcard.k-sake:last-child{grid-column:span 2;min-height:150px}
+
 :root[data-kind="coffee"]{--amber:#6A4127;--amber-soft:#EADFD3}
 @media (prefers-color-scheme: dark){:root[data-kind="coffee"]{--amber:#D2A27A;--amber-soft:#33261C}}
 .kcard.k-coffee{--c:#6A4127}
@@ -469,6 +472,16 @@ body.kinds-on{overflow:hidden}
 .kcard .en{margin-top:14px}
 .kgroup .soon-row{justify-content:flex-start;align-items:center}
 .kgroup .soon-row .lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;color:var(--muted);border:0;padding:0 4px 0 0}
+
+/* お酒の分類（醸造酒・蒸留酒）とその中身 */
+.kinds.sub .kgroup.kmain{display:none}
+.kg-back{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:9px;width:34px;height:30px;font-size:18px;line-height:1;cursor:pointer;align-self:center}
+.kg-lead{margin:-2px 0 0;color:var(--muted);font-size:13.5px}
+.kcard .ksubs{color:var(--c);opacity:.9}
+.kcard[data-kgroup]::after{content:"›";font-size:18px;top:10px}
+.kcard.k-brew{--c:#7A3552} .kcard.k-spirit{--c:#A9581A}
+.kcard.k-jtea{--c:#4F7A3A} .kcard.k-btea{--c:#9A3D22} .kcard.k-ctea{--c:#7D6A1F} .kcard.k-meat{--c:#A8423A} .kcard.k-herb{--c:#8A6A12}
+@media (prefers-color-scheme: dark){.kcard.k-brew{--c:#E28AAE}.kcard.k-spirit{--c:#E39A4E}.kcard.k-jtea{--c:#9FCB86}.kcard.k-btea{--c:#E79A7E}.kcard.k-ctea{--c:#D6C46E}.kcard.k-meat{--c:#E8908A}.kcard.k-herb{--c:#DDBA5A}}
 :root[data-kind="brandy"]{--amber:#7B3B22;--amber-soft:#F1DED3}
 @media (prefers-color-scheme: dark){:root[data-kind="brandy"]{--amber:#E3A07A;--amber-soft:#3A2419}}
 :root[data-kind="rum"]{--amber:#1F7A6A;--amber-soft:#D6EDE7}
@@ -516,6 +529,22 @@ body.kinds-on{overflow:hidden}
 .roastbar .rb span{font-size:11.5px;white-space:nowrap}
 .roastbar .rb.on{opacity:1;border-color:var(--amber);background:var(--amber-soft);font-weight:700}
 .roastscale{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin:4px 2px 0}
+
+.tbrew{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tbrew div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 12px;display:grid;gap:1px}
+.tbrew span{font-size:11.5px;color:var(--muted)}
+.tbrew b{font-size:15px;line-height:1.4}
+:root[data-kind="jtea"]{--amber:#4F7A3A;--amber-soft:#E2ECD6}
+:root[data-kind="btea"]{--amber:#9A3D22;--amber-soft:#F2DED5}
+:root[data-kind="ctea"]{--amber:#7D6A1F;--amber-soft:#EEE8CF}
+:root[data-kind="meat"]{--amber:#A8423A;--amber-soft:#F3DCD8}
+:root[data-kind="herb"]{--amber:#8A6A12;--amber-soft:#F1E8CC}
+@media (prefers-color-scheme: dark){
+  :root[data-kind="jtea"]{--amber:#9FCB86;--amber-soft:#22301C}
+  :root[data-kind="btea"]{--amber:#E79A7E;--amber-soft:#3A2219}
+  :root[data-kind="ctea"]{--amber:#D6C46E;--amber-soft:#332E17}
+  :root[data-kind="meat"]{--amber:#E8908A;--amber-soft:#3A201D}
+  :root[data-kind="herb"]{--amber:#DDBA5A;--amber-soft:#332B14}}
 .brews{display:grid;gap:8px}
 .brew{display:grid;gap:2px;border-left:3px solid var(--amber);padding:2px 0 2px 10px}
 .brew b{font-size:15px}
@@ -615,17 +644,72 @@ body.kinds-on{overflow:hidden}
 <div class="kinds" id="kinds" hidden>
   <div class="kinds-in">
     <header class="kinds-head"><span class="eyebrow">TASTING NOTES</span><h1>HIDEOUT CARTER</h1><p>今日はなにを記録しますか？</p></header>
-    <section class="kgroup"><div class="kg-head"><span class="en">LIQUOR</span><b>お酒</b></div>
+    <section class="kgroup kmain"><div class="kg-head"><span class="en">LIQUOR</span><b>お酒</b></div>
     <div class="kind-cards">
-      <button class="kcard k-whisky" data-kind="whisky">
-        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M17.5 33.5h29l-2 19.2a2.6 2.6 0 0 1-2.6 2.3H22.1a2.6 2.6 0 0 1-2.6-2.3z" fill="currentColor" opacity=".38"/><rect x="25" y="27" width="12" height="12" rx="2.2" transform="rotate(-12 31 33)" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".8"/><path d="M14 13h36l-4.4 40.4a3.4 3.4 0 0 1-3.4 3H21.8a3.4 3.4 0 0 1-3.4-3z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M17 33.5h30" stroke="currentColor" stroke-width="1.4"/></svg>
-        <span class="en">WHISKY</span><b>ウイスキー</b><span class="kc" id="kc-whisky"></span></button>
+      <button class="kcard k-brew" data-kgroup="brew">
+        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><circle cx="26" cy="28" r="6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="38" cy="28" r="6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="32" cy="38" r="6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="20" cy="38" r="5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" opacity=".8"/><circle cx="44" cy="38" r="5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" opacity=".8"/><circle cx="26" cy="47" r="5.5" fill="currentColor" opacity=".38"/><circle cx="38" cy="47" r="5.5" fill="currentColor" opacity=".38"/><circle cx="32" cy="55" r="5" fill="currentColor" opacity=".38"/><path d="M32 22V12c4-4 10-4 14-1" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <span class="en">BREWED</span><b>醸造酒</b><span class="kc ksubs">ワイン・日本酒</span><span class="kc" id="kc-g-brew"></span></button>
+      <button class="kcard k-spirit" data-kgroup="spirit">
+        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M16 54h22c3 0 4-2 4-5V36c0-8-6-14-15-14S12 28 12 36v13c0 3 1 5 4 5z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M14.5 42h25v7c0 2-.8 3-2.6 3H17c-1.8 0-2.5-1-2.5-3z" fill="currentColor" opacity=".38"/><path d="M27 22v-8h10l14 12v20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M47 46h8v8h-8z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <span class="en">SPIRITS</span><b>蒸留酒</b><span class="kc ksubs">ウイスキー・ブランデー・ラム・テキーラ</span><span class="kc" id="kc-g-spirit"></span></button>
+      <button class="kcard k-cocktail" data-kind="cocktail">
+        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 12h40L32 34z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M17.5 17h29L32 30.5z" fill="currentColor" opacity=".38"/><path d="M32 34v20M22 56h20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="45" cy="13" r="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M40 8l9-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span class="en">COCKTAIL</span><b>カクテル</b><span class="kc" id="kc-cocktail"></span></button>
+    </div>
+    </section>
+    <section class="kgroup kmain"><div class="kg-head"><span class="en">SOFT DRINKS</span><b>ソフトドリンク</b></div>
+    <div class="kind-cards">
+      <button class="kcard k-coffee" data-kind="coffee">
+        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 26h34v14a13 13 0 0 1-13 13h-8a13 13 0 0 1-13-13z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M14.5 31h29v9a10.5 10.5 0 0 1-10.5 10.5h-8A10.5 10.5 0 0 1 14.5 40z" fill="currentColor" opacity=".38"/><path d="M46 30h3.5a6 6 0 0 1 0 12H45" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M8 57h44" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M22 20c-2.5-3 2.5-5 0-9M31 20c-2.5-3 2.5-5 0-9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".7"/></svg>
+        <span class="en">COFFEE</span><b>コーヒー</b><span class="kc" id="kc-coffee"></span></button>
+      <button class="kcard k-jtea" data-kind="jtea">
+        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M14 24h36l-3 24a6 6 0 0 1-6 5H23a6 6 0 0 1-6-5z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M16.2 32h31.6l-2 15.5a3.6 3.6 0 0 1-3.6 3.1H21.8a3.6 3.6 0 0 1-3.6-3.1z" fill="currentColor" opacity=".38"/><path d="M26 18c-2.5-3 2.5-5 0-9M35 18c-2.5-3 2.5-5 0-9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".7"/><path d="M22 57h20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <span class="en">JAPANESE TEA</span><b>日本茶</b><span class="kc" id="kc-jtea"></span></button>
+      <button class="kcard k-btea" data-kind="btea">
+        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 24h36v8a18 18 0 0 1-18 18h0a18 18 0 0 1-18-18z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M14.4 30h31.2v2a15.6 15.6 0 0 1-15.6 15.6h0A15.6 15.6 0 0 1 14.4 32z" fill="currentColor" opacity=".38"/><path d="M48 27h3a6 6 0 0 1 0 12h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M6 55c8 3 40 3 48 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M24 18c-2.5-3 2.5-5 0-9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".7"/></svg>
+        <span class="en">BLACK TEA</span><b>紅茶</b><span class="kc" id="kc-btea"></span></button>
+      <button class="kcard k-ctea" data-kind="ctea">
+        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M14 30h36c-1 11-8 18-18 18s-17-7-18-18z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 34h30c-2 7-7 10.5-15 10.5S19 41 17 34z" fill="currentColor" opacity=".38"/><path d="M12 30c2-8 10-12 20-12s18 4 20 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M29 18v-3h6v3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M22 48l-3 6h26l-3-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <span class="en">CHINESE TEA</span><b>中国茶</b><span class="kc" id="kc-ctea"></span></button>
+    </div>
+    </section>
+    <section class="kgroup kmain"><div class="kg-head"><span class="en">FOOD</span><b>食べ物</b></div>
+    <div class="kind-cards">
+      <button class="kcard k-cheese" data-kind="cheese">
+        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 40l40-20 8 6v18H8z" fill="currentColor" opacity=".3"/><path d="M8 40l40-20 8 6M8 40v12h48V26M8 40h48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="20" cy="47" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="36" cy="45.5" r="3.4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="48" cy="48" r="2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="40" cy="31" r="2.2" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".8"/></svg>
+        <span class="en">CHEESE</span><b>チーズ</b><span class="kc" id="kc-cheese"></span></button>
+      <button class="kcard k-chinmi" data-kind="chinmi">
+        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 34h44c-1.5 11-10 18-22 18S11.5 45 10 34z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M14 38h36c-2.5 7-9 10.5-18 10.5S16.5 45 14 38z" fill="currentColor" opacity=".38"/><path d="M24 52l-2 5h20l-2-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M18 30c4-6 10-8 16-6M36 22l10-12M42 24l12-11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="28" cy="29" r="1.8" fill="currentColor" opacity=".7"/><circle cx="33" cy="30" r="1.8" fill="currentColor" opacity=".7"/></svg>
+        <span class="en">CHINMI</span><b>珍味</b><span class="kc" id="kc-chinmi"></span></button>
+      <button class="kcard k-meat" data-kind="meat">
+        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 40c-2-10 6-18 16-16l14 3c9 2 15 9 13 16-2 6-9 8-16 6l-16-3c-6-1-10-3-11-6z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M14 40c0-6 5-11 12-10l13 3c6 1.5 10 6 9 10-1.4 3.8-6 5-11 4l-14-3c-5-1-8-2-9-4z" fill="currentColor" opacity=".38"/><circle cx="24" cy="36" r="2.4" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".8"/><circle cx="36" cy="40" r="2" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".8"/><path d="M53 43l4 4M8 37l-3-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <span class="en">HAM &amp; SAUSAGE</span><b>ハム・ソーセージ</b><span class="kc" id="kc-meat"></span></button>
+      <button class="kcard k-herb" data-kind="herb">
+        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M18 52C14 36 22 20 40 12c2 16-6 32-22 40z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M18 52c5-12 12-22 22-40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M21 46c3-1 8 0 10 2M24 38c3-1 7-1 9 1M28 30c3 0 6 0 8 2" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".7"/><path d="M48 40l2 5 5 0-4 3 2 5-5-3-5 3 2-5-4-3 5 0z" fill="currentColor" opacity=".45" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        <span class="en">HERB &amp; SPICE</span><b>ハーブ・スパイス・薬膳</b><span class="kc" id="kc-herb"></span></button>
+      <button class="kcard k-food" data-kind="food">
+        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M17 40.5c1.4-7.4 6.6-11.5 13-11.5s11.6 4.1 13 11.5z" fill="currentColor" opacity=".38"/><ellipse cx="30" cy="42" rx="23" ry="8.5" fill="none" stroke="currentColor" stroke-width="2.2"/><ellipse cx="30" cy="41" rx="14" ry="4" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".7"/><path d="M38 9.5l15.5 25M45.5 7l12 27" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        <span class="en">DISH &amp; PAIRING</span><b>料理・酒の肴</b><span class="kc" id="kc-food"></span></button>
+    </div>
+    </section>
+    <section class="kgroup ksub" data-sub="brew" hidden><div class="kg-head"><button class="kg-back" data-act="kg-back" aria-label="お酒の分類に戻る">‹</button><span class="en">BREWED</span><b>醸造酒</b></div>
+    <p class="kg-lead">果物や穀物を発酵させて造るお酒。</p>
+    <div class="kind-cards">
       <button class="kcard k-wine" data-kind="wine">
         <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M20.6 24h22.8c-.5 6-2.6 10.4-6.2 12.8a9.6 9.6 0 0 1-10.4 0c-3.6-2.4-5.7-6.8-6.2-12.8z" fill="currentColor" opacity=".45"/><path d="M19.5 7h25c1.4 10.6.6 21.4-5.6 27.6a10 10 0 0 1-13.8 0C18.9 28.4 18.1 17.6 19.5 7z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M32 37.6V54M23 56.5h18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
         <span class="en">WINE</span><b>ワイン</b><span class="kc" id="kc-wine"></span></button>
       <button class="kcard k-sake" data-kind="sake">
         <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M24 6h10v6c0 3 6 6 7 13 1.2 8-1.5 18-2.4 24.5-.4 2.6-2.4 4.5-5 4.5h-5.2c-2.6 0-4.6-1.9-5-4.5C22.5 43 19.8 33 21 25c1-7 7-10 7-13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" transform="translate(-6 0)"/><path d="M38 40h20l-2.2 11.4a3 3 0 0 1-3 2.6H43.2a3 3 0 0 1-3-2.6z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M40.6 45.5h14.8l-1.1 5.8a1.6 1.6 0 0 1-1.6 1.3h-9.4a1.6 1.6 0 0 1-1.6-1.3z" fill="currentColor" opacity=".38"/><circle cx="48" cy="47.5" r="2.3" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".7"/></svg>
         <span class="en">SAKE</span><b>日本酒</b><span class="kc" id="kc-sake"></span></button>
+    </div>
+    <div class="soon-row"><span class="lbl">COMING SOON</span><span>ビール</span></div>
+    </section>
+    <section class="kgroup ksub" data-sub="spirit" hidden><div class="kg-head"><button class="kg-back" data-act="kg-back" aria-label="お酒の分類に戻る">‹</button><span class="en">SPIRITS</span><b>蒸留酒</b></div>
+    <p class="kg-lead">発酵させたお酒を蒸留して、香りとアルコールを凝縮したお酒。</p>
+    <div class="kind-cards">
+      <button class="kcard k-whisky" data-kind="whisky">
+        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M17.5 33.5h29l-2 19.2a2.6 2.6 0 0 1-2.6 2.3H22.1a2.6 2.6 0 0 1-2.6-2.3z" fill="currentColor" opacity=".38"/><rect x="25" y="27" width="12" height="12" rx="2.2" transform="rotate(-12 31 33)" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".8"/><path d="M14 13h36l-4.4 40.4a3.4 3.4 0 0 1-3.4 3H21.8a3.4 3.4 0 0 1-3.4-3z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M17 33.5h30" stroke="currentColor" stroke-width="1.4"/></svg>
+        <span class="en">WHISKY</span><b>ウイスキー</b><span class="kc" id="kc-whisky"></span></button>
       <button class="kcard k-brandy" data-kind="brandy">
         <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M17 33c0-8 6-17 15-17s15 9 15 17c0 9-6.7 15-15 15s-15-6-15-15z" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M18.5 36h27c-1.2 6.6-6.6 10.5-13.5 10.5S19.7 42.6 18.5 36z" fill="currentColor" opacity=".4"/><path d="M32 48v7M23 57h18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
         <span class="en">BRANDY</span><b>ブランデー</b><span class="kc" id="kc-brandy"></span></button>
@@ -635,32 +719,8 @@ body.kinds-on{overflow:hidden}
       <button class="kcard k-tequila" data-kind="tequila">
         <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M20 30h20l-2.5 24a2.5 2.5 0 0 1-2.5 2.2h-10A2.5 2.5 0 0 1 22.5 54z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M21.3 40h17.4l-1.3 13a1.6 1.6 0 0 1-1.6 1.4h-11.6a1.6 1.6 0 0 1-1.6-1.4z" fill="currentColor" opacity=".38"/><path d="M44 26a9 9 0 0 1 12 9" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M45.5 29a6 6 0 0 1 7.6 6.3" fill="currentColor" opacity=".38"/><path d="M30 26c-2-6-6-10-11-12M30 26c0-7 2-13 5-17M30 26c3-5 8-8 13-9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         <span class="en">TEQUILA</span><b>テキーラ</b><span class="kc" id="kc-tequila"></span></button>
-      <button class="kcard k-cocktail" data-kind="cocktail">
-        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 12h40L32 34z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M17.5 17h29L32 30.5z" fill="currentColor" opacity=".38"/><path d="M32 34v20M22 56h20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="45" cy="13" r="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M40 8l9-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span class="en">COCKTAIL</span><b>カクテル</b><span class="kc" id="kc-cocktail"></span></button>
     </div>
-    <div class="soon-row"><span class="lbl">COMING SOON</span><span>ビール</span><span>焼酎</span></div>
-    </section>
-    <section class="kgroup"><div class="kg-head"><span class="en">SOFT DRINKS</span><b>ソフトドリンク</b></div>
-    <div class="kind-cards">
-      <button class="kcard k-coffee" data-kind="coffee">
-        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 26h34v14a13 13 0 0 1-13 13h-8a13 13 0 0 1-13-13z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M14.5 31h29v9a10.5 10.5 0 0 1-10.5 10.5h-8A10.5 10.5 0 0 1 14.5 40z" fill="currentColor" opacity=".38"/><path d="M46 30h3.5a6 6 0 0 1 0 12H45" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M8 57h44" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M22 20c-2.5-3 2.5-5 0-9M31 20c-2.5-3 2.5-5 0-9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".7"/></svg>
-        <span class="en">COFFEE</span><b>コーヒー</b><span class="kc" id="kc-coffee"></span></button>
-    </div>
-    <div class="soon-row"><span class="lbl">COMING SOON</span><span>紅茶</span><span>日本茶</span></div>
-    </section>
-    <section class="kgroup"><div class="kg-head"><span class="en">FOOD</span><b>食べ物</b></div>
-    <div class="kind-cards">
-      <button class="kcard k-cheese" data-kind="cheese">
-        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 40l40-20 8 6v18H8z" fill="currentColor" opacity=".3"/><path d="M8 40l40-20 8 6M8 40v12h48V26M8 40h48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="20" cy="47" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="36" cy="45.5" r="3.4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="48" cy="48" r="2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="40" cy="31" r="2.2" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".8"/></svg>
-        <span class="en">CHEESE</span><b>チーズ</b><span class="kc" id="kc-cheese"></span></button>
-      <button class="kcard k-chinmi" data-kind="chinmi">
-        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 34h44c-1.5 11-10 18-22 18S11.5 45 10 34z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M14 38h36c-2.5 7-9 10.5-18 10.5S16.5 45 14 38z" fill="currentColor" opacity=".38"/><path d="M24 52l-2 5h20l-2-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M18 30c4-6 10-8 16-6M36 22l10-12M42 24l12-11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="28" cy="29" r="1.8" fill="currentColor" opacity=".7"/><circle cx="33" cy="30" r="1.8" fill="currentColor" opacity=".7"/></svg>
-        <span class="en">CHINMI</span><b>珍味</b><span class="kc" id="kc-chinmi"></span></button>
-      <button class="kcard k-food" data-kind="food">
-        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M17 40.5c1.4-7.4 6.6-11.5 13-11.5s11.6 4.1 13 11.5z" fill="currentColor" opacity=".38"/><ellipse cx="30" cy="42" rx="23" ry="8.5" fill="none" stroke="currentColor" stroke-width="2.2"/><ellipse cx="30" cy="41" rx="14" ry="4" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".7"/><path d="M38 9.5l15.5 25M45.5 7l12 27" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
-        <span class="en">DISH &amp; PAIRING</span><b>料理・酒の肴</b><span class="kc" id="kc-food"></span></button>
-    </div>
+    <div class="soon-row"><span class="lbl">COMING SOON</span><span>焼酎</span><span>ジン</span></div>
     </section>
   </div>
 </div>
@@ -671,7 +731,7 @@ body.kinds-on{overflow:hidden}
 
 <script>
 (() => {
-const APP_VERSION = '2026.10.15d';
+const APP_VERSION = '2026.10.15e';
 
 /* ---------- お酒の種類ごとの設定（ウイスキー／ワイン。日本酒・ビール・カクテルは今後ここに足す） ---------- */
 const STORY_HEADS = [['はじまり','HISTORY'],['造りのこだわり','CRAFT'],['ウイスキー界での存在感','STANDING']];
@@ -700,6 +760,24 @@ function lookCSS(key){
     yellow: plain('#E6C34A','#F2D77A'), green: plain('#6F8F35','#89A852'), brownc: plain('#7A4A26','#946038'), black: plain('#2A2422','#3F3633'),
     white: plain('#F4F0E6','#FFFFFF'), cream: plain('#EAD9B0','#F5E8C8'), purple: plain('#7B3B5A','#94546F'),
     roe_orange: dots('#C9561A','#F08A2E','#FFD2A0'), roe_black: dots('#161414','#2E2B2A','#5A5654'), roe_red: dots('#9E2E22','#D2523A','#F2A08E'),
+    // ハム・ソーセージの断面
+    prosciutto: `<rect width='100' height='100' fill='#D9756E'/><path d='M0 70 Q30 62 55 72 T100 66 V100 H0Z' fill='#FBF1E6'/><path d='M10 30 Q40 22 70 34' stroke='#E9958C' stroke-width='5' fill='none' stroke-linecap='round'/>`,
+    jamon: `<rect width='100' height='100' fill='#9B2F33'/><path d='M0 78 Q30 70 60 80 T100 74 V100 H0Z' fill='#F6E7D6'/><path d='M8 24 Q30 30 44 20 M56 42 Q72 36 90 46 M14 54 Q30 48 40 58' stroke='#EBD3C2' stroke-width='2.4' fill='none' stroke-linecap='round'/>`,
+    salami: `<rect width='100' height='100' fill='#5A3A30'/><circle cx='50' cy='50' r='45' fill='#A6343A'/>`+[[30,30],[56,24],[70,44],[40,52],[60,66],[28,70],[48,80],[74,62],[22,48],[44,36],[66,30],[36,64]].map(([x,y])=>C(x,y,3.4,'#F4E4D2')).join(''),
+    chorizo: `<rect width='100' height='100' fill='#7A2E18'/><circle cx='50' cy='50' r='45' fill='#C8462A'/>`+[[32,32],[58,26],[70,48],[42,54],[58,70],[30,68],[74,64],[46,40]].map(([x,y])=>C(x,y,4,'#F2C29A')).join(''),
+    mortadella: `<rect width='100' height='100' fill='#D9938C'/><circle cx='50' cy='50' r='46' fill='#EBB0A6'/>`+[[30,34],[62,28],[72,56],[42,62],[56,78],[26,58]].map(([x,y])=>`<rect x='${x-4}' y='${y-4}' width='8' height='8' fill='#FBF3EA'/>`).join('')+C(48,40,2.6,'#7EA246')+C(64,46,2.6,'#7EA246'),
+    bacon: `<rect width='100' height='100' fill='#F4E2CF'/><path d='M0 16 Q50 8 100 18 V34 Q50 26 0 36Z M0 50 Q50 42 100 54 V64 Q50 58 0 68Z M0 82 Q50 76 100 86 V100 H0Z' fill='#B9443A'/>`,
+    ham: plain('#EBA59B','#F4C3BA'),
+    sausage: ring('#8A4E2C','#E2A48C',42)+C(38,42,2.4,'#F3CDBA')+C(58,56,2,'#F3CDBA')+C(48,66,2,'#F3CDBA'),
+    weisswurst: ring('#E2D8C8','#F6F0E6',42)+[[36,40],[58,34],[64,58],[44,62],[50,48]].map(([x,y])=>C(x,y,2,'#6E9440')).join(''),
+    blood: ring('#2A1A18','#3D2421',42)+[[36,40],[58,36],[62,58],[42,62]].map(([x,y])=>C(x,y,3,'#E9D6C2')).join(''),
+    smokedham: ring('#5E3218','#C2665E',43)+`<path d='M14 64 Q50 56 86 66' stroke='#F2DCCB' stroke-width='5' fill='none'/>`,
+    bresaola: plain('#7A1E24','#93343A'),
+    lardo: plain('#F7F2E9','#FFFFFF')+`<path d='M0 86 H100 V100 H0Z' fill='#E7B9AE'/>`+C(30,40,2,'#7E9C55')+C(60,30,1.8,'#7E9C55')+C(70,58,2,'#7E9C55'),
+    speck: `<rect width='100' height='100' fill='#4A2814'/><rect x='6' y='6' width='88' height='70' fill='#B53E3A'/><rect x='6' y='76' width='88' height='18' fill='#F4E6D4'/>`,
+    pate: plain('#C9A27E','#D8B794'),
+    leber: plain('#B8957E','#C9AA95'),
+    jerky: `<rect width='100' height='100' fill='#5C2A1A'/><path d='M10 20 Q40 28 90 18 M10 50 Q50 58 90 46 M12 78 Q50 86 88 76' stroke='#7C3E26' stroke-width='6' fill='none' stroke-linecap='round'/>`,
   };
   const svg = M[key] || plain('#DDD');
   return `url('data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>${svg}</svg>`).replace(/'/g,'%27')}') center/cover no-repeat`;
@@ -729,6 +807,44 @@ const PAIR_CATS = {
 };
 const DRINK_FILTERS = [['whisky','ウイスキー',['w_smoky','w_sherry','w_light','w_rich']],['red','赤ワイン',['r_full','r_light']],['white','白ワイン',['wh_crisp','wh_rich']],
   ['spark','泡',['spark']],['sake','日本酒',['s_dry','s_rich','s_aroma','s_aged']]];
+
+/* お茶（日本茶・紅茶・中国茶）の種類の設定をまとめて作る */
+function teaKind(o){
+  const V=o.V, g=n=>(typeof window[V+'_'+n]!=='undefined'?window[V+'_'+n]:null);
+  const LIST = n => { try{ return eval(V+'_'+n); }catch(e){ return null; } };
+  const Lb = o.L;
+  return {
+    key:o.key, jp:o.jp, en:o.en, COLORS:o.COLORS, AXES:o.AXES, TAGS:o.TAGS,
+    PHASES: [['nose','香り','AROMA'],['palate','味わい','TASTE'],['finish','後味','AFTERTASTE']],
+    TYPES:o.TYPES, REGIONS:o.REGIONS, SERVES:o.SERVES, defServe:o.defServe, defType:o.defType, FINLEN:['ショート','ミディアム','ロング'],
+    Z: () => ({ D:LIST('ITEMS')||[], E:LIST('ENTRIES')||[], R:LIST('REGIONS')||{}, S:{}, W:(typeof TEA_MAPS!=='undefined'?o.W():{}) }),
+    ZK_TYPES: (LIST('TYPES')||[]).map(t=>t.name), ZK_TAGS:o.ZK_TAGS, ZK_PRICES:o.ZK_PRICES,
+    COUNTRIES: LIST('COUNTRIES')||{}, BIG: o.single?[o.single]:(LIST('MAIN')||[]), MINOR:[], WORLD_LABEL: o.WORLD_LABEL||{}, single:o.single,
+    exMeta: z => [z.type, z.age, z.cask],
+    zFacts: z => [[Lb.maker,z.distillery],['産地',ZR[z.region]?.jp],[Lb.typeLbl,z.type],[Lb.age,z.age],[Lb.cask,z.cask]],
+    cmpRows: (A,B) => [[Lb.maker,A.distillery,B.distillery],['産地',ZR[A.region]?.jp,ZR[B.region]?.jp],[Lb.typeLbl,A.type,B.type],[Lb.age,A.age||'—',B.age||'—'],[Lb.cask,A.cask||'—',B.cask||'—']],
+    heads: () => [], noAbv:true, unit:'お茶', tea:true, extra: z => teaBrewSection(z),
+    G: { list:()=>LIST('TYPES')||[], name:Lb.typeLbl, en:'TYPES', unit:'種類', countUnit:'品',
+      groups:o.groups, sub:g=>g.kind, glass:g=>{ const z=(LIST('ENTRIES')||[]).find(z=>z.grapes[0]===g.id); return z?.color||o.COLORS[1][0]; },
+      intro:o.gIntro, itemsTitle:`この種類の${o.jp}`, itemsEn:'TEAS',
+      note:'種類の特徴は一般的に語られる傾向をもとにした目安です。産地や作り手、淹れ方によって味わいは大きく変わります。' },
+    L: {
+      maker:Lb.maker, makerForm:Lb.makerForm, makerPh:Lb.makerPh, makerCount:o.single?'銘柄':'茶園',
+      typeLbl:Lb.typeLbl, age:Lb.age, ageForm:Lb.age, agePh:Lb.agePh, cask:Lb.cask, caskPh:Lb.caskPh, abvPh:'', tagPh:Lb.tagPh,
+      namePh:Lb.namePh, search:'お茶の名前・産地・香りで検索', zkSearch:`図鑑を検索（産地・${Lb.typeLbl}・香り）`,
+      pickLbl:'お茶の名前・産地で探す', pickPh:Lb.pickPh, cpPh:'お茶の名前で探す',
+      serveLbl:'淹れ方・飲み方', commentPh:Lb.commentPh,
+      worldCap:Lb.worldCap, worldAria:Lb.worldAria, worldHint:Lb.worldHint,
+      lineupEn:'TEAS', mapSec:'産地の場所', back:'図鑑', colorLbl:'水色', colorEn:'LIQUOR COLOR', priceLbl:'参考価格（100g）',
+      priceNote:'100gあたりのおおよその目安です。お店や時期、等級によって変わります。',
+      simNote:`ほかの${o.jp}から、味わいの傾向と香りの重なりで選んでいます。`,
+      zkNote:`図鑑の味わいは、一般的に語られる傾向をもとにした目安です。淹れ方で味わいは大きく変わります。参考価格は100gあたりのおおよその目安です。`,
+      distNote:'味わいは一般的に語られる傾向をもとにした目安です。参考価格は100gあたりのおおよその目安で、お店や時期によって変わります。',
+      modes:[['region','産地'],['grape',Lb.typeLbl],['flavor','味・香り']],
+    },
+  };
+}
+
 const KINDS = {
   whisky: {
     key:'whisky', jp:'ウイスキー', en:'WHISKY',
@@ -1105,6 +1221,57 @@ const KINDS = {
     },
   },
 
+  jtea: teaKind({ key:'jtea', jp:'日本茶', en:'JAPANESE TEA', V:'JTEA',
+    COLORS: [['pale','淡い黄緑','#DCE3A8'],['yellowgreen','黄緑','#C9D56B'],['green','鮮やかな緑','#93B83E'],['deepgreen','濃い緑','#55842C'],['matcha','抹茶の緑','#6E9A2E'],['gold','山吹色','#D9B45A'],['amber','琥珀色','#B5722E'],['brown','茶褐色','#7A4A22']],
+    AXES: [['umami','旨み'],['sweet','甘み'],['astr','渋み'],['bitter','苦み'],['green','青さ・若葉'],['roast','香ばしさ'],['aroma','華やかさ'],['body','コク']],
+    TAGS: [['若葉・青さ',['若葉','青のり','覆い香','爽やか','新茶','山の香り']],['甘み・旨み',['旨み','甘み','だし','とろり','まろやか']],
+      ['香ばしさ',['香ばしい','火入れ香','釜香','炒り米','スモーキー']],['花・果実',['花','果実','桜葉','柑橘']],['渋み・苦み',['渋み','キレ','ほろ苦さ']],['そのほか',['乳酸の酸味','クリーミー','カフェイン少なめ']]],
+    SERVES: ['急須（温かい）','冷茶・水出し','氷出し','抹茶を点てる','ティーバッグ'], defServe:'急須（温かい）', defType:'煎茶',
+    TYPES: ['煎茶','深蒸し煎茶','玉露','かぶせ茶','抹茶','ほうじ茶','玄米茶','番茶','釜炒り茶','蒸し製玉緑茶','茎茶・棒茶','後発酵茶','その他'],
+    REGIONS: ['静岡','鹿児島','京都','三重','埼玉','東京','福岡','佐賀','長崎','宮崎','熊本','奈良','滋賀','石川','徳島','高知','愛媛','そのほかの県'],
+    ZK_TAGS: ['若葉','覆い香','爽やか','旨み','甘み','まろやか','とろり','香ばしい','火入れ香','釜香','花','渋み','キレ'],
+    ZK_PRICES: [['p1','〜999円',0,1000],['p2','1,000〜2,499円',1000,2500],['p3','2,500〜4,999円',2500,5000],['p4','5,000円〜',5000,1e12]],
+    single:'japan', W: () => ({ japan:ZUKAN_WORLD.japan }),
+    groups:[['蒸し製の緑茶','蒸し製の緑茶'],['覆い下の緑茶','覆い下の緑茶（玉露・抹茶）'],['釜炒り製の緑茶','釜炒り製の緑茶'],['焙じた茶','焙じた茶'],['日常の茶','日常の茶'],['発酵させる茶','発酵させる茶']],
+    gIntro:'日本茶は、育て方（覆いをするか）と作り方（蒸す・炒る・焙じる）で、いくつもの種類に分かれます。タップすると特徴とそのお茶を見られます。',
+    L: { maker:'産地', makerForm:'産地・茶園・お店', makerPh:'例：川根', typeLbl:'種類', age:'摘んだ時期', agePh:'一番茶', cask:'品種', caskPh:'やぶきた',
+      namePh:'例：川根茶 煎茶 一番茶', pickPh:'例：八女 玉露', commentPh:'例：70℃で1分。若葉の香りと旨み、2煎目はすっきり。', tagPh:'例：桜葉、青のり',
+      worldCap:'JAPANESE TEA', worldAria:'日本茶の産地', worldHint:'地図の産地をタップすると、その土地のお茶が表示されます。' } }),
+  btea: teaKind({ key:'btea', jp:'紅茶', en:'BLACK TEA', V:'BTEA',
+    COLORS: [['pale','淡い金色','#E3B65A'],['orange','明るいオレンジ','#D98A2B'],['red','紅色','#B5452A'],['deepred','深紅','#8A2A1E'],['brown','濃い赤褐色','#5E2414']],
+    AXES: [['astr','渋み'],['body','コク'],['sweet','甘み'],['floral','花の香り'],['fruity','果実の香り'],['malt','モルト・蜜'],['smoky','スモーキー'],['fresh','爽やかさ']],
+    TAGS: [['果実',['マスカテル','マスカット','柑橘','ベルガモット','熟した果実','りんご','ドライフルーツ']],['花',['花','バラ','蘭の香り']],
+      ['甘い香り',['蜜','モルト','黒糖','さつまいも','バニラのような香り','キャラメル']],['スパイス・スモーク',['シナモン','ミント','メントール','松煙','スモーク']],
+      ['爽やかさ',['若葉','爽やか','キリッとした渋み']],['口あたり',['まろやか','コク','渋み','ミルク向き']]],
+    SERVES: ['ストレート','ミルクティー','レモンティー','アイスティー','チャイ','ロイヤルミルクティー'], defServe:'ストレート', defType:'リーフティー（オーソドックス製法）',
+    TYPES: ['ファーストフラッシュ（春摘み）','セカンドフラッシュ（夏摘み）','オータムナル（秋摘み）','リーフティー（オーソドックス製法）','CTC','フレーバードティー','ブレンドティー','燻製（スモーキー）','和紅茶','その他'],
+    REGIONS: ['ダージリン','アッサム','ニルギリ','ネパール','ヌワラエリヤ','ディンブラ','ウバ','キャンディ','ルフナ','中国','台湾','日本（和紅茶）','ケニア','ブレンド','その他'],
+    ZK_TAGS: ['マスカテル','花','若葉','ベルガモット','柑橘','蘭の香り','蜜','モルト','黒糖','さつまいも','松煙','ミルク向き','まろやか','爽やか'],
+    ZK_PRICES: [['p1','〜1,999円',0,2000],['p2','2,000〜3,999円',2000,4000],['p3','4,000〜7,999円',4000,8000],['p4','8,000円〜',8000,1e12]],
+    W: () => ({ world:TEA_MAPS.btea_world, btea_india:TEA_MAPS.btea_india, btea_srilanka:TEA_MAPS.btea_srilanka, tea_china:TEA_MAPS.tea_china, japan:ZUKAN_WORLD.japan, africa:(typeof COFFEE_MAPS!=='undefined'?COFFEE_MAPS.africa:null) }),
+    WORLD_LABEL: (typeof BTEA_WORLD_LABEL!=='undefined') ? BTEA_WORLD_LABEL : {},
+    groups:[['摘む季節','摘む季節（ダージリンなど）'],['製法','製法'],['ブレンド・着香','ブレンド・フレーバード'],['産地','産地']],
+    gIntro:'紅茶は、摘む季節や作り方、ブレンドのしかたによって性格が変わります。タップすると特徴とその紅茶を見られます。',
+    L: { maker:'茶園・ブランド', makerForm:'茶園・ブランド', makerPh:'例：キャッスルトン茶園', typeLbl:'タイプ', age:'摘んだ季節', agePh:'セカンドフラッシュ', cask:'品種', caskPh:'アッサム種',
+      namePh:'例：ダージリン キャッスルトン SF', pickPh:'例：ダージリン', commentPh:'例：マスカットの香り。ストレートで3分。', tagPh:'例：はちみつ、白ぶどう',
+      worldCap:'BLACK TEA', worldAria:'世界の紅茶の産地', worldHint:'国を選ぶと、産地と茶園を地図から探せます。' } }),
+  ctea: teaKind({ key:'ctea', jp:'中国茶', en:'CHINESE TEA', V:'CTEA',
+    COLORS: [['pale','淡い黄緑','#E4E6A6'],['yellow','黄金','#E0C25A'],['amber','琥珀','#C8862E'],['orange','橙','#B8592A'],['red','紅褐色','#8A2E1E'],['dark','濃い褐色','#4A2414']],
+    AXES: [['floral','花の香り'],['fruity','果実・蜜'],['sweet','甘み'],['astr','渋み'],['roast','焙煎香'],['aged','熟成・土'],['fresh','爽やかさ'],['body','コク']],
+    TAGS: [['花',['花','蘭の香り','ジャスミン','くちなし']],['果実・蜜',['蜜','熟した果実','龍眼','なつめ','マスカット']],['香ばしさ',['焙煎香','栗','豆','岩の香り','シナモン']],
+      ['熟成',['熟成','土','木','干し草']],['爽やかさ',['爽やか','若葉','クリーミー','ミルクの香り']],['口あたり',['まろやか','甘い','渋み','苦み']]],
+    SERVES: ['蓋碗','茶壺（工夫茶）','グラス','マグ・急須','水出し'], defServe:'蓋碗', defType:'青茶（烏龍茶）',
+    TYPES: ['緑茶','白茶','黄茶','青茶（烏龍茶）','紅茶','黒茶','花茶','その他'],
+    REGIONS: ['浙江','江蘇','安徽','福建','広東','雲南','四川','湖南','広西','河南','台湾','その他'],
+    ZK_TAGS: ['花','蘭の香り','ジャスミン','蜜','熟した果実','焙煎香','栗','岩の香り','熟成','土','爽やか','クリーミー','まろやか'],
+    ZK_PRICES: [['p1','〜2,999円',0,3000],['p2','3,000〜5,999円',3000,6000],['p3','6,000〜9,999円',6000,10000],['p4','10,000円〜',10000,1e12]],
+    single:'china', W: () => ({ tea_china:TEA_MAPS.tea_china }),
+    groups:[['六大茶類','六大茶類'],['再加工茶','再加工茶']],
+    gIntro:'中国茶は発酵の度合いによって「六大茶類」に分けられます。タップすると特徴とそのお茶を見られます。',
+    L: { maker:'銘茶・産地', makerForm:'銘茶の名前・産地', makerPh:'例：武夷岩茶', typeLbl:'茶類', age:'摘んだ時期', agePh:'春', cask:'品種', caskPh:'青心烏龍',
+      namePh:'例：阿里山高山茶', pickPh:'例：鉄観音', commentPh:'例：蓋碗で5煎。花の香りから蜜の甘さへ。', tagPh:'例：白桃、ミルク',
+      worldCap:'CHINESE TEA', worldAria:'中国茶の産地', worldHint:'地図の産地をタップすると、その土地のお茶が表示されます。' } }),
+
   cheese: {
     key:'cheese', jp:'チーズ', en:'CHEESE',
     COLORS: [['fresh','フレッシュ（白）'],['mozz','モッツァレラ'],['bloom','白カビ'],['washed','ウォッシュ'],['chevre','シェーヴル'],['blue','青カビ'],['semi','セミハード'],
@@ -1212,6 +1379,100 @@ const KINDS = {
     },
   },
 
+  meat: {
+    key:'meat', jp:'ハム・ソーセージ', en:'HAM & SAUSAGE',
+    COLORS: [['prosciutto','生ハム（淡い）'],['jamon','生ハム（濃い赤）'],['salami','サラミ'],['chorizo','パプリカ色'],['mortadella','モルタデッラ'],['bacon','ベーコン'],['ham','加熱ハム'],
+      ['sausage','ソーセージ'],['weisswurst','白いソーセージ'],['blood','黒いソーセージ'],['smokedham','燻製'],['bresaola','赤身の乾燥肉'],['lardo','背脂'],['speck','スペック'],['pate','パテ・リエット'],['leber','レバー'],['jerky','ジャーキー']].map(([k,n])=>[k,n,lookCSS(k)]),
+    AXES: [['salty','塩気'],['umami','旨み'],['fat','脂の甘み'],['smoky','燻製香'],['spicy','スパイス'],['herb','ハーブ'],['aged','熟成香'],['firm','かみごたえ']],
+    TAGS: [['旨み・熟成',['旨み','熟成','ナッツ','どんぐり','チーズのような香り']],['脂',['甘い脂','とろける','ジューシー','霜降り']],['燻製',['燻製','ブナ','スモーク']],
+      ['スパイス・ハーブ',['黒こしょう','パプリカ','にんにく','フェンネル','マジョラム','唐辛子','ジュニパー']],['塩気',['やさしい塩気','しっかりした塩気']],['食感',['しっとり','パリッ','ぷりっと','かみごたえ','やわらか']]],
+    PHASES: [['nose','香り','AROMA'],['palate','味わい','TASTE'],['finish','余韻','FINISH']],
+    TYPES: ['生ハム','加熱ハム','ベーコン','乾燥・熟成肉','サラミ・ドライソーセージ','焼くソーセージ（ブラートヴルスト）','ゆでソーセージ（ブリューヴルスト）','レバー・血のソーセージ','脂の塩漬け・パテ','その他'],
+    REGIONS: ['イタリア','スペイン','ドイツ','フランス','ポルトガル','イギリス','オーストリア','ハンガリー','ポーランド','アメリカ','中国','日本','その他'],
+    SERVES: ['そのまま','薄く切って','焼いて','ゆでて・温めて','パンにのせて・はさんで','料理に'], defServe:'そのまま', defType:'',
+    FINLEN: ['ショート','ミディアム','ロング'],
+    Z: () => ({ D:(typeof MEAT_ITEMS!=='undefined'?MEAT_ITEMS:[]), E:(typeof MEAT_ENTRIES!=='undefined'?MEAT_ENTRIES:[]), R:(typeof MEAT_REGIONS!=='undefined'?MEAT_REGIONS:{}), S:{},
+      W:{ ...(typeof MEAT_MAPS!=='undefined'?MEAT_MAPS:{}), ...(typeof WINE_MAPS!=='undefined'?{ france:WINE_MAPS.france, italy:WINE_MAPS.italy, spain:WINE_MAPS.spain }:{}) } }),
+    ZK_TYPES: ['生ハム','加熱ハム','ベーコン','乾燥・熟成肉','サラミ・ドライソーセージ','焼くソーセージ（ブラートヴルスト）','ゆでソーセージ（ブリューヴルスト）','レバー・血のソーセージ','脂の塩漬け・パテ'],
+    ZK_TAGS: ['旨み','熟成','甘い脂','とろける','ジューシー','燻製','黒こしょう','パプリカ','にんにく','フェンネル','マジョラム','唐辛子','しっとり','パリッ','かみごたえ'],
+    ZK_PRICES: [['p1','〜499円',0,500],['p2','500〜999円',500,1000],['p3','1,000〜1,999円',1000,2000],['p4','2,000円〜',2000,1e12]],
+    COUNTRIES: (typeof MEAT_COUNTRIES!=='undefined') ? MEAT_COUNTRIES : {},
+    BIG: (typeof MEAT_MAIN!=='undefined') ? MEAT_MAIN : [], MINOR: ['usa','china','japan'],
+    WORLD_LABEL: (typeof MEAT_WORLD_LABEL!=='undefined') ? MEAT_WORLD_LABEL : {},
+    exMeta: z => [z.type, z.age && z.age!=='—' ? '熟成'+z.age : ''],
+    zFacts: z => [['産地',[ZR[z.region]?.jp, ZK_COUNTRIES[countryOfRegion(z.region)]?.jp].filter((v,i,a)=>v && a.indexOf(v)===i).join('・')],['タイプ',z.type],['原料',z.cask],['熟成',z.age && z.age!=='—'?z.age:'']],
+    cmpRows: (A,B) => [['産地',ZR[A.region]?.jp,ZR[B.region]?.jp],['タイプ',A.type,B.type],['原料',A.cask||'—',B.cask||'—'],['熟成',A.age||'—',B.age||'—']],
+    heads: () => [], noAbv:true, eat:true, unit:'ハム・ソーセージ', fab:'＋ 記録する', tabs:['銘柄','みんなの記録','図鑑','マイ'],
+    extra: z => itemPairSection(z) + itemRecipeSection(z),
+    daily: { en:'EVERYDAY', title:'手頃なハム・ソーセージ', sub:'100gあたり1,000円未満のものを一覧で見る ›', prices:['p1','p2'] },
+    G: { list:()=>(typeof MEAT_TYPES!=='undefined'?MEAT_TYPES:[]), name:'タイプ', en:'TYPES', unit:'タイプ', countUnit:'品',
+      groups:[['ハム・ベーコン','ハム・ベーコン'],['ソーセージ','ソーセージ'],['そのほか','そのほか']], sub:g=>g.kind,
+      glass:g=>({rawham:'prosciutto',cookedham:'ham',bacon:'bacon',dryaged:'bresaola',salami:'salami',bratwurst:'sausage',brueh:'weisswurst',kochwurst:'blood',fat:'lardo'})[g.id]||'ham',
+      intro:'加工肉は、塩漬けにして熟成させるか、加熱するか、腸に詰めるかなど、作り方でいくつかのタイプに分けられます。タップすると、そのタイプの特徴と銘柄を見られます。',
+      itemsTitle:'このタイプの加工肉', itemsEn:'ITEMS',
+      note:'タイプの分け方は一般的なものです。国や地方によって呼び方や分類が異なることがあります。' },
+    L: {
+      maker:'名前', makerForm:'名前（分類名）', makerPh:'例：プロシュット・ディ・パルマ', makerCount:'種',
+      typeLbl:'タイプ', age:'熟成', ageForm:'熟成期間', agePh:'18か月', cask:'原料', caskPh:'豚もも肉', abvPh:'', tagPh:'例：くるみ、甘い脂',
+      namePh:'例：ハモン・イベリコ・デ・ベジョータ', search:'名前・産地・香りで検索', zkSearch:'図鑑を検索（名前・産地・タイプ・香り）',
+      pickLbl:'名前で探す', pickPh:'例：サラミ', cpPh:'名前で探す',
+      serveLbl:'食べ方', commentPh:'例：常温に少し置くと脂がとろける。辛口のシェリーと好相性。',
+      worldCap:'HAM & SAUSAGE', worldAria:'ヨーロッパのハム・ソーセージの産地', worldHint:'国を選ぶと、その国のハム・ソーセージを見られます。イタリア・スペイン・ドイツ・フランスは地図から地方を選べます。',
+      lineupEn:'VARIETIES', mapSec:'産地の場所', back:'図鑑', colorLbl:'見た目', colorEn:'LOOK', priceLbl:'参考価格（100g）',
+      priceNote:'国内の店頭価格100gあたりのおおよその目安です。店舗や熟成度によって変わります。',
+      simNote:'ほかのハム・ソーセージから、味わいの傾向と香りの重なりで選んでいます。',
+      zkNote:'図鑑の味わいは、一般的に語られる傾向をもとにした目安です。色と模様は、断面のイメージをイラストで表しています。参考価格は100gあたりのおおよその目安です。',
+      distNote:'味わいは一般的に語られる傾向をもとにした目安です。DOP・IGPなどは、決められた産地と製法を守ったものだけが名乗れる原産地呼称です。',
+      modes:[['region','産地'],['grape','タイプ'],['flavor','味・香り']],
+    },
+  },
+  herb: {
+    key:'herb', jp:'ハーブ・スパイス', en:'HERB & SPICE',
+    COLORS: [['leaf','緑の葉','#5E8F3A'],['dried','乾燥した葉','#8A9A5B'],['red','赤','#B8322A'],['brown','茶色','#8A5530'],['yellow','黄色','#E0A82A'],['black','黒','#2E2826'],
+      ['white','白','#EFEBE2'],['purple','紫','#7B3F7A'],['orange','橙','#E07A2A'],['tan','淡い茶','#C2A06A'],['root','根の色','#B89466'],['pale','淡い色','#E8DFC4']],
+    AXES: [['aroma','香りの強さ'],['hot','辛み'],['bitter','苦み'],['sweet','甘み'],['sour','酸味'],['cool','清涼感'],['earthy','土・木の香り'],['floral','華やかさ']],
+    TAGS: [['香り',['爽やか','甘い香り','柑橘の香り','華やか','強い香り','松のような香り']],['刺激',['辛い','ピリッと','しびれる','清涼感']],['味',['ほろ苦い','甘い','酸味']],
+      ['使い方',['肉料理','魚料理','カレー','中華','お菓子','ハーブティー','薬味']],['薬膳',['体を温める','体を冷ます','生薬']]],
+    PHASES: [['nose','香り','AROMA'],['palate','味わい','TASTE'],['finish','余韻','FINISH']],
+    TYPES: ['ハーブ','スパイス','ミックススパイス','生薬・薬膳食材','漢方処方','その他'],
+    REGIONS: ['地中海・ヨーロッパ','中東・北アフリカ','インド・スリランカ','東南アジア','中国・東アジア','日本','中南米','漢方処方','その他'],
+    SERVES: ['料理に','ハーブティー・お茶','そのまま','薬膳料理','お菓子に'], defServe:'料理に', defType:'',
+    FINLEN: ['ショート','ミディアム','ロング'],
+    Z: () => ({ D:(typeof HERB_ITEMS!=='undefined'?HERB_ITEMS:[]), E:(typeof HERB_ENTRIES!=='undefined'?HERB_ENTRIES:[]), R:(typeof HERB_REGIONS!=='undefined'?HERB_REGIONS:{}), S:{},
+      W:(typeof HERB_MAPS!=='undefined'?HERB_MAPS:{}) }),
+    ZK_TYPES: ['ハーブ','スパイス','ミックススパイス','生薬・薬膳食材','漢方処方'],
+    ZK_TAGS: ['爽やか','甘い香り','柑橘の香り','華やか','強い香り','辛い','しびれる','清涼感','ほろ苦い','肉料理','カレー','中華','お菓子','ハーブティー','薬味','生薬'],
+    ZK_PRICES: [],
+    COUNTRIES: (typeof HERB_COUNTRIES!=='undefined') ? HERB_COUNTRIES : {},
+    BIG: (typeof HERB_MAIN!=='undefined') ? HERB_MAIN : [], MINOR: ['kampo'],
+    WORLD_LABEL: (typeof HERB_WORLD_LABEL!=='undefined') ? HERB_WORLD_LABEL : {},
+    exMeta: z => [z.type, z.age && z.age!=='—' ? z.age : ''],
+    zFacts: z => z.grapes?.[0]==='kampo' ? [['分類',z.type],['構成生薬',z.cask]]
+      : [['分類',z.type],['使う部位',z.age],['別名・生薬名',z.cask],['主な地域',ZR[z.region]?.jp],['薬膳の性・味',z.yakuzen?`${z.yakuzen.sei}性・${z.yakuzen.mi}味`:'']],
+    cmpRows: (A,B) => [['分類',A.type,B.type],['地域',ZR[A.region]?.jp,ZR[B.region]?.jp],['使う部位',A.age||'—',B.age||'—'],['薬膳の性・味',A.yakuzen?`${A.yakuzen.sei}・${A.yakuzen.mi}`:'—',B.yakuzen?`${B.yakuzen.sei}・${B.yakuzen.mi}`:'—']],
+    heads: () => [], noAbv:true, eat:true, unit:'ハーブ・スパイス', fab:'＋ 記録する', tabs:['記録','みんなの記録','図鑑','マイ'],
+    extra: z => herbSection(z) + itemRecipeSection(z),
+    G: { list:()=>(typeof HERB_TYPES!=='undefined'?HERB_TYPES:[]), name:'分類', en:'TYPES', unit:'分類', countUnit:'品',
+      groups:[['香りを楽しむ','香りを楽しむ（ハーブ・スパイス）'],['薬膳・漢方','薬膳・漢方']], sub:g=>g.kind,
+      glass:g=>({herb:'leaf',spice:'brown',blend:'red',shoyaku:'root',kampo:'tan'})[g.id]||'leaf',
+      intro:'料理の香りづけに使うハーブやスパイスと、薬膳や漢方に使う生薬。タップすると、その分類の特徴と一覧を見られます。',
+      itemsTitle:'この分類のもの', itemsEn:'ITEMS',
+      note:'薬膳の性・味は、一般的に伝えられている考え方にもとづく目安です。体質や体調に関わることは、医師・薬剤師などの専門家に相談してください。' },
+    L: {
+      maker:'名前', makerForm:'名前', makerPh:'例：ローズマリー', makerCount:'種',
+      typeLbl:'分類', age:'使う部位', ageForm:'使う部位', agePh:'葉', cask:'別名', caskPh:'マンネンロウ', abvPh:'', tagPh:'例：レモンのような香り',
+      namePh:'例：ローズマリー（自家栽培）', search:'名前・香り・使い方で検索', zkSearch:'図鑑を検索（名前・地域・香り・使い方）',
+      pickLbl:'名前で探す', pickPh:'例：クミン', cpPh:'名前で探す',
+      serveLbl:'使い方', commentPh:'例：鶏肉と一緒に焼いたら、松のような香りが広がった。',
+      worldCap:'HERB & SPICE', worldAria:'世界のハーブとスパイスの産地', worldHint:'地域を選ぶと、そこで生まれたハーブやスパイスを見られます。漢方処方は上のボタンから。', minorLbl:'薬膳・漢方', exUnit:'種',
+      lineupEn:'VARIETIES', mapSec:'主な地域', back:'図鑑', colorLbl:'見た目', colorEn:'LOOK', priceLbl:'参考価格',
+      priceNote:'', simNote:'ほかのハーブやスパイスから、香りと味わいの重なりで選んでいます。',
+      zkNote:'香りや味わい、薬膳の性・味は、一般的に語られる内容をもとにした目安です。漢方処方は医薬品です。服用の前に医師・薬剤師に相談してください。',
+      distNote:'香りや薬膳の性・味は、一般的に語られる内容をもとにした目安です。',
+      modes:[['region','地域'],['grape','分類'],['flavor','香り・味']],
+    },
+  },
+
   cocktail: {
     key:'cocktail', jp:'カクテル', en:'COCKTAIL', isFood:true, book:'cocktail',
     COLORS: [['c','カクテル','#C9A0B8']],
@@ -1251,7 +1512,7 @@ const KINDS = {
     },
   },
 };
-const KIND_LIST = ['whisky','wine','sake','brandy','rum','tequila','cocktail','coffee','cheese','chinmi','food'];
+const KIND_LIST = ['whisky','wine','sake','brandy','rum','tequila','cocktail','coffee','jtea','btea','ctea','cheese','chinmi','meat','herb','food'];
 const KIND_SOON = [['日本酒','SAKE'],['ビール','BEER'],['カクテル','COCKTAIL']];
 let KIND = 'whisky', K = KINDS.whisky, L = K.L;
 let COLORS, AXES, TAGS, PHASES, TYPES, REGIONS, SERVES, FINLEN;
@@ -2296,7 +2557,9 @@ function countryMapSVG(key, { focus=null, mini=false, sel=null }={}){
 
 function miniMap(d){
   const ck = Object.keys(ZK_COUNTRIES).find(k=>ZK_COUNTRIES[k].map && ZK_COUNTRIES[k].regions.includes(d.region));
-  return ck ? countryMapSVG(ck,{focus:d.id, mini:true}) : mapSVG({sel:d.region, focus:d.id, interactive:false});
+  if(ck && ZW[ZK_COUNTRIES[ck].map]) return countryMapSVG(ck,{focus:d.id, mini:true});
+  // スコットランドの地図はウイスキーだけ（ほかの種類で地図のない国は、地図を出さない）
+  return KIND==='whisky' ? mapSVG({sel:d.region, focus:d.id, interactive:false}) : '';
 }
 function regionPanel(){
   if(K.single && !zk.country) zk.country = K.single;
@@ -2304,7 +2567,7 @@ function regionPanel(){
   if(!c){
     return `<div class="mapcard world-card"><span class="caption">${L.worldCap}</span>${worldSVG()}</div>
       <div class="ccards">${BIG5.map(k=>{ const x=ZK_COUNTRIES[k]; return `<button class="ccard" data-country="${k}"><span class="en">${x.en}</span><b>${x.style}</b><span class="small">${x.style!==x.jp?x.jp+'・':''}${countDist(k)}${L.makerCount}／${countEx(k)}銘柄</span></button>`; }).join('')}</div>
-      ${MINOR.length?`<div class="world"><span class="lbl">そのほかの国</span>${MINOR.map(k=>`<button class="chip" data-country="${k}">${ZK_COUNTRIES[k].jp}</button>`).join('')}</div>`:''}
+      ${MINOR.length?`<div class="world"><span class="lbl">${L.minorLbl||'そのほかの国'}</span>${MINOR.map(k=>`<button class="chip" data-country="${k}">${ZK_COUNTRIES[k].jp}</button>`).join('')}</div>`:''}
       ${K.daily?`<button class="daily-btn" data-act="daily"><span class="en">${K.daily.en}</span><b>${K.daily.title}</b><span class="small">${K.daily.sub}</span></button>`:''}
       <p class="small" style="margin:0">${L.worldHint}</p>`;
   }
@@ -2371,9 +2634,9 @@ function dCard(d){
   const recorded = d.ex.some(x=>{ const b=bottleForZ(x); return b && aggs.get(b.id)?.n; });
   return `<button class="zcard" data-d="${esc(d.id)}"><span class="gl" style="background:${glassColor(d.ex[0].color)}"></span>
     <span class="info"><h3>${esc(d.name)}</h3><div class="en">${esc(d.en)}</div>
-      <div class="meta">${esc(ZR[d.region]?.jp||'')} · 約${esc(priceRange(d))}${recorded?'<span class="badge peat">みんなの記録あり</span>':''}</div>
+      <div class="meta">${esc([ZR[d.region]?.jp||'', d.ex.some(x=>x.price)?'約'+priceRange(d):''].filter(Boolean).join(' · '))}${recorded?'<span class="badge peat">みんなの記録あり</span>':''}</div>
       <div class="tagline">${tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div></span>
-    <span class="right"><b>${d.ex.length}</b><i>銘柄</i></span></button>`;
+    <span class="right"><b>${d.ex.length}</b><i>${L.exUnit||'銘柄'}</i></span></button>`;
 }
 function zCard({z,score}, scored){
   const b = z.community ? bottles.find(x=>x.id===z.bottleId) : bottleForZ(z);
@@ -2401,8 +2664,8 @@ function renderZukan(list){
         <div class="chips">${ZK_TAGS.map(t=>`<button class="chip" data-tag-pick="${esc(t)}" aria-pressed="${zk.tags.includes(t)}">${esc(t)}</button>`).join('')}</div>
         <div class="group-name">タイプ</div>
         <div class="chips">${ZK_TYPES.map(t=>`<button class="chip" data-type-pick="${esc(t)}" aria-pressed="${zk.types.includes(t)}">${esc(t)}</button>`).join('')}</div>
-        <div class="group-name">価格帯（目安）</div>
-        <div class="chips">${ZK_PRICES.map(([k,l])=>`<button class="chip" data-price-pick="${k}" aria-pressed="${zk.prices.includes(k)}">${l}</button>`).join('')}</div>
+        ${ZK_PRICES.length?`<div class="group-name">価格帯（目安）</div>
+        <div class="chips">${ZK_PRICES.map(([k,l])=>`<button class="chip" data-price-pick="${k}" aria-pressed="${zk.prices.includes(k)}">${l}</button>`).join('')}</div>`:''}
         ${zk.axes.length||zk.tags.length||zk.types.length||zk.prices.length?`<div><button class="btn small ghost" data-act="zk-clear">条件をクリア</button></div>`:''}
       </div>`;
   list.innerHTML = `<div class="zk">
@@ -2494,6 +2757,7 @@ function openDistillery(id){
   const d = zDist(id); if(!d) return;
   currentBottle=null;
   const r = ZR[d.region];
+  const miniMapHTML = d.lat!=null ? miniMap(d) : '';
   const exCards = d.ex.map(x=>{ const z=zEntry(x.id); const b=bottleForZ(z); const a=b?aggs.get(b.id):null;
     const meta=K.exMeta(z).filter(Boolean).join(' · ');
     return `<button class="excard" data-zopen="${esc(z.id)}">
@@ -2512,7 +2776,7 @@ function openDistillery(id){
         <div class="list" style="padding-top:0">${exCards}</div>
         ${d.ex.length>1?`<div style="margin-top:10px"><button class="btn" data-act="cmp-dist">この中の2本を比較する</button></div>`:''}
       </section>
-      ${d.lat!=null?`<section class="sec"><h3>${L.mapSec}<small>MAP</small></h3><div class="minimap">${miniMap(d)}</div></section>`:''}
+      ${d.lat!=null && miniMapHTML?`<section class="sec"><h3>${L.mapSec}<small>MAP</small></h3><div class="minimap">${miniMapHTML}</div></section>`:''}
       <p class="note-small">${L.distNote}</p>
     </div></div>`);
   $('#sheet-root').onclick=e=>{
@@ -2553,6 +2817,48 @@ function roastBrewSection(z){
     <div class="roastscale"><span>← 浅煎り</span><span>深煎り →</span></div>
     <p class="rtext"><b>おすすめの焙煎度：${esc(roastRange(z))}</b><br>${esc(txt)}</p>`:''}
     ${(z.brew||[]).length?`<div class="group-name" style="margin-top:12px">おすすめの淹れ方</div><div class="brews">${z.brew.map(b=>`<div class="brew"><b>${esc(b)}</b><span>${esc(BREW_NOTE[b]||'')}</span></div>`).join('')}</div>`:''}
+  </section>`;
+}
+
+/* ハーブ・スパイス・薬膳：使い方・薬膳の性と味・漢方処方の構成 */
+const SEI_TEXT = { '熱':'体を強く温める', '温':'体を温める', '平':'体を温めも冷やしもしない、穏やかな', '涼':'体の熱を冷ます', '微寒':'体の熱をやや冷ます', '寒':'体の熱を強く冷ます' };
+const MI_TEXT = { '辛':'辛味は、体を温めて巡りをよくする', '甘':'甘味は、体を補い、緊張をゆるめる', '酸':'酸味は、引き締めて汗などが出すぎるのを抑える', '苦':'苦味は、熱を冷まして余分なものを出す', '鹹':'鹹味（塩辛い）は、かたいものをやわらげる', '淡':'淡味は、水分の巡りを助ける', '微苦':'わずかな苦味は、熱を冷ます' };
+function herbSection(z){
+  let h='';
+  if(z.use) h+=`<section class="sec"><h3>${z.grapes?.[0]==='kampo'?'この処方について':'使い方'}<small>${z.grapes?.[0]==='kampo'?'ABOUT':'HOW TO USE'}</small></h3><p style="margin:0">${esc(z.use)}</p></section>`;
+  if(z.yakuzen){
+    const sei=z.yakuzen.sei, mis=String(z.yakuzen.mi).split('・');
+    h+=`<section class="sec"><h3>薬膳での性と味<small>YAKUZEN</small></h3>
+      <div class="tbrew"><div><span>五性</span><b>${esc(sei)}性</b></div><div><span>五味</span><b>${esc(z.yakuzen.mi)}味</b></div></div>
+      <p class="rtext" style="margin-top:10px">${esc(`${SEI_TEXT[sei]||''}性質とされる。`+mis.map(m=>MI_TEXT[m]).filter(Boolean).map(t=>t+'とされる。').join(''))}</p>
+      <p class="small" style="margin:6px 0 0">薬膳（中医学）の考え方にもとづく一般的な目安です。</p></section>`;
+  }
+  if(z.herbs?.length){
+    const hs=z.herbs.map(id=>ZE.find(x=>x.id===id)).filter(Boolean);
+    h+=`<section class="sec"><h3>構成生薬<small>INGREDIENTS</small></h3>
+      <p class="small" style="margin:0 0 8px">${esc(z.cask)}</p>
+      <div class="pchips">${hs.map(x=>`<button class="chip" data-zopen="${esc(x.id)}"><i style="background:${glassColor(x.color)}"></i>${esc(x.label)}</button>`).join('')}</div>
+      <p class="small" style="margin:6px 0 0">図鑑に載っている生薬だけをボタンにしています。</p></section>
+      <div class="notice">漢方薬は医薬品です。体質（証）によって合う・合わないがあり、ほかの薬との飲み合わせにも注意が必要です。服用の前に、医師・薬剤師・登録販売者に相談してください。</div>`;
+  }
+  const ks=ZE.filter(x=>(x.herbs||[]).includes(z.id));
+  if(ks.length) h+=`<section class="sec"><h3>この生薬を含む漢方処方<small>KAMPO</small></h3>
+    <div class="pchips">${ks.map(x=>`<button class="chip" data-zopen="${esc(x.id)}">${esc(x.name)} ›</button>`).join('')}</div></section>`;
+  return h;
+}
+
+/* お茶：おいしい淹れ方 */
+function teaBrewSection(z){
+  const b=z.brew; if(!b || typeof b!=='object' || Array.isArray(b)) return '';
+  const G=GL().find(g=>(z.grapes||[]).includes(g.id));
+  const cells=[['お湯の温度',b.t],['蒸らす時間',b.m],['茶葉',b.g],['お湯の量',b.ml]].filter(x=>x[1]);
+  const extra = KIND==='jtea' ? '沸騰したお湯を湯のみに移すと約10℃下がる。急須からは数杯に少しずつ注ぎ分け（まわし注ぎ）、濃さをそろえる。'
+    : KIND==='btea' ? 'お湯は汲みたての水を沸騰させ、空気をたっぷり含んだうちに注ぐ。ミルクティーにするときは茶葉を1.5倍にすると負けない。'
+    : '同じ茶葉で何煎も楽しめるのが中国茶のよさ。煎を重ねるごとに、蒸らし時間を少しずつ長くしていく。';
+  return `<section class="sec"><h3>おいしい淹れ方<small>HOW TO BREW</small></h3>
+    <div class="tbrew">${cells.map(([k,v])=>`<div><span>${k}</span><b>${esc(v)}</b></div>`).join('')}</div>
+    ${b.note?`<p class="rtext" style="margin-top:10px">${esc(b.note)}</p>`:''}
+    <p class="small" style="margin:8px 0 0">${esc(extra)}${G?` 目安は「${esc(G.name)}」の一般的な淹れ方です。`:''}</p>
   </section>`;
 }
 
@@ -2620,6 +2926,19 @@ function tasteDetail(z){
     else if(v.fresh>=4) serve = 'よく冷やして、開けたてのみずみずしさを楽しみたい。';
     else if(v.dry>=4) serve = '冷やでも燗でもすっきりとして、食事の邪魔をしない。刺身や塩焼きと。';
     else serve = '冷やから燗まで、温度を変えて楽しめる。まずは常温で味を確かめたい。';
+  } else if(K.tea){
+    const PHS = {
+      jtea:{ umami:'だしのような旨み', sweet:'やさしい甘み', astr:'キリッとした渋み', bitter:'ほろ苦さ', green:'若葉のような青い香り', roast:'香ばしい香り', aroma:'華やかな香り', body:'しっかりとしたコク' },
+      btea:{ astr:'キリッとした渋み', body:'しっかりとしたコク', sweet:'まろやかな甘み', floral:'花のような香り', fruity:'果実の香り', malt:'モルトや蜜のような甘い香り', smoky:'スモーキーな香り', fresh:'爽やかさ' },
+      ctea:{ floral:'花のような香り', fruity:'蜜や熟した果実の香り', sweet:'やさしい甘み', astr:'しっかりとした渋み', roast:'焙煎の香ばしさ', aged:'熟成による深い香り', fresh:'爽やかさ', body:'厚みのあるコク' } };
+    const PH=PHS[KIND]; const G=GL().find(g=>(z.grapes||[]).includes(g.id));
+    if(G) body.push(`${G.name}は、${G.desc.split('。')[0]}。`);
+    const strong = top.filter(k=>v[k]>=4).slice(0,3);
+    if(strong.length) body.push(`このお茶は、${strong.map(k=>PH[k]).join('、')}が持ち味。`);
+    else if(top.length) body.push(`${top.slice(0,3).map(k=>PH[k]).join('、')}がバランスよくまとまっている。`);
+    if(z.cask && z.cask!=='—') body.push(`品種は${z.cask}。`);
+    if(tags.length) body.push(`香りや味わいでは、${tags.join('、')}などがよく挙げられる。`);
+    return body.length ? `<div class="z-detail"><p>${esc(body.join(''))}</p></div>` : '';
   } else if(KIND==='coffee'){
     const PROC = { 'ウォッシュト':'ウォッシュト（水洗式）は、果肉を取り除いてから発酵させて水で洗うため、雑味が少なくクリーンで、酸がはっきり出やすい。',
       'ナチュラル':'ナチュラル（乾燥式）は、実を丸ごと天日で乾かすため、熟した果実やワインのような甘い香りが豆に移りやすい。',
@@ -2665,9 +2984,11 @@ function tasteDetail(z){
     if(price && price<=2500) body.push('手頃な価格で、カクテルにも気兼ねなく使える。');
     else if(price>=30000) body.push('特別な日に開けたい一本。');
     return `<div class="z-detail">${body.length?`<p>${esc(body.join(''))}</p>`:''}${serve?`<p><b>おすすめの飲み方</b>${esc(serve)}</p>`:''}</div>`;
-  } else if(KIND==='cheese' || KIND==='chinmi'){
+  } else if(KIND==='cheese' || KIND==='chinmi' || KIND==='meat' || KIND==='herb'){
     const G = GL().find(g=>(z.grapes||[]).includes(g.id));
-    const PH = KIND==='cheese'
+    const PH = KIND==='meat' ? { salty:'しっかりとした塩気', umami:'凝縮した旨み', fat:'とろける脂の甘み', smoky:'燻製の香り', spicy:'スパイスの刺激', herb:'ハーブの香り', aged:'熟成による深い香り', firm:'しっかりとしたかみごたえ' }
+      : KIND==='herb' ? { aroma:'強い香り', hot:'ピリッとした辛み', bitter:'ほろ苦さ', sweet:'甘い香りと甘み', sour:'さわやかな酸味', cool:'すっとした清涼感', earthy:'土や木を思わせる深い香り', floral:'華やかな香り' }
+      : KIND==='cheese'
       ? { milky:'ミルクの甘い香り', salty:'しっかりとした塩気', umami:'凝縮した旨み', acid:'さわやかな酸味', sweet:'ナッツやキャラメルのような甘み', aroma:'個性的で強い香り', pungent:'ピリッとした刺激', firm:'締まったかための食感' }
       : { salty:'強い塩気', umami:'濃い旨み', sweet:'やさしい甘み', acid:'さわやかな酸味', spicy:'ピリッとした辛み', funky:'発酵による独特の香り', smoky:'香ばしさや燻した香り', texture:'楽しい歯ごたえ' };
     if(G) body.push(`${G.name}は、${G.desc.split('。')[0]}。`);
@@ -2683,7 +3004,17 @@ function tasteDetail(z){
         : t==='chevre' ? '少し常温に戻して。軽く焼いてサラダにのせたり、はちみつをかけたりしても。'
         : t==='hard'||t==='semihard' ? '薄く切るか手で割って、常温に少し戻すと香りが開く。'
         : 'そのまま気軽に。';
-    } else serve = z.howto ? `${z.howto}。塩分が多いものは、少しずつ味わいたい。` : '';
+    } else if(KIND==='meat'){
+      const t=G?.id;
+      serve = t==='rawham' ? '食べる少し前に冷蔵庫から出し、脂が透き通るくらいまで室温に置くと、甘みと香りが開く。できるだけ薄く切って。'
+        : t==='salami' ? '薄く切って、室温に少し置いてから。皮（ケーシング）は食べられないものもあるので、はがしてから切る。'
+        : t==='bratwurst' ? '弱めの中火でじっくり焼き、皮がはじけないように。マスタードとザワークラウト、パンと一緒に。'
+        : t==='brueh' ? '沸騰させないお湯（80℃くらい）で温めると、皮が破れずジューシーに仕上がる。'
+        : t==='bacon' ? '油をひかずにフライパンで焼き、出てきた脂で香ばしく。'
+        : t==='fat' ? '温かいパンにのせて、口の中でとろける脂を味わう。'
+        : 'そのまま、またはパンや料理に。';
+    } else if(KIND==='herb') serve = '';
+    else serve = z.howto ? `${z.howto}。塩分が多いものは、少しずつ味わいたい。` : '';
     return `<div class="z-detail">${body.length?`<p>${esc(body.join(''))}</p>`:''}${serve?`<p><b>おすすめの食べ方</b>${esc(serve)}</p>`:''}</div>`;
   }
   if(price && price<=1500) body.push('手頃な価格で、日常の一本にしやすい。');
@@ -2721,14 +3052,14 @@ function openZukan(id){
       ${siblings.length?`<section class="sec"><h3>同じラインナップのほかの銘柄<small>RANGE</small></h3>
         <div class="chips">${siblings.map(x=>`<button class="chip" data-zopen="${esc(x.id)}">${esc(x.label)}</button>`).join('')}</div></section>`:''}
 
-      <section class="sec"><h3>味わいの傾向<small>PROFILE</small></h3>
+      ${z.grapes?.[0]==='kampo' ? '' : `<section class="sec"><h3>味わいの傾向<small>PROFILE</small></h3>
         <div class="radar-wrap">${radarSVG({ single:arrProf(z.p), mine: community ? arrProf(community) : null })}
           <div class="legend"><span><i style="border-color:var(--amber)"></i>一般的な傾向</span>${community?`<span><i style="border-color:var(--peat);border-top-style:dashed"></i>みんなの感じ方（${a.profs.length}件）</span>`:''}</div></div>
-      </section>
+      </section>`}
       <section class="sec"><h3>よく語られる香りと味<small>NOTES</small></h3>
         <div class="chips">${z.tags.map(t=>`<span class="chip" aria-pressed="true">${esc(t)}</span>`).join('')}</div></section>
 
-      <section class="sec"><h3>似ている銘柄<small>SIMILAR</small></h3>
+      ${z.grapes?.[0]==='kampo' ? '' : `<section class="sec"><h3>似ている銘柄<small>SIMILAR</small></h3>
         <p class="small" style="margin:0 0 8px">${L.simNote}</p>
         <div class="list" style="padding-top:0">${sims.map(s=>{
           const o=s.o; const meta=[o.community?'':o.distillery, ZR[o.region]?.jp, o.price?'約'+priceBand(o.price):''].filter(Boolean).join(' · ');
@@ -2736,7 +3067,7 @@ function openZukan(id){
             <span class="info"><h3>${esc(o.name)}${o.community?'<span class="badge peat">みんなの記録</span>':''}</h3><div class="meta">${esc(meta)}</div>
             ${s.shared.length?`<div class="tagline">${s.shared.slice(0,4).map(t=>`<span>${esc(t)}</span>`).join('')}</div>`:''}</span>
             <span class="right"><b>${Math.round(s.score*100)}<small style="font-size:11px">%</small></b><i>似ている</i></span></button>`; }).join('')}</div>
-      </section>
+      </section>`}
 
       ${pairSection(drinkWeights(KIND, arrProf(z.p), z.type))}
       ${DRINK_KINDS.includes(KIND)||KIND==='coffee' ? cocktailSection(KIND, z) : ''}
@@ -3045,7 +3376,7 @@ function openDrink(kind, id){ enterKind(kind, 'zukan'); openZukan(id); }
 
 
 /* チーズ・珍味：お酒との相性と、使う料理 */
-const ITEM_KINDS = ['cheese','chinmi'];
+const ITEM_KINDS = ['cheese','chinmi','meat'];
 const MAIN_DRINKS = ['whisky','wine','sake'];
 const DRINK_KINDS = ['whisky','wine','sake','brandy','rum','tequila'];
 const kEntries = k => { try{ return KINDS[k].Z().E||[]; }catch(e){ return []; } };
@@ -3587,6 +3918,9 @@ function openRecipe(id){
 
 /* ---------- お酒の種類を選ぶ ---------- */
 const kindOpen = () => !$('#kinds').hidden;
+let kindGroup = null;
+const KIND_GROUPS = { brew:['wine','sake'], spirit:['whisky','brandy','rum','tequila'] };
+function drawKindGroup(){ $('#kinds').classList.toggle('sub', !!kindGroup); document.querySelectorAll('#kinds .ksub').forEach(x=>x.hidden = x.dataset.sub!==kindGroup); $('#kinds').scrollTop=0; }
 function drawKindCounts(){
   KIND_LIST.forEach(k=>{ const el=$('#kc-'+k); if(!el) return;
     if(!loaded || setupError){ el.textContent=''; return; }
@@ -3594,14 +3928,19 @@ function drawKindCounts(){
     if(k==='food'){ el.textContent = c.t ? `レシピ${FR().length}品・${c.t}件の記録` : `レシピ${FR().length}品`; return; }
     if(k==='cocktail'){ el.textContent = c.t ? `レシピ${CL().length}品・${c.t}件の記録` : `レシピ${CL().length}品`; return; }
     el.textContent = c.b ? `${c.b}銘柄・${c.t}件の記録` : 'まだ記録はありません'; });
+  Object.entries(KIND_GROUPS).forEach(([g,ks])=>{ const el=$('#kc-g-'+g); if(!el) return;
+    if(!loaded || setupError){ el.textContent=''; return; }
+    const c=ks.reduce((a,k)=>{ const x=kindCount(k); return { b:a.b+x.b, t:a.t+x.t }; },{b:0,t:0});
+    el.textContent = c.b ? `${c.b}銘柄・${c.t}件の記録` : ''; });
 }
 function setKindsVisible(on){ $('#kinds').hidden=!on; document.body.classList.toggle('kinds-on', on); if(on) drawKindCounts(); }
 function showKindPicker(atStart){
   unmount(); currentBottle=null;
+  kindGroup=null; drawKindGroup();
   setKindsVisible(true);
   if(atStart===true) return;
   // 種類を切り替えるときは、履歴をここから始め直す（この画面で戻ると終了の確認）
-  nav.stack=[snap()]; ensureGuard();
+  navReset();
 }
 function chooseKind(k, startView){
   if(!KINDS[k]) return;
@@ -3616,7 +3955,10 @@ function chooseKind(k, startView){
   setKindsVisible(false);
   renderList(); window.scrollTo(0,0); navCommit();
 }
-$('#kinds').addEventListener('click',e=>{ const b=e.target.closest('[data-kind]'); if(b) chooseKind(b.dataset.kind); });
+$('#kinds').addEventListener('click',e=>{
+  const g=e.target.closest('[data-kgroup]'); if(g){ kindGroup=g.dataset.kgroup; drawKindGroup(); navCommit(); return; }
+  if(e.target.closest('[data-act="kg-back"]')){ const st=nav.stack, prev=st[st.length-2]; if(prev && prev.kind==null && !prev.kg) return goBack(); kindGroup=null; drawKindGroup(); navCommit(); return; }
+  const b=e.target.closest('[data-kind]'); if(b) chooseKind(b.dataset.kind); });
 $('#kind-chip').onclick=()=>showKindPicker();
 
 /* ---------- 2銘柄の比較 ---------- */
@@ -3750,36 +4092,48 @@ function openMenu(){
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt=e; });
 
 /* ---------- 戻るボタン（画面の履歴） ----------
-   アプリ内の画面遷移を独自の履歴として積み、ブラウザ履歴には「ガード」を1つだけ置く。
-   端末の戻るボタン → popstate → 1つ前の画面を復元。最初の画面なら終了の確認を出す。 */
+   画面を開くたびにブラウザ履歴を1つ積み、端末の戻るボタンで1つずつ戻る。
+   いちばん下に「終了確認」用の土台の履歴を置き、最初の画面で戻ると確認を出す。
+   ※ Android の Chrome は、タップなしで積まれた履歴を戻るボタンで飛ばすため、
+     履歴を積むのは必ずタップの直後（画面を開くとき）だけにする。 */
 let curSheet = null;
-const nav = { stack:[], restoring:false, replaceNext:false, guarded:false, exitOpen:false };
+const nav = { stack:[], restoring:false, replaceNext:false, exitOpen:false, seq:0 };
 const FORM_SHEETS = ['picker','bform','taste','cpick','daypick','dform'];
-const snapKey = s => JSON.stringify({ k:s.kind, v:s.view, z:s.zk, s:s.sheet });
-function snap(){ return { kind: kindOpen() ? null : KIND, view, zk:{ mode:zk.mode, country:zk.country, region:zk.region }, sheet: curSheet ? { ...curSheet } : null }; }
-function ensureGuard(){ if(!nav.guarded){ try{ history.pushState({ hc:'guard' }, ''); nav.guarded=true; }catch(e){} } }
+const snapKey = s => JSON.stringify({ k:s.kind, g:s.kg||null, v:s.view, z:s.zk, s:s.sheet });
+function snap(){ return { uid:++nav.seq, kind: kindOpen() ? null : KIND, kg: kindOpen() ? (kindGroup||null) : null, view, zk:{ mode:zk.mode, country:zk.country, region:zk.region }, sheet: curSheet ? { ...curSheet } : null }; }
+const hState = () => history.state || {};
+function hPush(item){ try{ history.pushState({ hc:'n', uid:item.uid }, ''); }catch(e){} }
+function hReplace(item){ try{ history.replaceState({ hc:'n', uid:item.uid }, ''); }catch(e){} }
+// 土台の上に、いまの最初の画面の履歴を積む（タップの直後に呼ぶ）
+function ensureRoot(){ if(hState().hc==='base' && !nav.exitOpen && nav.stack.length) hPush(nav.stack[0]); }
 function navCommit(){
-  if(nav.restoring) return;
+  if(nav.restoring || !nav.inited) return;
   const s = snap(), st = nav.stack, top = st[st.length-1];
   if(nav.replaceNext){
     nav.replaceNext=false;
-    if(st.length) st.pop();
-    // 保存などで画面が切り替わったときは、下に残った入力画面も取り除く
+    if(st.length>1) st.pop();
+    // 保存などで画面が切り替わったときは、下に残った入力画面も取り除く（その履歴は戻るときに読み飛ばす）
     while(st.length>1 && st[st.length-1].sheet && FORM_SHEETS.includes(st[st.length-1].sheet.t)) st.pop();
-    if(st.length && snapKey(st[st.length-1])===snapKey(s)) return;
-    st.push(s);
-  } else {
-    if(top && snapKey(top)===snapKey(s)) return;
-    st.push(s);
+    if(st.length && snapKey(st[st.length-1])===snapKey(s)){ hReplace(st[st.length-1]); return; }
+    st.push(s); ensureRoot(); hReplace(s);
+    return;
   }
-  if(st.length>1) ensureGuard();
+  if(top && snapKey(top)===snapKey(s)) return;
+  st.push(s);
+  ensureRoot(); hPush(s);
+}
+// 種類の選び直しなどで、履歴をここから始め直す
+function navReset(){
+  if(!nav.inited) return;
+  const s=snap(); nav.stack=[s];
+  if(hState().hc==='base') hPush(s); else hReplace(s);
 }
 function goBack(){ if(nav.stack.length>1) history.back(); }
 function restore(s){
   nav.restoring=true; nav.ignoreScrollUntil=performance.now()+400;
   const y=s.y, sy=s.sy;
   try{
-    if(s.kind==null){ currentBottle=null; unmount(); setKindsVisible(true); return; }
+    if(s.kind==null){ currentBottle=null; unmount(); kindGroup=s.kg||null; drawKindGroup(); setKindsVisible(true); return; }
     if(s.kind!==KIND){ applyKind(s.kind); refilter(); }
     setKindsVisible(false);
     view=s.view; zk.mode=s.zk.mode; zk.country=s.zk.country; zk.region=s.zk.region;
@@ -3819,10 +4173,19 @@ function showExitConfirm(){
 }
 function hideExitConfirm(){ nav.exitOpen=false; $('#exit-dlg').hidden=true; }
 window.addEventListener('popstate',()=>{
-  nav.guarded=false;
-  if(nav.exitOpen){ hideExitConfirm(); return; }
-  if(nav.stack.length>1){ nav.stack.pop(); restore(nav.stack[nav.stack.length-1]); ensureGuard(); }
-  else showExitConfirm();
+  if(!nav.inited) return;
+  const hs=hState();
+  if(hs.hc!=='n'){
+    // 土台まで戻った＝最初の画面でさらに戻った
+    if(nav.exitOpen){ hideExitConfirm(); return; }
+    if(nav.stack.length>1){ nav.stack=[nav.stack[0]]; restore(nav.stack[0]); }
+    showExitConfirm(); return;
+  }
+  const i=nav.stack.findIndex(x=>x.uid===hs.uid);
+  // 取り除いた画面や古い履歴は読み飛ばす
+  if(i<0 || i>=nav.stack.length-1){ history.back(); return; }
+  nav.stack.length=i+1;
+  restore(nav.stack[i]);
 });
 // 各画面のスクロール位置を覚えておき、戻ったときに復元する
 window.addEventListener('scroll',()=>{ if(performance.now()<(nav.ignoreScrollUntil||0)) return; const t=nav.stack[nav.stack.length-1]; if(t && !t.sheet) t.y=window.scrollY; },{passive:true});
@@ -3831,13 +4194,15 @@ function initNav(){
   if(nav.inited) return; nav.inited=true;
   try{ history.replaceState({ hc:'base' }, ''); }catch(e){}
   nav.stack=[snap()];
-  ensureGuard();
-  $('#exit-no').onclick=()=>{ hideExitConfirm(); ensureGuard(); };
+  // 最初にどこかをタップした時点で、最初の画面の履歴を積む（これで戻るボタンが終了確認になる）
+  ['pointerdown','keydown'].forEach(ev=>document.addEventListener(ev,()=>ensureRoot(),{capture:true}));
+  $('#exit-no').onclick=()=>{ hideExitConfirm(); ensureRoot(); };
   $('#exit-yes').onclick=()=>{
-    hideExitConfirm();
+    hideExitConfirm(); nav.exitOpen=true; // もう積まない
     try{ window.close(); }catch(e){}
     // 端末によってはアプリ側から閉じられないため、もう一度の戻るで終了できる状態にして案内する
-    setTimeout(()=>toast('もう一度戻るボタンを押すと終了します'),250);
+    setTimeout(()=>{ toast('もう一度戻るボタンを押すと終了します'); },250);
+    setTimeout(()=>{ nav.exitOpen=false; },4000);
   };
 }
 
