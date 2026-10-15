@@ -27,6 +27,7 @@
 <script src="cheese-data.js"></script>
 <script src="chinmi-data.js"></script>
 <script src="cocktail-data.js"></script>
+<script src="wineglass-data.js"></script>
 <script src="food-data.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.104.1/dist/umd/supabase.js"></script>
 <style>
@@ -482,6 +483,16 @@ body.kinds-on{overflow:hidden}
 .cing-h{display:flex;justify-content:space-between;gap:12px;font-size:14.5px}
 .cing-h em{font-style:normal;color:var(--muted);white-space:nowrap}
 .cing .pchips{margin:0}
+.wg-svg{display:block;color:var(--ink)}
+.wg-rec{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:center;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 12px;cursor:pointer;color:inherit;font:inherit}
+.wg-rec b{display:block;font-family:var(--display);font-weight:800;font-size:17px;line-height:1.3}
+.wg-rec em{display:block;font-style:normal;font-size:13.5px;color:var(--muted);line-height:1.6;margin-top:2px}
+.wg-rec i{display:block;font-style:normal;font-size:12px;color:var(--amber);margin-top:4px}
+.wg-alt{border:0;background:none;padding:0;color:var(--amber);font:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.zcard.wg-card{grid-template-columns:52px 1fr auto}
+.wg-hero{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center}
+.wg-hero h1{font-family:var(--display);font-weight:800;font-size:24px;line-height:1.25;margin:0}
+.wg-hero .en{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.04em}
 .ckt-tools{display:grid;gap:8px}
 .ckt-tool{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;gap:3px}
 .ckt-tool b{font-size:15px;display:flex;gap:8px;align-items:baseline}
@@ -651,7 +662,7 @@ body.kinds-on{overflow:hidden}
 
 <script>
 (() => {
-const APP_VERSION = '2026.10.15b';
+const APP_VERSION = '2026.10.15c';
 
 /* ---------- お酒の種類ごとの設定（ウイスキー／ワイン。日本酒・ビール・カクテルは今後ここに足す） ---------- */
 const STORY_HEADS = [['はじまり','HISTORY'],['造りのこだわり','CRAFT'],['ウイスキー界での存在感','STANDING']];
@@ -804,6 +815,7 @@ const KINDS = {
     zFacts: z => [['生産者',z.distillery],['産地',[ZR[z.region]?.jp, ZK_COUNTRIES[countryOfRegion(z.region)]?.jp].filter((v,i,a)=>v && a.indexOf(v)===i).join('・')],['タイプ',z.type],['品種',z.cask],['度数',z.abv?z.abv+'%':'']],
     cmpRows: (A,B) => [['生産者',A.distillery,B.distillery],['産地',ZR[A.region]?.jp,ZR[B.region]?.jp],['タイプ',A.type,B.type],['品種',A.cask||'—',B.cask||'—'],['度数',A.abv?A.abv+'%':'—',B.abv?B.abv+'%':'—']],
     heads: () => WINE_HEADS,
+    extra: z => wineGlassSection(wineInfoZ(z)),
     days: true,
     daily: { en:'DAILY WINE', title:'スーパーでも買える手頃なワイン', sub:'2,000円台までのワインを一覧で見る ›', prices:['p0','p1'] },
     G: { list:()=>(typeof WINE_GRAPES!=='undefined'?WINE_GRAPES:[]), name:'品種', en:'GRAPES', unit:'品種',
@@ -822,7 +834,7 @@ const KINDS = {
       simNote:'ほかの造り手のワインから、味わいの傾向と香りの重なりで選んでいます。',
       zkNote:'図鑑の味わいは、一般的に語られる傾向をもとにした目安です。ワインは収穫年によって味わいも価格も変わります。参考価格は国内のおおよその目安です。',
       distNote:'味わいは一般的に語られる傾向をもとにした目安です。参考価格は国内のおおよその目安で、ヴィンテージや店舗によって大きく変わります。創業年や逸話は一般に伝えられている内容で、諸説あるものを含みます。所有者は買収などで変わることがあります。',
-      modes:[['region','産地'],['grape','品種'],['flavor','味・香り']],
+      modes:[['region','産地'],['grape','品種'],['flavor','味・香り'],['glass','グラス']],
     },
   },
 
@@ -1826,6 +1838,7 @@ function openBottle(id, keepScroll){
         <div class="d-score"><b>${a.avg==null?'–':a.n>1?fmt1(a.avg):a.avg}</b><div>${a.n>1?'みんなの平均':a.n?'1件の記録':''}</div></div></div>
       ${facts.length?`<dl class="facts">${facts.map(f=>`<div><dt>${f[0]}</dt><dd>${esc(f[1])}</dd></div>`).join('')}</dl>`:''}
       ${myId && !a.mine.length?`<div>${wishBtn(wishKeyForBottle(b))}</div>`:''}
+      ${KIND==='wine'?wineGlassSection(wineInfoBottle(b,a)):''}
 
       ${a.n===0?`<div class="notice">まだ誰も記録していません。最初の一杯を記録しましょう。</div>`:''}
       ${a.n>0?`<section class="sec"><h3>みんなの評価<small>CONSENSUS</small>${label?`<span class="agree">${label}</span>`:''}</h3>
@@ -1856,6 +1869,7 @@ function openBottle(id, keepScroll){
 
   $('#sheet-root').onclick=async e=>{
     const rc=e.target.closest('[data-recipe]'); if(rc) return openRecipe(rc.dataset.recipe);
+    const wgl=e.target.closest('[data-wglass]'); if(wgl) return openWineGlass(wgl.dataset.wglass);
     const dz=e.target.closest('[data-dz]'); if(dz) return openDrink(dz.dataset.dk, dz.dataset.dz);
     const el=e.target.closest('[data-act]'); if(!el) return; const act=el.dataset.act;
     const tid=el.closest('[data-tid]')?.dataset.tid;
@@ -2369,7 +2383,7 @@ function zCard({z,score}, scored){
 function renderZukan(list){
   if(K.isFood) return isCk() ? renderCocktails(list) : renderRecipes(list);
   const r = zk.region && ZR[zk.region];
-  const panel = zk.mode==='region' ? regionPanel() : zk.mode==='grape' ? grapePanel()
+  const panel = zk.mode==='region' ? regionPanel() : zk.mode==='grape' ? grapePanel() : zk.mode==='glass' ? glassPanel()
     : `
       <div class="zk-filter">
         <div class="group-name">こんな味わい（複数選べます）</div>
@@ -2385,7 +2399,7 @@ function renderZukan(list){
   list.innerHTML = `<div class="zk">
     <input class="search" id="zk-q" type="search" placeholder="${L.zkSearch}" aria-label="図鑑を検索" value="${esc(zk.q)}">
     <div class="zk-top">
-      <div class="zk-mode" role="group" aria-label="探し方" style="grid-template-columns:repeat(${L.modes.length},1fr)">${L.modes.map(([k,t])=>`<button data-zmode="${k}" aria-pressed="${zk.mode===k}">${t}</button>`).join('')}</div>
+      <div class="zk-mode" role="group" aria-label="探し方" style="grid-template-columns:repeat(${L.modes.length},1fr)">${L.modes.map(([k,t])=>`<button data-zmode="${k}"${L.modes.length>3?' style="padding:8px 2px;font-size:13px;white-space:nowrap"':''} aria-pressed="${zk.mode===k}">${t}</button>`).join('')}</div>
       <button class="btn cmp-open" data-act="cmp-open" aria-label="2つの銘柄を比較">比較${compare.a||compare.b?`<em>${[compare.a,compare.b].filter(Boolean).length}</em>`:''}</button>
     </div>
     ${panel}
@@ -2398,6 +2412,7 @@ function drawZkResults(){
   if(K.isFood) return isCk() ? drawCocktailResults() : drawRecipeResults();
   const el=$('#zk-results'); if(!el) return;
   if(zk.mode==='grape'){ const g=$('#grape-list'); if(g) g.innerHTML=grapeCards(); el.innerHTML=''; return; }
+  if(zk.mode==='glass'){ const g=$('#wg-list'); if(g) g.innerHTML=glassCards(); el.innerHTML=''; return; }
   if(zk.mode==='region'){
     const ds = zkDistilleries();
     if(!zk.q && (!zk.country || (zk.country==='scot' && !zk.region))){ el.innerHTML=''; return; }
@@ -2445,6 +2460,7 @@ $('#list').addEventListener('click',e=>{
   if(t.closest('[data-act="cmp-open"]')){ openCompare(); return; }
   const d=t.closest('[data-d]'); if(d){ openDistillery(d.dataset.d); return; }
   const gp=t.closest('[data-grape]'); if(gp){ openGrape(gp.dataset.grape); return; }
+  const wg=t.closest('[data-wglass]'); if(wg){ openWineGlass(wg.dataset.wglass); return; }
   const c=t.closest('[data-z]'); if(c) openZukanItem(c.dataset.z);
 });
 $('#list').addEventListener('keydown',e=>{ const g=e.target.closest?.('.rg,.wpin,.dpin'); if(view==='zukan' && (e.key==='Enter'||e.key===' ') && g){ e.preventDefault(); g.dispatchEvent(new MouseEvent('click',{bubbles:true})); } });
@@ -2725,7 +2741,8 @@ function openZukan(id){
     ${myId?`<div class="cta"><button class="btn primary" data-act="taste-z">${K.eat?`この${K.jp}を記録する`:'この銘柄をテイスティング'}</button></div>`:''}
   </div>`);
   $('#sheet-root').onclick=e=>{
-    const el=e.target.closest('[data-act],[data-zopen],[data-grape],[data-recipe],[data-dz]'); if(!el) return;
+    const el=e.target.closest('[data-act],[data-zopen],[data-grape],[data-recipe],[data-dz],[data-wglass]'); if(!el) return;
+    if(el.dataset.wglass) return openWineGlass(el.dataset.wglass);
     if(el.dataset.dz) return openDrink(el.dataset.dk, el.dataset.dz);
     if(el.dataset.recipe) return openRecipe(el.dataset.recipe);
     if(el.dataset.zopen) return openZukanItem(el.dataset.zopen);
@@ -2785,6 +2802,127 @@ function openGrape(id){
   $('#sheet-root').onclick=e=>{
     const el=e.target.closest('[data-act],[data-z],[data-grape]'); if(!el) return;
     if(el.dataset.grape) return openGrape(el.dataset.grape);
+    if(el.dataset.z) return openZukanItem(el.dataset.z);
+    if(el.dataset.act==='back') goBack();
+  };
+}
+
+/* ---------- ワイングラス ---------- */
+const WGL = () => (typeof WINE_GLASSES!=='undefined' ? WINE_GLASSES : []);
+const wGlass = id => WGL().find(g=>g.id===id) || null;
+const WG_TINT = { bordeaux:'#73202D', burgundy:'#9B2E35', universal:'#8A2A33', white:'#EEDC8E', montrachet:'#E4C463', flute:'#F1E3A0', tulip:'#EAD285', dessert:'#C98A2E', copita:'#E8D79A' };
+let wgSeq=0;
+function wineGlassSVG(g, color, w=52){
+  const s=g.s, c=30, R=s.rw/2, M=s.mw/2, k=1.4, a=(s.ym-s.t)*.45, bb=(s.yb-s.ym)*.6;
+  const bowl=`M${c-R},${s.t} C${c-R},${s.t+a} ${c-M},${s.ym-a} ${c-M},${s.ym} C${c-M},${s.ym+bb} ${c-k-4},${s.yb} ${c-k},${s.yb} L${c+k},${s.yb} C${c+k+4},${s.yb} ${c+M},${s.ym+bb} ${c+M},${s.ym} C${c+M},${s.ym-a} ${c+R},${s.t+a} ${c+R},${s.t} Z`;
+  const id='wgc'+(++wgSeq), col=color||WG_TINT[g.id]||'#8A2A33';
+  return `<svg class="wg-svg" viewBox="0 0 60 100" width="${w}" height="${Math.round(w*100/60)}" aria-hidden="true">
+    <defs><clipPath id="${id}"><path d="${bowl}"/></clipPath></defs>
+    <rect x="0" y="${s.lv}" width="60" height="${100-s.lv}" fill="${col}" opacity=".9" clip-path="url(#${id})"/>
+    <path d="${bowl}" fill="currentColor" fill-opacity=".06" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+    <path d="M${c},${s.yb} L${c},${s.st}" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <ellipse cx="${c}" cy="${s.st+1.5}" rx="${s.fw/2}" ry="2.4" fill="currentColor" fill-opacity=".06" stroke="currentColor" stroke-width="1.3"/></svg>`;
+}
+const RED_FULL=['cabernet','merlot','cabfranc','carmenere','malbec','tempranillo','touriga','syrah','montepulciano'];
+const RED_FINE=['pinot','nebbiolo','gamay'];
+const wgGrapeName = id => { const g=(typeof WINE_GRAPES!=='undefined'?WINE_GRAPES:[]).find(x=>x.id===id); return g ? g.name.replace(/（.*?）/,'') : ''; };
+// w: { type, grapes[], p{fruit,acid,...}, region, name, cask }
+function recommendGlass(w){
+  const p=w.p||{}, g0=(w.grapes||[])[0], t=w.type||'', nm=(w.name||'')+' '+(w.cask||'');
+  const body=p.body||0, tan=p.tannin||0, acid=p.acid||0, oak=p.oak||0, sweet=p.sweet||0, aged=p.earthy||0;
+  const r=(id,alt,why)=>({id,alt,why});
+  if(t==='酒精強化'){
+    if(w.region==='jerez' || g0==='palomino' || /シェリー|フィノ|マンサニーリャ|アモンティリャード|オロロソ|ティオ・ペペ/.test(nm))
+      return r('copita','white','辛口のシェリーは、細い飲み口に香りを集めるコピータで。ナッツや塩気のニュアンスがはっきり感じられる。');
+    return r('dessert','universal','ポートのように甘く濃い酒精強化ワインは、小ぶりのグラスで少量ずつゆっくりと。ドライフルーツやチョコレートのような香りが集まる。');
+  }
+  if(t==='甘口・デザート' || (sweet>=4 && t!=='スパークリング'))
+    return r('dessert','white','甘口ワインは小ぶりのグラスで。すぼまった飲み口が蜂蜜やドライフルーツの香りを集め、甘さの後ろの酸味を感じさせてくどさを抑える。');
+  if(t==='スパークリング'){
+    if(w.region==='champagne' || /シャンパーニュ|シャンパン|champagne/i.test(nm)){
+      const rich = aged>=3 || body>=4;
+      return r('tulip', rich?'white':'flute', rich ? '熟成による複雑な香りを持つシャンパーニュ。チューリップ型で泡と香りの両方を楽しめる。白ワイン用グラスで香りを広げて飲むのもおすすめ。' : 'シャンパーニュは、泡を保ちながらブリオッシュのような香りも開くチューリップ型で。');
+    }
+    return r('flute','tulip', sweet>=3 ? '甘く軽やかなスパークリングは、泡が長持ちするフルート型で。よく冷やしてフレッシュな香りを楽しむ。' : '軽やかなスパークリングは、泡が長持ちするフルート型で。よく冷やして爽快感を楽しむ。');
+  }
+  if(t==='ロゼ') return r('white','universal','辛口のロゼは小ぶりの白ワイン用グラスで、冷たさを保ちながら。果実味の豊かなものは万能型でも。');
+  if(t==='白' || t==='オレンジ'){
+    if(oak>=3 || (body>=4 && ['chardonnay','semillon'].includes(g0)))
+      return r('montrachet','universal',`樽熟成によるコクのある${g0?wgGrapeName(g0)+'の':''}白。口の広い大ぶりのグラスで空気に触れさせると、バターやナッツのような香りがふくらむ。`);
+    return r('white','universal', ['riesling','gewurz'].includes(g0) ? `華やかな香りの${wgGrapeName(g0)}。小ぶりのグラスで冷たさを保ちながら、すぼまった飲み口で果実や花の香りを集める。`
+      : 'すっきりした白は小ぶりのグラスで。冷たさを保ち、爽やかな香りと酸味をいきいきと感じられる。');
+  }
+  // 赤（タイプ未記入も赤として扱う）
+  if(RED_FINE.includes(g0)) return r('burgundy','universal',
+    g0==='nebbiolo' ? '香り高く、酸味と渋みのあるネッビオーロ。大きなボウルのブルゴーニュ型で、バラやスミレ、熟成の香りを開かせて。'
+    : g0==='gamay' ? '軽やかで果実味豊かなガメイ。丸いボウルのブルゴーニュ型で香りを広げて。万能型でも十分楽しめる。'
+    : '繊細なピノ・ノワールは、香りを大きく広げて閉じ込めるブルゴーニュ型で。酸味がやわらかく、果実の甘さを感じやすくなる。');
+  if(RED_FULL.includes(g0) || (body>=4 && tan>=3))
+    return r('bordeaux','universal',`${g0?wgGrapeName(g0)+'主体の、':''}渋みと果実味がしっかりした赤。背の高いボルドー型で空気に触れさせると、渋みがまろやかになり香りが開く。`);
+  if(!g0 && acid>=4 && tan<=2) return r('burgundy','universal','酸味が豊かで渋みの穏やかな赤。ブルゴーニュ型で香りを広げると、果実の甘さが感じやすくなる。');
+  return r('universal', body>=3?'bordeaux':'burgundy', `${g0?wgGrapeName(g0)+'の、':''}ミディアムボディの赤。中ぶりの万能型グラスで、果実味と酸味のバランスよく楽しめる。`);
+}
+const wgCache=new Map();
+function wineInfoZ(z){ return { type:z.type, grapes:z.grapes||[], p:arrProf(z.p||[]), region:z.region, name:z.name, cask:z.cask, color:z.color }; }
+function glassFor(z){ if(!wgCache.has(z.id)) wgCache.set(z.id, recommendGlass(wineInfoZ(z))); return wgCache.get(z.id); }
+function wineInfoBottle(b,a){
+  const z=zukanFor(b);
+  if(z){ const w=wineInfoZ(z); if(b.type) w.type=b.type; return w; }
+  const GLs=(typeof WINE_GRAPES!=='undefined'?WINE_GRAPES:[]);
+  const txt=(b.cask||'')+' '+(b.name||'');
+  const hits=GLs.map(g=>{ const names=[g.name.replace(/（.*?）/,''), ...(g.name.match(/（(.*?)）/)?.[1]||'').split(/[・、]/), g.en].filter(x=>x && x.length>1);
+    const i=Math.min(...names.map(n=>{ const j=txt.toLowerCase().indexOf(n.toLowerCase()); return j<0?1e9:j; })); return [g.id,i]; }).filter(x=>x[1]<1e9).sort((x,y)=>x[1]-y[1]).map(x=>x[0]);
+  const regionKey=Object.keys(ZR).find(k=>(ZR[k].picks||[ZR[k].pick]).filter(Boolean).includes(b.region)) || (/ヘレス|シェリー/.test(b.region||'')?'jerez':/シャンパーニュ/.test(b.region||'')?'champagne':null);
+  const colorTop=(Object.entries(a?.colors||{}).sort((x,y)=>y[1]-x[1])[0]||[])[0]||'';
+  return { type:b.type||'', grapes:hits, p:a?.avgProfile||{}, region:regionKey, name:b.name, cask:b.cask, color:colorTop };
+}
+function wineGlassSection(w){
+  if(!WGL().length) return '';
+  const r=recommendGlass(w), g=wGlass(r.id), alt=wGlass(r.alt); if(!g) return '';
+  const col = w.color ? glassColor(w.color) : null;
+  return `<section class="sec wg-sec"><h3>おすすめのグラス<small>GLASS</small></h3>
+    <button class="wg-rec" data-wglass="${g.id}">${wineGlassSVG(g,col,60)}<span><b>${esc(g.name)}</b><em>${esc(r.why)}</em><i>グラス図鑑で見る ›</i></span></button>
+    ${alt && alt.id!==g.id?`<p class="small" style="margin:8px 0 0">手元になければ <button class="wg-alt" data-wglass="${alt.id}">${esc(alt.name)}</button> でも。</p>`:''}
+  </section>`;
+}
+function glassCards(){
+  const q=norm(zk.q);
+  const gs=WGL().filter(g=>!q || norm([g.name,g.en,g.suits,g.shape].join(' ')).includes(q));
+  const groups=[...new Set(WGL().map(g=>g.group))];
+  const card=g=>{ const n=ZE.filter(z=>glassFor(z).id===g.id).length;
+    return `<button class="zcard wg-card" data-wglass="${g.id}"><span style="display:grid;place-items:center">${wineGlassSVG(g,null,40)}</span>
+      <span class="info"><h3>${esc(g.name)}</h3><div class="en">${esc(g.en)}</div><div class="meta">${esc(g.shape)}</div></span>
+      <span class="right"><b>${n}</b><i>本</i></span></button>`; };
+  const out=groups.map(gr=>{ const l=gs.filter(g=>g.group===gr); return l.length?`<div class="zk-head"><b>${esc(gr)}</b><span>${l.length}種</span></div><div class="list" style="padding-top:8px">${l.map(card).join('')}</div>`:''; }).join('');
+  return out || `<div class="empty" style="padding:24px 8px"><p>該当するグラスがありません。</p></div>`;
+}
+function glassPanel(){
+  return `<p class="small" style="margin:0">ワインはグラスの形で香りの広がり方や、舌に当たる位置が変わります。タップすると、そのグラスが向いているワインを見られます。数字は図鑑でそのグラスをおすすめしている銘柄の数です。</p><div id="wg-list" style="display:grid;gap:10px">${glassCards()}</div>`;
+}
+function openWineGlass(id){
+  if(KIND!=='wine') return;
+  curSheet={t:'wglass',id};
+  const g=wGlass(id); if(!g) return;
+  currentBottle=null;
+  const wines=ZE.filter(z=>glassFor(z).id===id).sort((a,b)=>(a.price||0)-(b.price||0));
+  const alts=ZE.filter(z=>glassFor(z).alt===id).length;
+  const others=WGL().filter(x=>x.id!==id && x.group===g.group);
+  mount(`<div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(g.name)}">
+    <div class="sheet-bar"><button class="btn ghost" data-act="back">‹ 戻る</button><h2>${esc(g.name)}</h2><span style="width:60px"></span></div>
+    <div class="sheet-body">
+      <div class="wg-hero">${wineGlassSVG(g,null,90)}
+        <div><div class="small">${esc(g.group)} · WINE GLASS</div><h1>${esc(g.name)}</h1><div class="en">${esc(g.en)}</div></div></div>
+      <p class="z-desc">${esc(g.desc)}</p>
+      <dl class="facts"><div><dt>形</dt><dd>${esc(g.shape)}</dd></div><div><dt>向くワイン</dt><dd>${esc(g.suits)}</dd></div></dl>
+      <div class="notice">${esc(g.point)}</div>
+      <section class="sec"><h3>このグラスがおすすめのワイン<small>${wines.length} WINES</small></h3>
+        ${wines.length?`<div class="list" style="padding-top:0">${wines.map(z=>zCard({z},false)).join('')}</div>`:`<p class="small" style="margin:0">図鑑では、ほかのグラスの「手元になければ」の候補として${alts}本に挙げています。</p>`}</section>
+      ${others.length?`<section class="sec"><h3>同じ仲間のグラス<small>RELATED</small></h3><div class="chips">${others.map(x=>`<button class="chip" data-wglass="${x.id}">${esc(x.name)} ›</button>`).join('')}</div></section>`:''}
+      <p class="note-small">${typeof WINE_GLASS_NOTE!=='undefined'?WINE_GLASS_NOTE:''}</p>
+    </div></div>`);
+  $('#sheet-root').onclick=e=>{
+    const el=e.target.closest('[data-act],[data-z],[data-wglass]'); if(!el) return;
+    if(el.dataset.wglass) return openWineGlass(el.dataset.wglass);
     if(el.dataset.z) return openZukanItem(el.dataset.z);
     if(el.dataset.act==='back') goBack();
   };
@@ -3596,6 +3734,7 @@ function restore(s){
     else if(sh.t==='zukan') openZukan(sh.id);
     else if(sh.t==='dist') openDistillery(sh.id);
     else if(sh.t==='grape') openGrape(sh.id);
+    else if(sh.t==='wglass') openWineGlass(sh.id);
     else if(sh.t==='cmp') openCompare();
     else if(sh.t==='cpick') openComparePicker(sh.slot);
     else if(sh.t==='picker') openPicker();
