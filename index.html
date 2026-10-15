@@ -27,6 +27,7 @@
 <script src="cheese-data.js"></script>
 <script src="chinmi-data.js"></script>
 <script src="cocktail-data.js"></script>
+<script src="mixer-data.js"></script>
 <script src="wineglass-data.js"></script>
 <script src="food-data.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.104.1/dist/umd/supabase.js"></script>
@@ -493,6 +494,14 @@ body.kinds-on{overflow:hidden}
 .wg-hero{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center}
 .wg-hero h1{font-family:var(--display);font-weight:800;font-size:24px;line-height:1.25;margin:0}
 .wg-hero .en{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.04em}
+.cing-mix{border:0;background:none;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer;text-decoration:underline;text-decoration-color:var(--amber);text-underline-offset:3px}
+.cing-mix small{color:var(--amber)}
+.mx-brands{display:grid;gap:8px}
+.mx-brand{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;gap:2px}
+.mx-brand b{font-size:15px;line-height:1.4}
+.mx-brand .en{font-size:11.5px;color:var(--muted)}
+.mx-brand .mx-meta{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--muted);font-family:var(--mono)}
+.mx-brand p{margin:2px 0 0;font-size:13.5px;line-height:1.6}
 .ckt-tools{display:grid;gap:8px}
 .ckt-tool{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;gap:3px}
 .ckt-tool b{font-size:15px;display:flex;gap:8px;align-items:baseline}
@@ -662,7 +671,7 @@ body.kinds-on{overflow:hidden}
 
 <script>
 (() => {
-const APP_VERSION = '2026.10.15c';
+const APP_VERSION = '2026.10.15d';
 
 /* ---------- お酒の種類ごとの設定（ウイスキー／ワイン。日本酒・ビール・カクテルは今後ここに足す） ---------- */
 const STORY_HEADS = [['はじまり','HISTORY'],['造りのこだわり','CRAFT'],['ウイスキー界での存在感','STANDING']];
@@ -3377,7 +3386,8 @@ function renderCocktails(list){
   const used=new Set(CL().map(c=>c.base));
   list.innerHTML = `<div class="zk">
     <input class="search" id="zk-q" type="search" placeholder="${L.zkSearch}" aria-label="カクテルを検索" value="${esc(zk.q)}">
-    <div class="zk-mode" role="group" aria-label="表示" style="grid-template-columns:1fr 1fr"><button data-cmode="list" aria-pressed="${cz.mode==='list'}">カクテル</button><button data-cmode="tools" aria-pressed="${cz.mode==='tools'}">器具とグラス</button></div>
+    <div class="zk-mode" role="group" aria-label="表示" style="grid-template-columns:1fr 1fr 1.3fr"><button data-cmode="list" aria-pressed="${cz.mode==='list'}">カクテル</button><button data-cmode="mix" aria-pressed="${cz.mode==='mix'}">材料</button><button data-cmode="tools" aria-pressed="${cz.mode==='tools'}" style="white-space:nowrap">器具とグラス</button></div>
+    ${cz.mode==='mix'?`<p class="small" style="margin:0">リキュールやシロップなど、カクテルならではの材料と、その代表的な銘柄。タップすると、特徴・使い方・使うカクテルを見られます。</p>`:''}
     ${cz.mode==='list'?`<div class="zk-filter">
       <div class="group-name">ベースのお酒</div>${chips(cz.bases,'bases',CK_BASES.filter(b=>used.has(b)))}
       <div class="group-name">作り方</div>${chips(cz.methods,'methods',CK_METHODS)}
@@ -3394,6 +3404,7 @@ function renderCocktails(list){
 function drawCocktailResults(){
   const el=$('#zk-results'); if(!el) return;
   const q=norm(zk.q);
+  if(cz.mode==='mix'){ el.innerHTML=mixerCards(q); return; }
   if(cz.mode==='tools'){
     const tl=CTOOLS().filter(t=>!q || norm(t.name+t.desc).includes(q)), gl=CGLASS().filter(g=>!q || norm(g.name+g.desc).includes(q));
     const n = (id, f) => CL().filter(f).length;
@@ -3422,6 +3433,51 @@ function drawCocktailResults(){
     <div class="list" style="padding-top:8px">${rs.length?rs.map(c=>cCard(c)).join(''):`<div class="empty" style="padding:24px 8px"><p>該当するカクテルがありません。条件を減らしてみてください。</p></div>`}</div>`;
 }
 
+/* ---------- カクテルの材料図鑑（リキュール・シロップなど） ---------- */
+const MXL = () => (typeof MIXERS!=='undefined' ? MIXERS : []);
+const MXCATS = () => (typeof MIXER_CATS!=='undefined' ? MIXER_CATS : []);
+const mixerById = id => MXL().find(m=>m.id===id) || null;
+const mxRe = new Map();
+const mixerRe = m => { if(!mxRe.has(m.id)) mxRe.set(m.id, new RegExp(m.match)); return mxRe.get(m.id); };
+const mixersFor = name => MXL().filter(m=>mixerRe(m).test(name));
+const mixerCocktails = m => CL().filter(c=>c.ings.some(i=>mixerRe(m).test(i[0])));
+function mixerCards(q){
+  const ms=MXL().filter(m=>!q || norm([m.name,m.en,m.desc,m.taste,...m.brands.map(b=>b.name+' '+b.en)].join(' ')).includes(q));
+  const card=m=>`<button class="zcard" data-mix="${m.id}"><span class="gl" style="background:${m.color}"></span>
+    <span class="info"><h3>${esc(m.name)}</h3><div class="en">${esc(m.en)}${m.abv&&m.abv!=='0%'?` · ${esc(m.abv)}`:''}</div><div class="meta">${esc(m.taste)}</div>
+      <div class="tagline">${m.brands.filter(b=>b.maker).slice(0,3).map(b=>`<span>${esc(b.name.replace(/ (ロンドン ドライジン|コーヒーリキュール|クレーム・ド・.*|グレナデン・シロップ)$/,''))}</span>`).join('')}</div></span>
+    <span class="right"><b>${mixerCocktails(m).length}</b><i>品</i></span></button>`;
+  const out=MXCATS().map(([k,t,sub])=>{ const l=ms.filter(m=>m.cat===k); return l.length?`<div class="zk-head"><b>${esc(t)}</b><span>${l.length}種類</span></div><p class="small" style="margin:-4px 0 0">${esc(sub)}</p><div class="list" style="padding-top:8px">${l.map(card).join('')}</div>`:''; }).join('');
+  return out || `<div class="empty" style="padding:24px 8px"><p>該当する材料がありません。</p></div>`;
+}
+function openMixer(id){
+  const m=mixerById(id); if(!m) return;
+  curSheet={t:'mix',id};
+  currentBottle=null;
+  const cat=MXCATS().find(c=>c[0]===m.cat);
+  const cks=mixerCocktails(m);
+  const facts=[['分類',cat?.[1]],['度数の目安',m.abv],['味わい',m.taste],['保存',m.keep],['代わりに使うなら',m.sub]].filter(f=>f[1]);
+  const sib=MXL().filter(x=>x.cat===m.cat && x.id!==m.id);
+  mount(`<div class="sheet" data-view="recipe" role="dialog" aria-modal="true" aria-label="${esc(m.name)}">
+    <div class="sheet-bar"><button class="btn ghost" data-act="back">‹ 戻る</button><h2>${esc(m.name)}</h2><span style="width:60px"></span></div>
+    <div class="sheet-body">
+      <div class="z-hero"><span class="gl" style="background:${m.color}"></span>
+        <div><div class="small">${esc(cat?.[1]||'')} · カクテルの材料</div><h1>${esc(m.name)}</h1><div class="en">${esc(m.en)}</div></div></div>
+      <p class="z-desc">${esc(m.desc)}</p>
+      <dl class="facts">${facts.map(f=>`<div><dt>${f[0]}</dt><dd>${esc(f[1])}</dd></div>`).join('')}</dl>
+      <section class="sec"><h3>カクテルでの使い方<small>USE</small></h3><p style="margin:0">${esc(m.use)}</p></section>
+      <section class="sec"><h3>代表的な銘柄<small>${m.brands.length} BRANDS</small></h3>
+        <div class="mx-brands">${m.brands.map(b=>`<div class="mx-brand"><b>${esc(b.name)}</b>${b.en&&b.en!=='Homemade'?`<span class="en">${esc(b.en)}</span>`:''}
+          <div class="mx-meta">${[b.maker,b.abv&&b.abv!=='0%'?b.abv:'',b.price?'約'+b.price:''].filter(Boolean).map(x=>`<span>${esc(x)}</span>`).join('')}</div>
+          <p>${esc(b.note)}</p></div>`).join('')}</div></section>
+      <section class="sec"><h3>この材料を使うカクテル<small>${cks.length} COCKTAILS</small></h3>
+        ${cks.length?`<div class="list" style="padding-top:0">${cks.map(c=>cCard(c)).join('')}</div>`:'<p class="small" style="margin:0">図鑑にはまだありません。</p>'}</section>
+      ${sib.length?`<section class="sec"><h3>同じ仲間の材料<small>RELATED</small></h3><div class="chips">${sib.map(x=>`<button class="chip" data-mix="${x.id}">${esc(x.name)} ›</button>`).join('')}</div></section>`:''}
+      <p class="note-small">度数や価格は、日本で流通しているもののおおよその目安です。容量や店舗、時期によって変わります。お酒は20歳になってから。</p>
+    </div></div>`);
+  $('#sheet-root').onclick=e=>{ if(e.target.closest('[data-act="back"]')) goBack(); };
+}
+
 /* カクテルのページ */
 function openCocktail(id){
   const c=cocktailById(id); if(!c) return;
@@ -3433,9 +3489,10 @@ function openCocktail(id){
   const pdrinks=[...new Set(posts.map(t=>t.drink).filter(Boolean))].slice(0,8);
   const g=CGLASS().find(x=>x.id===c.glass);
   const facts=[['ベース',c.base],['作り方',c.method],['グラス',g?.name],['強さ',c.strength+(c.abv?`（約${c.abv}%）`:'')],['飲むタイミング',c.time],['飾り',c.garnish]];
-  const ingRow = i => { const picks=i[2]?linkPicks(i[2]):[]; const l=i[2]&&CLINKS()[i[2]];
-    return `<div class="cing"><div class="cing-h"><span>${esc(i[0])}</span><em>${esc(i[1])}</em></div>
-      ${picks.length?`<div class="pchips">${picks.map(z=>`<button class="chip" data-dk="${l.k}" data-dz="${esc(z.id)}"><i style="background:${kGlass(l.k,z.color)}"></i>${esc(z.name)}</button>`).join('')}</div>`:''}</div>`; };
+  const ingRow = i => { const picks=i[2]?linkPicks(i[2]):[]; const l=i[2]&&CLINKS()[i[2]]; const mx=!picks.length ? mixersFor(i[0]) : [];
+    return `<div class="cing"><div class="cing-h">${mx.length?`<button class="cing-mix" data-mix="${mx[0].id}">${esc(i[0])} <small>›</small></button>`:`<span>${esc(i[0])}</span>`}<em>${esc(i[1])}</em></div>
+      ${picks.length?`<div class="pchips">${picks.map(z=>`<button class="chip" data-dk="${l.k}" data-dz="${esc(z.id)}"><i style="background:${kGlass(l.k,z.color)}"></i>${esc(z.name)}</button>`).join('')}</div>`
+        : mx.length?`<div class="pchips">${mx[0].brands.filter(b=>b.maker).slice(0,3).map(b=>`<button class="chip" data-mix="${mx[0].id}"><i style="background:${mx[0].color}"></i>${esc(b.name)}</button>`).join('')}</div>`:''}</div>`; };
   mount(`<div class="sheet" data-view="recipe" role="dialog" aria-modal="true" aria-label="${esc(c.name)}">
     <div class="sheet-bar"><button class="btn ghost" data-act="back">‹ 戻る</button><h2>${esc(c.name)}</h2><span style="width:60px"></span></div>
     <div class="sheet-body">
@@ -3446,7 +3503,7 @@ function openCocktail(id){
       <dl class="facts">${facts.filter(f=>f[1]).map(f=>`<div><dt>${f[0]}</dt><dd>${esc(f[1])}</dd></div>`).join('')}</dl>
       <div class="chips">${c.taste.map(t=>`<span class="chip" aria-pressed="true">${esc(t)}</span>`).join('')}</div>
       <section class="sec"><h3>材料<small>1 GLASS</small></h3>
-        <p class="small" style="margin:0 0 8px">お酒の材料の下にあるのは、図鑑から選んだおすすめの銘柄です。タップすると図鑑のページを開きます。</p>
+        <p class="small" style="margin:0 0 8px">材料の下にあるのは、図鑑から選んだおすすめの銘柄です。リキュールやシロップは、名前をタップすると材料図鑑で特徴や銘柄を見られます。</p>
         <div class="cings">${c.ings.map(ingRow).join('')}</div></section>
       <section class="sec"><h3>作り方<small>STEPS</small></h3>
         <ol class="rsteps">${c.steps.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>
@@ -3741,6 +3798,7 @@ function restore(s){
     else if(sh.t==='menu') openMenu();
     else if(sh.t==='recipe'){ if(recipeById(sh.id)) openRecipe(sh.id); else ok=false; }
     else if(sh.t==='cocktail'){ if(cocktailById(sh.id)) openCocktail(sh.id); else ok=false; }
+    else if(sh.t==='mix'){ if(mixerById(sh.id)) openMixer(sh.id); else ok=false; }
     else if(sh.t==='dform'){ const b=sh.b?bottles.find(x=>x.id===sh.b):null; const t=sh.tid?tastings.find(x=>x.id===sh.tid):null;
       if((sh.b && !b) || (sh.tid && !t)) ok=false; else openDishForm(b, t, sh.rid); }
     else if(sh.t==='taste'){ const b=bottles.find(x=>x.id===sh.b); const t=sh.tid?tastings.find(x=>x.id===sh.tid):null;
@@ -3801,6 +3859,7 @@ $('#list').addEventListener('click',e=>{
   const r=e.target.closest('[data-recipe]'); if(r) return openRecipe(r.dataset.recipe);
   const dz=e.target.closest('[data-dz]'); if(dz) return openDrink(dz.dataset.dk, dz.dataset.dz);
   const ck=e.target.closest('[data-cocktail]'); if(ck) return openCocktail(ck.dataset.cocktail);
+  const mx=e.target.closest('[data-mix]'); if(mx) return openMixer(mx.dataset.mix);
   if(e.target.closest('[data-act="to-recipes"]')) tab('zukan');
 });
 $('#menu').onclick=openMenu;
@@ -3808,6 +3867,7 @@ $('#menu').onclick=openMenu;
 $('#sheet-root').addEventListener('click', async e=>{
   const w=e.target.closest('[data-wish]'); if(w){ const k=w.dataset.wish; if(await toggleWish(k)) w.outerHTML=wishBtn(k); return; }
   const ck=e.target.closest('[data-cocktail]'); if(ck) return openCocktail(ck.dataset.cocktail);
+  const mx=e.target.closest('[data-mix]'); if(mx) return openMixer(mx.dataset.mix);
   const s=e.target.closest('[data-rid] [data-act]'); if(s) handleSocialClick(s);
 });
 $('#gate-form').addEventListener('submit',e=>{ e.preventDefault(); submitGate(); });
