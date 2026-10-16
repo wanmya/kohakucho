@@ -4,7 +4,7 @@
   "short_name": "HIDEOUT CARTER",
   "description": "ウイスキーのテイスティングを記録して仲間と共有するノート",
   "lang": "ja",
-  "start_url": "./",
+  "start_url": "./?app=hideout-carter",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
