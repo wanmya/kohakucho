@@ -745,7 +745,7 @@ body.kinds-on{overflow:hidden}
 
 <script>
 (() => {
-const APP_VERSION = '2026.10.17a';
+const APP_VERSION = '2026.10.18a';
 
 /* ---------- お酒の種類ごとの設定（ウイスキー／ワイン。日本酒・ビール・カクテルは今後ここに足す） ---------- */
 const STORY_HEADS = [['はじまり','HISTORY'],['造りのこだわり','CRAFT'],['ウイスキー界での存在感','STANDING']];
@@ -947,7 +947,7 @@ const KINDS = {
     ZK_TAGS: ['カシス','ブラックベリー','ブラックチェリー','プラム','いちご','ラズベリー','さくらんぼ','柑橘','グレープフルーツ','青りんご','白桃','パイナップル','白い花','バラ','スミレ','ハーブ','黒胡椒','バニラ','トースト','ナッツ','トリュフ','なめし革','ミネラル','蜂蜜'],
     ZK_PRICES: [['p0','〜999円',0,1000],['p1','1,000〜2,000円台',1000,3000],['p2','3,000〜4,000円台',3000,5000],['p3','5,000〜9,000円台',5000,10000],['p4','1万〜4万円台',10000,50000],['p5','5万円〜',50000,1e12]],
     COUNTRIES: (typeof WINE_COUNTRIES!=='undefined') ? WINE_COUNTRIES : {},
-    BIG: (typeof WINE_MAIN!=='undefined') ? WINE_MAIN : [], MINOR: [],
+    BIG: (typeof WINE_MAIN!=='undefined') ? WINE_MAIN : [], MINOR: (typeof WINE_MINOR!=='undefined') ? WINE_MINOR : [],
     WORLD_LABEL: { germany:[63,7,'end'], france:[63,13.5,'end'], spain:[63,20,'end'], portugal:[63,26.5,'end'], italy:[101,22,'start'],
       usa:[14,8,'start'], japan:[180,34,'end'], chile:[30,70,'end'], argentina:[47,64,'start'], australia:[160,86,'end'], nz:[190,71,'end'] },
     exMeta: z => [z.type, z.cask, z.abv?z.abv+'%':''],
