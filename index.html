@@ -648,6 +648,7 @@ body.kinds-on{overflow:hidden}
       <button role="tab" id="t-bottles" aria-selected="true">銘柄</button>
       <button role="tab" id="t-feed" aria-selected="false">みんなの記録</button>
       <button role="tab" id="t-zukan" aria-selected="false">図鑑</button>
+      <button role="tab" id="t-sauce" aria-selected="false" hidden></button>
       <button role="tab" id="t-mine" aria-selected="false">マイ</button>
     </div>
   </header>
@@ -777,7 +778,7 @@ body.kinds-on{overflow:hidden}
 
 <script>
 (() => {
-const APP_VERSION = '2026.10.21b';
+const APP_VERSION = '2026.10.21c';
 
 /* ---------- お酒の種類ごとの設定（ウイスキー／ワイン。日本酒・ビール・カクテルは今後ここに足す） ---------- */
 const STORY_HEADS = [['はじまり','HISTORY'],['造りのこだわり','CRAFT'],['ウイスキー界での存在感','STANDING']];
@@ -1542,7 +1543,7 @@ const KINDS = {
     exMeta: z => [z.type, ZR[z.region]?.areaJp],
     zFacts: z => [['分類',z.type],['地域',[ZR[z.region]?.areaJp, ZR[z.region]?.jp].filter(Boolean).join('・')],['原料',z.age],['名前の意味',z.cask],['ゆで時間',z.cook]],
     cmpRows: (A,B) => [['分類',A.type,B.type],['地域',ZR[A.region]?.jp,ZR[B.region]?.jp],['原料',A.age||'—',B.age||'—']],
-    heads: () => [], noAbv:true, noAge:true, eat:true, unit:'パスタ', fab:'＋ 記録する', tabs:['記録','みんなの記録','図鑑','マイ'],
+    heads: () => [], noAbv:true, noAge:true, eat:true, unit:'パスタ', fab:'＋ 記録する', tabs:['記録','みんなの記録','パスタ図鑑','マイ'], sauceTab:'ソース図鑑',
     extra: z => pastaSection(z),
     G: { list:()=>(typeof PASTA_TYPES!=='undefined'?PASTA_TYPES:[]), name:'分類', en:'TYPES', unit:'分類', countUnit:'種',
       groups:[['長い','長いパスタ'],['短い','短いパスタ'],['包む','詰め物パスタ'],['その他','ニョッキ・焼きパスタ・スープ用']], sub:g=>g.kind,
@@ -1562,7 +1563,7 @@ const KINDS = {
       priceNote:'', simNote:'ほかのパスタから、特徴の重なりで選んでいます。',
       zkNote:'特徴は一般的に語られる傾向をもとにした目安です。ゆで時間は目安なので、乾麺は袋の表示に従ってください。イラストは形のイメージです。',
       distNote:'特徴は一般的に語られる傾向をもとにした目安です。',
-      modes:[['region','地域'],['grape','分類'],['sauce','ソース'],['flavor','食感・特徴']],
+      modes:[['region','地域'],['grape','分類'],['flavor','食感・特徴']],
     },
   },
 
@@ -1671,6 +1672,7 @@ function applyKind(k){
   const merged = !!TL[1];
   ['bottles','feed','zukan','mine'].forEach((x,i)=>{ const el=document.querySelector('#t-'+x); if(!el) return;
     el.textContent = x==='bottles' && merged ? 'みんなの記録' : (TL[i]||''); el.hidden = x==='feed' || !TL[i]; });
+  const ts=document.querySelector('#t-sauce'); if(ts){ ts.hidden=!K.sauceTab; ts.textContent=K.sauceTab||''; }
   const fab = document.querySelector('#add'); if(fab) fab.textContent = K.fab || '＋ テイスティング';
 }
 applyKind('whisky');
@@ -2144,7 +2146,8 @@ function bottleMatches(b, a, q){
   return hay.includes(norm(q));
 }
 function renderList(){
-  if(view==='feed'){ view='bottles'; ['bottles','feed','zukan','mine'].forEach(k=>$('#t-'+k).setAttribute('aria-selected',view===k)); }
+  if(view==='sauce' && !K.sauceTab) view='feed';
+  if(view==='feed'){ view='bottles'; ['bottles','feed','zukan','sauce','mine'].forEach(k=>$('#t-'+k).setAttribute('aria-selected',view===k)); }
   const list=$('#list');
   $('#count').textContent = loaded && !setupError ? (K.isFood ? `${bottles.length}品・${tastings.length}件の記録` : `${bottles.length}銘柄・${tastings.length}件`) : '';
   if(setupError==='config'){ list.innerHTML=`<div class="empty"><h2>初期設定が必要です</h2></div><div class="notice"><code>config.js</code> に Supabase の URL とキーを書き込んでアップロードしてください。</div>`; return; }
@@ -2155,8 +2158,9 @@ function renderList(){
   }
   if(!loaded) return;
   $('#sortbar').hidden = view!=='bottles' || !!K.isFood;
-  $('#toolbar').hidden = view==='zukan' || view==='mine';
+  $('#toolbar').hidden = view==='zukan' || view==='mine' || view==='sauce';
   if(view==='mine') return renderMine(list);
+  if(view==='sauce'){ $('#count').textContent = `${Object.keys(PSAUCE()).length}種のソース`; return renderSauceBook(list); }
   if(view==='zukan'){ $('#count').textContent = K.isFood ? `${bkList().length}${K.L.bookUnit||'品のレシピ'}` : `${ZE.length}${L.exUnit||'銘柄'}`; return renderZukan(list); }
   if(K.isFood) return renderDishes(list);
   return view==='bottles' ? renderBottles(list) : renderFeed(list);
@@ -2167,7 +2171,7 @@ function renderBottles(list){
   rows = rows.filter(r=>bottleMatches(r.b,r.a,query));
   const key = { recent:r=>r.a.lastAt||r.b.createdAt, score:r=>r.a.avg??-1, count:r=>r.a.people*1000+r.a.n }[sort];
   rows.sort((x,y)=>key(y)-key(x));
-  if(!bottles.length){ list.innerHTML=`<div class="empty"><h2>${esc(K.jp)}はまだ一本もありません</h2><p>右下の「テイスティング」から、最初のボトルを登録しましょう。<br>同じ銘柄に何人もの記録が集まるほど、その一本の姿がはっきりしていきます。</p></div>`; return; }
+  if(!bottles.length){ list.innerHTML=`<div class="empty"><h2>${esc(K.jp)}${K.eat?'の記録はまだありません':'はまだ一本もありません'}</h2><p>${K.eat?`右下の「${esc((K.fab||'').replace(/^＋\s*/,''))}」から、最初の${esc(K.unit||K.jp)}を記録しましょう。`:'右下の「テイスティング」から、最初のボトルを登録しましょう。'}<br>${K.eat?'同じものに何人もの記録が集まるほど、その味わいの姿がはっきりしていきます。':'同じ銘柄に何人もの記録が集まるほど、その一本の姿がはっきりしていきます。'}</p></div>`; return; }
   if(!rows.length){ list.innerHTML=`<div class="empty"><h2>該当する銘柄がありません</h2><p>検索語や表示の切り替えを変えてみてください。</p></div>`; return; }
   list.innerHTML = rows.map(({b,a})=>{
     const tags = topTags(a,3);
@@ -2799,7 +2803,7 @@ function zCard({z,score}, scored){
 function renderZukan(list){
   if(K.isFood) return isCk() ? renderCocktails(list) : renderRecipes(list);
   const r = zk.region && ZR[zk.region];
-  const panel = zk.mode==='region' ? regionPanel() : zk.mode==='grape' ? grapePanel() : zk.mode==='glass' ? glassPanel() : zk.mode==='sauce' ? saucePanel()
+  const panel = zk.mode==='region' ? regionPanel() : zk.mode==='grape' ? grapePanel() : zk.mode==='glass' ? glassPanel()
     : `
       <div class="zk-filter">
         <div class="group-name">こんな味わい（複数選べます）</div>
@@ -2829,7 +2833,6 @@ function drawZkResults(){
   const el=$('#zk-results'); if(!el) return;
   if(zk.mode==='grape'){ const g=$('#grape-list'); if(g) g.innerHTML=grapeCards(); el.innerHTML=''; return; }
   if(zk.mode==='glass'){ const g=$('#wg-list'); if(g) g.innerHTML=glassCards(); el.innerHTML=''; return; }
-  if(zk.mode==='sauce'){ const g=$('#sauce-list'); if(g) g.innerHTML=sauceCards(); el.innerHTML=''; return; }
   if(zk.mode==='region'){
     const ds = zkDistilleries();
     if(!zk.q && (!zk.country || (zk.country==='scot' && !zk.region))){ el.innerHTML=''; return; }
@@ -3448,21 +3451,38 @@ function openWineGlass(id){
 /* パスタソース図鑑 */
 const PSAUCE = () => (typeof PASTA_SAUCES!=='undefined' ? PASTA_SAUCES : {});
 const pastasForSauce = id => ZE.filter(z=>(z.sauces||[]).some(a=>a[0]===id));
-function saucePanel(){
-  return `<p class="small" style="margin:0">パスタに合わせるソースの図鑑。タップすると、作り方のポイントと、そのソースに合うパスタを見られます。数字は、図鑑でそのソースを合わせているパスタの数です。</p><div id="sauce-list"></div>`;
+const sz = { by:'base', q:'' };
+function renderSauceBook(list){
+  const segs=[['base','ベースの材料で分ける'],['area','地域で分ける']];
+  list.innerHTML = `<div class="zk">
+    <input class="search" id="sz-q" type="search" placeholder="ソースを検索（名前・材料・地域）" aria-label="ソースを検索" value="${esc(sz.q)}">
+    <div class="zk-mode" role="group" aria-label="分け方" style="grid-template-columns:1fr 1fr;margin:10px 0 4px">${segs.map(([k,t])=>`<button data-sby="${k}" aria-pressed="${sz.by===k}">${t}</button>`).join('')}</div>
+    <p class="small" style="margin:6px 0 0">パスタに合わせるソースの図鑑。タップすると、作り方のポイントと、そのソースに合うパスタを見られます。数字は、パスタ図鑑でそのソースを合わせているパスタの数です。</p>
+    <div id="sauce-list"></div>
+    <p class="note-small">作り方は一般的な目安です。地域や家庭によって材料や作り方は変わります。</p>
+  </div>`;
+  drawSauceList();
 }
+function drawSauceList(){ const el=$('#sauce-list'); if(el) el.innerHTML=sauceCards(); }
 function sauceCards(){
-  const q=norm(zk.q), SS=PSAUCE();
-  const ids=Object.keys(SS).filter(id=>{ const s=SS[id]; return !q || norm([s.name,s.en,s.origin,s.kind,...s.ings].join(' ')).includes(q); });
-  const kinds=(typeof PASTA_SAUCE_KINDS!=='undefined'?PASTA_SAUCE_KINDS:[]);
+  const q=norm(sz.q), SS=PSAUCE();
+  const ids=Object.keys(SS).filter(id=>{ const s=SS[id]; return !q || norm([s.name,s.en,s.origin,s.kind,s.area,...s.ings].join(' ')).includes(q); });
+  const groups = sz.by==='area' ? (typeof PASTA_SAUCE_AREAS!=='undefined'?PASTA_SAUCE_AREAS:[]).map(([k,d])=>[k,d,id=>SS[id].area===k])
+    : (typeof PASTA_SAUCE_KINDS!=='undefined'?PASTA_SAUCE_KINDS:[]).map(k=>[k,'',id=>SS[id].kind===k]);
   const card=id=>{ const s=SS[id], n=pastasForSauce(id).length;
     return `<button class="zcard" data-sauce="${esc(id)}"><span class="gl pic">${sauceSVG(s)}</span>
-      <span class="info"><h3>${esc(s.name)}</h3><div class="en">${esc(s.en)}</div><div class="meta">${esc(s.origin)}</div>
+      <span class="info"><h3>${esc(s.name)}</h3><div class="en">${esc(s.en)}</div><div class="meta">${esc(sz.by==='area'?`${s.origin} · ${s.kind}`:s.origin)}</div>
         <div class="tagline">${s.ings.slice(0,3).map(t=>`<span>${esc(t)}</span>`).join('')}</div></span>
       <span class="right"><b>${n}</b><i>種</i></span></button>`; };
-  const out=kinds.map(k=>{ const l=ids.filter(id=>SS[id].kind===k); return l.length?`<div class="zk-head"><b>${esc(k)}</b><span>${l.length}種</span></div><div class="list" style="padding-top:8px">${l.map(card).join('')}</div>`:''; }).join('');
+  const out=groups.map(([k,d,f])=>{ const l=ids.filter(f); return l.length?`<div class="zk-head" style="margin-top:18px"><b>${esc(k)}</b><span>${l.length}種</span></div>${d&&!q?`<p class="small" style="margin:4px 0 0">${esc(d)}</p>`:''}<div class="list" style="padding-top:8px">${l.map(card).join('')}</div>`:''; }).join('');
   return out || `<div class="empty" style="padding:24px 8px"><p>該当するソースがありません。</p></div>`;
 }
+$('#list').addEventListener('click',e=>{
+  if(view!=='sauce') return;
+  const b=e.target.closest('[data-sby]'); if(b){ if(sz.by!==b.dataset.sby){ sz.by=b.dataset.sby; renderList(); } return; }
+  const sc=e.target.closest('[data-sauce]'); if(sc) openSauce(sc.dataset.sauce);
+});
+document.addEventListener('input',e=>{ if(e.target.id==='sz-q'){ sz.q=e.target.value.trim(); drawSauceList(); } });
 function openSauce(id){
   if(KIND!=='pasta') return;
   const SS=PSAUCE(), s=SS[id]; if(!s) return;
@@ -3477,14 +3497,14 @@ function openSauce(id){
       <div class="z-hero"><span class="gl pic">${sauceSVG(s)}</span>
         <div><div class="small">${esc(s.kind)} · PASTA SAUCE</div><h1>${esc(s.name)}</h1><div class="en">${esc(s.en)}</div></div></div>
       <p class="z-desc">${esc(s.desc)}</p>
-      <dl class="facts"><div><dt>分類</dt><dd>${esc(s.kind)}</dd></div><div><dt>生まれた土地</dt><dd>${esc(s.origin)}</dd></div></dl>
+      <dl class="facts"><div><dt>ベース</dt><dd>${esc(s.kind)}</dd></div><div><dt>地域</dt><dd>${esc(s.area||'')}</dd></div><div><dt>生まれた土地</dt><dd>${esc(s.origin)}</dd></div></dl>
       <section class="sec"><h3>主な材料<small>INGREDIENTS</small></h3><div class="ps-ings" style="margin:0">${s.ings.map(i=>`<span>${esc(i)}</span>`).join('')}</div></section>
       ${s.tip?`<section class="sec"><h3>作り方のポイント<small>HOW TO MAKE</small></h3><div class="notice" style="margin:0">${esc(s.tip)}</div>
         ${rec?`<div style="margin-top:10px"><button class="chip" data-recipe="${esc(rec.id)}">「${esc(rec.name)}」のレシピを見る ›</button></div>`:''}</section>`:''}
       <section class="sec"><h3>このソースに合うパスタ<small>${ps.length} PASTA</small></h3>
         <div class="list" style="padding-top:0">${ps.map(z=>{ const why=(z.sauces.find(a=>a[0]===id)||[])[1];
           return `<div>${zCard({z},false)}${why?`<p class="ps-why" style="margin:6px 4px 4px">${esc(why)}</p>`:''}</div>`; }).join('')}</div></section>
-      ${same.length?`<section class="sec"><h3>同じ分類のソース<small>RELATED</small></h3><div class="chips">${same.map(x=>`<button class="chip" data-sauce="${esc(x)}">${esc(SS[x].name)} ›</button>`).join('')}</div></section>`:''}
+      ${same.length?`<section class="sec"><h3>同じベースのソース<small>RELATED</small></h3><div class="chips">${same.map(x=>`<button class="chip" data-sauce="${esc(x)}">${esc(SS[x].name)} ›</button>`).join('')}</div></section>`:''}
       <p class="note-small">作り方は一般的な目安です。地域や家庭によって材料や作り方は変わります。</p>
     </div></div>`);
   $('#sheet-root').onclick=e=>{
@@ -4179,7 +4199,7 @@ function chooseKind(k, startView){
   }
   refilter();
   view = startView || 'bottles';
-  ['bottles','feed','zukan','mine'].forEach(x=>$('#t-'+x).setAttribute('aria-selected',view===x));
+  ['bottles','feed','zukan','sauce','mine'].forEach(x=>$('#t-'+x).setAttribute('aria-selected',view===x));
   setKindsVisible(false);
   renderList(); window.scrollTo(0,0); navCommit();
 }
@@ -4365,7 +4385,7 @@ function restore(s){
     if(s.kind!==KIND){ applyKind(s.kind); refilter(); }
     setKindsVisible(false);
     view=s.view; zk.mode=s.zk.mode; zk.country=s.zk.country; zk.region=s.zk.region;
-    ['bottles','feed','zukan','mine'].forEach(k=>$('#t-'+k).setAttribute('aria-selected',view===k));
+    ['bottles','feed','zukan','sauce','mine'].forEach(k=>$('#t-'+k).setAttribute('aria-selected',view===k));
     renderList();
     const sh=s.sheet; let ok=true;
     if(!sh){ currentBottle=null; unmount(); }
@@ -4446,8 +4466,8 @@ const seg=(a,b,set)=>{ $(a).onclick=()=>{set(0);$(a).setAttribute('aria-pressed'
 seg('#f-all','#f-mine',v=>filter=v?'mine':'all');
 $('#sortbar').addEventListener('click',e=>{ const b=e.target.closest('[data-sort]'); if(!b) return; sort=b.dataset.sort;
   $('#sortbar').querySelectorAll('[data-sort]').forEach(x=>x.setAttribute('aria-pressed',x===b)); renderList(); });
-const tab=v=>{ if(v==='feed') v='bottles'; if(view===v) return; view=v; ['bottles','feed','zukan','mine'].forEach(k=>$('#t-'+k).setAttribute('aria-selected',v===k)); renderList(); navCommit(); window.scrollTo(0,0); };
-$('#t-bottles').onclick=()=>tab('bottles'); $('#t-feed').onclick=()=>tab('feed'); $('#t-zukan').onclick=()=>tab('zukan'); $('#t-mine').onclick=()=>tab('mine');
+const tab=v=>{ if(v==='feed') v='bottles'; if(view===v) return; view=v; ['bottles','feed','zukan','sauce','mine'].forEach(k=>$('#t-'+k).setAttribute('aria-selected',v===k)); renderList(); navCommit(); window.scrollTo(0,0); };
+$('#t-bottles').onclick=()=>tab('bottles'); $('#t-feed').onclick=()=>tab('feed'); $('#t-zukan').onclick=()=>tab('zukan'); $('#t-mine').onclick=()=>tab('mine'); $('#t-sauce').onclick=()=>tab('sauce');
 $('#add').onclick=()=> K.isFood ? openDishForm(null, null, null) : openPicker();
 $('#list').addEventListener('click',e=>{
   const r=e.target.closest('[data-recipe]'); if(r) return openRecipe(r.dataset.recipe);
