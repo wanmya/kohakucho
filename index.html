@@ -30,6 +30,7 @@
 <script src="meat-data.js"></script>
 <script src="herb-data.js"></script>
 <script src="season-data.js"></script>
+<script src="pasta-data.js"></script>
 <script src="cocktail-data.js"></script>
 <script src="mixer-data.js"></script>
 <script src="wineglass-data.js"></script>
@@ -481,8 +482,8 @@ body.kinds-on{overflow:hidden}
 .kcard .ksubs{color:var(--c);opacity:.9}
 .kcard[data-kgroup]::after{content:"›";font-size:18px;top:10px}
 .kcard.k-brew{--c:#7A3552} .kcard.k-spirit{--c:#A9581A} .kcard.k-tea{--c:#4F7A3A}
-.kcard.k-season{--c:#7A3A22} .kcard.k-jtea{--c:#4F7A3A} .kcard.k-btea{--c:#9A3D22} .kcard.k-ctea{--c:#7D6A1F} .kcard.k-meat{--c:#A8423A} .kcard.k-herb{--c:#8A6A12}
-@media (prefers-color-scheme: dark){.kcard.k-season{--c:#E39A7A}.kcard.k-tea{--c:#9FCB86}.kcard.k-brew{--c:#E28AAE}.kcard.k-spirit{--c:#E39A4E}.kcard.k-jtea{--c:#9FCB86}.kcard.k-btea{--c:#E79A7E}.kcard.k-ctea{--c:#D6C46E}.kcard.k-meat{--c:#E8908A}.kcard.k-herb{--c:#DDBA5A}}
+.kcard.k-season{--c:#7A3A22} .kcard.k-pasta{--c:#B0781A} .kcard.k-jtea{--c:#4F7A3A} .kcard.k-btea{--c:#9A3D22} .kcard.k-ctea{--c:#7D6A1F} .kcard.k-meat{--c:#A8423A} .kcard.k-herb{--c:#8A6A12}
+@media (prefers-color-scheme: dark){.kcard.k-pasta{--c:#E8B95A}.kcard.k-season{--c:#E39A7A}.kcard.k-tea{--c:#9FCB86}.kcard.k-brew{--c:#E28AAE}.kcard.k-spirit{--c:#E39A4E}.kcard.k-jtea{--c:#9FCB86}.kcard.k-btea{--c:#E79A7E}.kcard.k-ctea{--c:#D6C46E}.kcard.k-meat{--c:#E8908A}.kcard.k-herb{--c:#DDBA5A}}
 :root[data-kind="brandy"]{--amber:#7B3B22;--amber-soft:#F1DED3}
 @media (prefers-color-scheme: dark){:root[data-kind="brandy"]{--amber:#E3A07A;--amber-soft:#3A2419}}
 :root[data-kind="rum"]{--amber:#1F7A6A;--amber-soft:#D6EDE7}
@@ -541,13 +542,15 @@ body.kinds-on{overflow:hidden}
 :root[data-kind="meat"]{--amber:#A8423A;--amber-soft:#F3DCD8}
 :root[data-kind="herb"]{--amber:#8A6A12;--amber-soft:#F1E8CC}
 :root[data-kind="season"]{--amber:#7A3A22;--amber-soft:#F1DDD2}
+:root[data-kind="pasta"]{--amber:#9A6412;--amber-soft:#F5E6C6}
 @media (prefers-color-scheme: dark){
   :root[data-kind="jtea"]{--amber:#9FCB86;--amber-soft:#22301C}
   :root[data-kind="btea"]{--amber:#E79A7E;--amber-soft:#3A2219}
   :root[data-kind="ctea"]{--amber:#D6C46E;--amber-soft:#332E17}
   :root[data-kind="meat"]{--amber:#E8908A;--amber-soft:#3A201D}
   :root[data-kind="herb"]{--amber:#DDBA5A;--amber-soft:#332B14}
-  :root[data-kind="season"]{--amber:#E39A7A;--amber-soft:#3A2219}}
+  :root[data-kind="season"]{--amber:#E39A7A;--amber-soft:#3A2219}
+  :root[data-kind="pasta"]{--amber:#E8B95A;--amber-soft:#3A2C14}}
 .brews{display:grid;gap:8px}
 .brew{display:grid;gap:2px;border-left:3px solid var(--amber);padding:2px 0 2px 10px}
 .brew b{font-size:15px}
@@ -594,6 +597,27 @@ body.kinds-on{overflow:hidden}
 .dscore i{display:inline-flex;align-items:center;gap:2px;font-style:normal}
 .dpost .hero{margin:-2px -2px 8px}
 .rcard .gl{display:grid;place-items:center;color:#fff;font-family:var(--display);font-weight:800;font-size:18px}
+
+/* パスタ図鑑：写真の代わりのイラスト、パスタソース */
+.gl.pic{background:#F7EBD0 !important;border-radius:16px !important;box-shadow:none !important;display:grid;place-items:center;overflow:hidden;padding:2px}
+.gl.pic svg{width:100%;height:100%;display:block}
+.z-hero .gl.pic{width:96px;height:96px;border-radius:22px !important}
+.zcard .gl.pic{width:60px;height:60px}
+@media (prefers-color-scheme: dark){.gl.pic{background:#3A3122 !important;border-color:rgba(255,255,255,.08)}}
+.ps-list{display:grid;gap:10px}
+.ps-card{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--card)}
+.ps-head{display:flex;align-items:center;gap:10px}
+.ps-dot{width:30px;height:30px;border-radius:50%;flex:none;border:1px solid rgba(0,0,0,.12);box-shadow:inset 0 -5px 0 rgba(0,0,0,.12)}
+.ps-head b{font-size:16px;display:block}
+.ps-head .en{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.04em}
+.ps-why{margin:8px 0 0;padding:8px 10px;border-radius:10px;background:var(--amber-soft);font-size:14px;line-height:1.6}
+.ps-why::before{content:'このパスタに合う理由';display:block;font-size:11px;font-weight:700;color:var(--amber);letter-spacing:.06em;margin-bottom:2px}
+.ps-desc{margin:8px 0 0;font-size:14px;line-height:1.7}
+.ps-ings{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.ps-ings span{font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.ps-also{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.ps-also .lbl{font-size:12px;color:var(--muted)}
+.ps-also .chip{font-size:13px;padding:4px 10px}
 </style>
 </head>
 <body>
@@ -687,6 +711,9 @@ body.kinds-on{overflow:hidden}
       <button class="kcard k-season" data-kind="season">
         <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M26 8h12v6l4 6v34a3 3 0 0 1-3 3H25a3 3 0 0 1-3-3V20l4-6z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M22.8 34h18.4v20a2 2 0 0 1-2 2H24.8a2 2 0 0 1-2-2z" fill="currentColor" opacity=".38"/><path d="M26 14h12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M48 44c0-4 2-7 6-8 0 5-2 8-6 8zM48 44v12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg>
         <span class="en">SEASONING</span><b>調味料</b><span class="kc" id="kc-season"></span></button>
+      <button class="kcard k-pasta" data-kind="pasta">
+        <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 34h44c0 11-9.8 19-22 19S10 45 10 34z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M14 38.5h36c-2 7.5-9 11.5-18 11.5s-16-4-18-11.5z" fill="currentColor" opacity=".38"/><path d="M20 33c2-6 6-9 12-9s10 3 12 9M24 33c1.6-4 4.4-6 8-6s6.4 2 8 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".8"/><path d="M38 23l8-15M43 25l9-14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        <span class="en">PASTA</span><b>パスタ</b><span class="kc" id="kc-pasta"></span></button>
       <button class="kcard k-food" data-kind="food">
         <svg class="kglass" viewBox="0 0 64 64" aria-hidden="true"><path d="M17 40.5c1.4-7.4 6.6-11.5 13-11.5s11.6 4.1 13 11.5z" fill="currentColor" opacity=".38"/><ellipse cx="30" cy="42" rx="23" ry="8.5" fill="none" stroke="currentColor" stroke-width="2.2"/><ellipse cx="30" cy="41" rx="14" ry="4" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".7"/><path d="M38 9.5l15.5 25M45.5 7l12 27" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
         <span class="en">DISH &amp; PAIRING</span><b>料理・酒の肴</b><span class="kc" id="kc-food"></span></button>
@@ -745,7 +772,7 @@ body.kinds-on{overflow:hidden}
 
 <script>
 (() => {
-const APP_VERSION = '2026.10.18a';
+const APP_VERSION = '2026.10.21a';
 
 /* ---------- お酒の種類ごとの設定（ウイスキー／ワイン。日本酒・ビール・カクテルは今後ここに足す） ---------- */
 const STORY_HEADS = [['はじまり','HISTORY'],['造りのこだわり','CRAFT'],['ウイスキー界での存在感','STANDING']];
@@ -1487,6 +1514,53 @@ const KINDS = {
     },
   },
 
+  pasta: {
+    key:'pasta', jp:'パスタ', en:'PASTA',
+    COLORS: [['durum','デュラム小麦（淡い黄色）','#EBC874'],['egg','卵（濃い黄色）','#F2BC45'],['whole','全粒粉','#C49A66'],['buck','そば粉','#8E745B'],['green','ほうれん草','#8FA858'],
+      ['potato','じゃがいも','#EDD6A0'],['toast','焼いたもの','#D29A50'],['pale','白っぽい','#F0DAA2'],['saffron','サフラン','#F0AE2E'],['black','イカ墨','#2A2A2A'],['red','トマト','#C2412D']],
+    AXES: [['firm','コシ・歯ごたえ'],['chewy','もちもち感'],['wheat','小麦の香り'],['egg','卵のコク'],['cling','ソースのからみ'],['thick','太さ・食べごたえ'],['rough','表面のざらつき'],['light','軽やかさ']],
+    TAGS: [['食感',['アルデンテ','もちもち','つるつる','ざらざら','やわらかめ','ふんわり']],['風味',['小麦の香り','卵のコク','香ばしい','チーズ','にんにく']],
+      ['ソース',['トマト','クリーム','オイル','バター','肉のラグー','魚介','ペースト','スープ']],['作り方',['乾麺','生パスタ','手打ち','お店で']]],
+    PHASES: [['nose','香り','AROMA'],['palate','食感・味わい','TASTE'],['finish','ソースとの相性','PAIRING']],
+    TYPES: ['ロングパスタ','卵の平打ち麺','ショートパスタ','郷土の手作りパスタ','詰め物パスタ','ニョッキ','シート・オーブン焼き','スープ用の小さなパスタ','その他'],
+    REGIONS: ['北イタリア','中部イタリア','南イタリア','シチリア・サルデーニャ','イタリア以外','その他'],
+    SERVES: ['乾麺','生パスタ','手打ち','お店で'], defServe:'', defType:'',
+    FINLEN: ['ショート','ミディアム','ロング'],
+    Z: () => ({ D:(typeof PASTA_ITEMS!=='undefined'?PASTA_ITEMS:[]), E:(typeof PASTA_ENTRIES!=='undefined'?PASTA_ENTRIES:[]), R:(typeof PASTA_REGIONS!=='undefined'?PASTA_REGIONS:{}), S:{},
+      W:{ ...(typeof WINE_MAPS!=='undefined'?{ italy:WINE_MAPS.italy }:{}) } }),
+    ZK_TYPES: ['ロングパスタ','卵の平打ち麺','ショートパスタ','郷土の手作りパスタ','詰め物パスタ','ニョッキ','シート・オーブン焼き','スープ用の小さなパスタ'],
+    ZK_TAGS: ['乾麺','卵','手打ち','手作り','詰め物','太麺','もちもち','筒形','らせん','ねじれ','オーブン','スープ','魚介','ペスト','クリスマス'],
+    ZK_PRICES: [],
+    COUNTRIES: (typeof PASTA_COUNTRIES!=='undefined') ? PASTA_COUNTRIES : {},
+    BIG: ['italy'], MINOR: [], WORLD_LABEL: {}, single:'italy',
+    pic: z => (typeof pastaSVG==='function' && z.shape) ? pastaSVG(z.shape, z.color) : '',
+    exMeta: z => [z.type, ZR[z.region]?.areaJp],
+    zFacts: z => [['分類',z.type],['地域',[ZR[z.region]?.areaJp, ZR[z.region]?.jp].filter(Boolean).join('・')],['原料',z.age],['名前の意味',z.cask],['ゆで時間',z.cook]],
+    cmpRows: (A,B) => [['分類',A.type,B.type],['地域',ZR[A.region]?.jp,ZR[B.region]?.jp],['原料',A.age||'—',B.age||'—']],
+    heads: () => [], noAbv:true, noAge:true, eat:true, unit:'パスタ', fab:'＋ 記録する', tabs:['記録','みんなの記録','図鑑','マイ'],
+    extra: z => pastaSection(z),
+    G: { list:()=>(typeof PASTA_TYPES!=='undefined'?PASTA_TYPES:[]), name:'分類', en:'TYPES', unit:'分類', countUnit:'種',
+      groups:[['長い','長いパスタ'],['短い','短いパスタ'],['包む','詰め物パスタ'],['その他','ニョッキ・焼きパスタ・スープ用']], sub:g=>g.kind,
+      glass:g=>g.dough||'durum',
+      pic:g=>typeof pastaSVG==='function' ? pastaSVG({long:'long',ribbon:'nest',short:'penne',handmade:'ear',filled:'ring',gnocchi:'gnocchi',baked:'sheet',small:'beads'}[g.id]||'long', g.dough) : '',
+      intro:'形や作り方で分けたパスタの分類。タップすると、その分類の特徴と一覧を見られます。',
+      itemsTitle:'この分類のパスタ', itemsEn:'PASTA',
+      note:'特徴は一般的に語られる傾向をもとにした目安です。同じ名前のパスタでも、地域や作り手によって形や材料が変わります。' },
+    L: {
+      maker:'名前', makerForm:'名前', makerPh:'例：タリアテッレ', makerCount:'種', exUnit:'種',
+      typeLbl:'分類', age:'原料', ageForm:'原料', agePh:'デュラム小麦・水', cask:'ソース', caskPh:'例：ボロネーゼ', abvPh:'', tagPh:'例：もちもち、ソースがよくからむ',
+      namePh:'例：ディ・チェコ スパゲッティーニ', search:'名前・ソース・ひとことで検索', zkSearch:'図鑑を検索（パスタ・地域・特徴）',
+      pickLbl:'パスタの名前で探す', pickPh:'例：オレッキエッテ', cpPh:'パスタの名前で探す',
+      serveLbl:'作り方', commentPh:'例：ラグーとの相性が抜群。卵のコクで、ソースがよくからんだ。',
+      worldCap:'PASTA', worldAria:'イタリアのパスタの地図', worldHint:'州を選ぶと、その土地のパスタを見られます。',
+      lineupEn:'VARIETIES', mapSec:'地域', back:'図鑑', colorLbl:'生地の色', colorEn:'COLOR', priceLbl:'参考価格',
+      priceNote:'', simNote:'ほかのパスタから、特徴の重なりで選んでいます。',
+      zkNote:'特徴は一般的に語られる傾向をもとにした目安です。ゆで時間は目安なので、乾麺は袋の表示に従ってください。イラストは形のイメージです。',
+      distNote:'特徴は一般的に語られる傾向をもとにした目安です。',
+      modes:[['region','地域'],['grape','分類'],['flavor','食感・特徴']],
+    },
+  },
+
   season: {
     key:'season', jp:'調味料', en:'SEASONING',
     COLORS: [['clear','透明','#F4F1EA'],['pale','淡い琥珀','#E3C27A'],['amber','琥珀色','#C27A2E'],['redbrown','赤褐色','#7A2E18'],['dark','黒褐色','#2E1A12'],
@@ -1573,7 +1647,7 @@ const KINDS = {
     },
   },
 };
-const KIND_LIST = ['whisky','wine','sake','brandy','rum','tequila','cocktail','coffee','jtea','btea','ctea','cheese','chinmi','meat','herb','season','food'];
+const KIND_LIST = ['whisky','wine','sake','brandy','rum','tequila','cocktail','coffee','jtea','btea','ctea','cheese','chinmi','meat','herb','season','pasta','food'];
 const KIND_SOON = [['日本酒','SAKE'],['ビール','BEER'],['カクテル','COCKTAIL']];
 let KIND = 'whisky', K = KINDS.whisky, L = K.L;
 let COLORS, AXES, TAGS, PHASES, TYPES, REGIONS, SERVES, FINLEN;
@@ -1588,7 +1662,10 @@ function applyKind(k){
   const q = document.querySelector('#q'); if(q) q.placeholder = L.search;
   const kl = document.querySelector('#kind-label'); if(kl) kl.textContent = K.en;
   const TL = K.tabs || ['銘柄','みんなの記録','図鑑','マイ'];
-  ['bottles','feed','zukan','mine'].forEach((x,i)=>{ const el=document.querySelector('#t-'+x); if(el){ el.textContent=TL[i]||''; el.hidden=!TL[i]; } });
+  // 「銘柄」と「みんなの記録」は内容が重なるため、銘柄一覧を「みんなの記録」として1つにまとめる
+  const merged = !!TL[1];
+  ['bottles','feed','zukan','mine'].forEach((x,i)=>{ const el=document.querySelector('#t-'+x); if(!el) return;
+    el.textContent = x==='bottles' && merged ? 'みんなの記録' : (TL[i]||''); el.hidden = x==='feed' || !TL[i]; });
   const fab = document.querySelector('#add'); if(fab) fab.textContent = K.fab || '＋ テイスティング';
 }
 applyKind('whisky');
@@ -2062,6 +2139,7 @@ function bottleMatches(b, a, q){
   return hay.includes(norm(q));
 }
 function renderList(){
+  if(view==='feed'){ view='bottles'; ['bottles','feed','zukan','mine'].forEach(k=>$('#t-'+k).setAttribute('aria-selected',view===k)); }
   const list=$('#list');
   $('#count').textContent = loaded && !setupError ? (K.isFood ? `${bottles.length}品・${tastings.length}件の記録` : `${bottles.length}銘柄・${tastings.length}件`) : '';
   if(setupError==='config'){ list.innerHTML=`<div class="empty"><h2>初期設定が必要です</h2></div><div class="notice"><code>config.js</code> に Supabase の URL とキーを書き込んでアップロードしてください。</div>`; return; }
@@ -2074,7 +2152,7 @@ function renderList(){
   $('#sortbar').hidden = view!=='bottles' || !!K.isFood;
   $('#toolbar').hidden = view==='zukan' || view==='mine';
   if(view==='mine') return renderMine(list);
-  if(view==='zukan'){ $('#count').textContent = K.isFood ? `${bkList().length}${K.L.bookUnit||'品のレシピ'}` : `${ZE.length}銘柄`; return renderZukan(list); }
+  if(view==='zukan'){ $('#count').textContent = K.isFood ? `${bkList().length}${K.L.bookUnit||'品のレシピ'}` : `${ZE.length}${L.exUnit||'銘柄'}`; return renderZukan(list); }
   if(K.isFood) return renderDishes(list);
   return view==='bottles' ? renderBottles(list) : renderFeed(list);
 }
@@ -2693,7 +2771,7 @@ const priceRange = d => { const ps=d.ex.map(x=>x.price).filter(Boolean); if(!ps.
 function dCard(d){
   const tags=[...new Set(d.ex.flatMap(x=>x.tags))].slice(0,4);
   const recorded = d.ex.some(x=>{ const b=bottleForZ(x); return b && aggs.get(b.id)?.n; });
-  return `<button class="zcard" data-d="${esc(d.id)}"><span class="gl" style="background:${glassColor(d.ex[0].color)}"></span>
+  return `<button class="zcard" data-d="${esc(d.id)}">${glHTML(d.ex[0])}
     <span class="info"><h3>${esc(d.name)}</h3><div class="en">${esc(d.en)}</div>
       <div class="meta">${esc([ZR[d.region]?.jp||'', d.ex.some(x=>x.price)?'約'+priceRange(d):''].filter(Boolean).join(' · '))}${recorded?'<span class="badge peat">みんなの記録あり</span>':''}</div>
       <div class="tagline">${tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div></span>
@@ -2705,7 +2783,7 @@ function zCard({z,score}, scored){
   const meta=[z.community?z.distillery:'', ZR[z.region]?.jp, z.abv?z.abv+'%':'', z.price?'約'+priceBand(z.price):''].filter(Boolean).join(' · ');
   const right = scored ? `<b>${Math.round(score*100)}<small style="font-size:11px">%</small></b><i>一致</i>`
     : a?.n ? `<b>${a.n>1?fmt1(a.avg):a.avg}</b><i>みんな${a.people}人</i>` : '';
-  return `<button class="zcard" data-z="${esc(z.id)}"><span class="gl" style="background:${glassColor(z.color)}"></span>
+  return `<button class="zcard" data-z="${esc(z.id)}">${glHTML(z)}
     <span class="info"><h3>${esc(z.name)}${z.community?'<span class="badge peat">みんなの記録</span>':''}</h3>${z.en?`<div class="en">${esc(z.en)}</div>`:''}
       <div class="meta">${esc(meta||z.type||'')}</div>
       ${z.tags.length?`<div class="tagline">${z.tags.slice(0,4).map(t=>`<span>${esc(t)}</span>`).join('')}</div>`:''}
@@ -2822,7 +2900,7 @@ function openDistillery(id){
   const exCards = d.ex.map(x=>{ const z=zEntry(x.id); const b=bottleForZ(z); const a=b?aggs.get(b.id):null;
     const meta=K.exMeta(z).filter(Boolean).join(' · ');
     return `<button class="excard" data-zopen="${esc(z.id)}">
-      <span class="gl" style="background:${glassColor(z.color)}"></span>
+      ${glHTML(z)}
       <span class="info"><span class="ex-label">${esc(x.label)}</span><span class="meta">${esc(meta)}</span>
         <span class="tagline">${z.tags.slice(0,3).map(t=>`<span>${esc(t)}</span>`).join('')}</span></span>
       <span class="right"><b class="price">${z.price?esc(priceBand(z.price)):''}</b>${a?.n?`<i>みんな ${a.n>1?fmt1(a.avg):a.avg}点</i>`:z.price?'<i>参考価格</i>':''}</span></button>`; }).join('');
@@ -2905,6 +2983,23 @@ function herbSection(z){
   const ks=ZE.filter(x=>(x.herbs||[]).includes(z.id));
   if(ks.length) h+=`<section class="sec"><h3>この生薬を含む漢方処方<small>KAMPO</small></h3>
     <div class="pchips">${ks.map(x=>`<button class="chip" data-zopen="${esc(x.id)}">${esc(x.name)} ›</button>`).join('')}</div></section>`;
+  return h;
+}
+
+/* パスタ：ゆで時間と、合うパスタソース */
+function pastaSection(z){
+  const SS=(typeof PASTA_SAUCES!=='undefined')?PASTA_SAUCES:{};
+  let h='';
+  if(z.cook) h+=`<section class="sec"><h3>ゆで時間の目安<small>COOKING</small></h3><p style="margin:0">${esc(z.cook)}</p>
+    <p class="small" style="margin:6px 0 0">乾麺は袋の表示を目安に。たっぷりのお湯に、湯の1%ほどの塩を入れてゆでる。ゆで汁は少し取っておくと、ソースをなめらかにまとめるのに使える。</p></section>`;
+  const ss=(z.sauces||[]).filter(([id])=>SS[id]);
+  if(ss.length) h+=`<section class="sec"><h3>このパスタに合うソース<small>${ss.length} SAUCES</small></h3><div class="ps-list">${ss.map(([id,why])=>{ const s=SS[id];
+    const also=ZE.filter(x=>x.id!==z.id && (x.sauces||[]).some(a=>a[0]===id));
+    return `<div class="ps-card"><div class="ps-head"><span class="ps-dot" style="background:${s.color}"></span><div><b>${esc(s.name)}</b><span class="en">${esc(s.en)} · ${esc(s.origin)}</span></div></div>
+      ${why?`<p class="ps-why">${esc(why)}</p>`:''}<p class="ps-desc">${esc(s.desc)}</p>
+      <div class="ps-ings">${s.ings.map(i=>`<span>${esc(i)}</span>`).join('')}</div>
+      ${(s.recipe && typeof recipeById==='function' && recipeById(s.recipe)) || also.length ? `<div class="ps-also">${s.recipe && recipeById(s.recipe)?`<button class="chip" data-recipe="${esc(s.recipe)}">レシピを見る ›</button>`:''}${also.length?`<span class="lbl">このソースに合うほかのパスタ</span>${also.map(x=>`<button class="chip" data-zopen="${esc(x.id)}">${esc(x.name)}</button>`).join('')}`:''}</div>`:''}
+    </div>`; }).join('')}</div></section>`;
   return h;
 }
 
@@ -3055,9 +3150,10 @@ function tasteDetail(z){
     if(price && price<=2500) body.push('手頃な価格で、カクテルにも気兼ねなく使える。');
     else if(price>=30000) body.push('特別な日に開けたい一本。');
     return `<div class="z-detail">${body.length?`<p>${esc(body.join(''))}</p>`:''}${serve?`<p><b>おすすめの飲み方</b>${esc(serve)}</p>`:''}</div>`;
-  } else if(KIND==='cheese' || KIND==='chinmi' || KIND==='meat' || KIND==='herb' || KIND==='season'){
+  } else if(KIND==='cheese' || KIND==='chinmi' || KIND==='meat' || KIND==='herb' || KIND==='season' || KIND==='pasta'){
     const G = GL().find(g=>(z.grapes||[]).includes(g.id));
     const PH = KIND==='meat' ? { salty:'しっかりとした塩気', umami:'凝縮した旨み', fat:'とろける脂の甘み', smoky:'燻製の香り', spicy:'スパイスの刺激', herb:'ハーブの香り', aged:'熟成による深い香り', firm:'しっかりとしたかみごたえ' }
+      : KIND==='pasta' ? { firm:'しっかりとしたコシ', chewy:'もちもちとした弾力', wheat:'小麦の豊かな香り', egg:'卵の風味とコク', cling:'ソースのからみのよさ', thick:'太く食べごたえのある形', rough:'ソースを抱える表面のざらつき', light:'軽やかな口当たり' }
       : KIND==='season' ? { salty:'しっかりとした塩味', umami:'深い旨み', sweet:'やさしい甘み', sour:'さわやかな酸味', hot:'ピリッとした辛み', aroma:'豊かな香り', ferment:'発酵による深い香り', body:'濃厚なコク' }
       : KIND==='herb' ? { aroma:'強い香り', hot:'ピリッとした辛み', bitter:'ほろ苦さ', sweet:'甘い香りと甘み', sour:'さわやかな酸味', cool:'すっとした清涼感', earthy:'土や木を思わせる深い香り', floral:'華やかな香り' }
       : KIND==='cheese'
@@ -3085,7 +3181,7 @@ function tasteDetail(z){
         : t==='bacon' ? '油をひかずにフライパンで焼き、出てきた脂で香ばしく。'
         : t==='fat' ? '温かいパンにのせて、口の中でとろける脂を味わう。'
         : 'そのまま、またはパンや料理に。';
-    } else if(KIND==='herb' || KIND==='season') serve = '';
+    } else if(KIND==='herb' || KIND==='season' || KIND==='pasta') serve = '';
     else serve = z.howto ? `${z.howto}。塩分が多いものは、少しずつ味わいたい。` : '';
     return `<div class="z-detail">${body.length?`<p>${esc(body.join(''))}</p>`:''}${serve?`<p><b>おすすめの食べ方</b>${esc(serve)}</p>`:''}</div>`;
   }
@@ -3111,7 +3207,7 @@ function openZukan(id){
   mount(`<div class="sheet" data-view="zukan" role="dialog" aria-modal="true" aria-label="${esc(z.name)}">
     <div class="sheet-bar"><button class="btn ghost" data-act="back">‹ 戻る</button><h2></h2><button class="btn" data-act="cmp-add">比較</button></div>
     <div class="sheet-body">
-      <div class="z-hero"><span class="gl" style="background:${glassColor(z.color)}"></span>
+      <div class="z-hero">${glHTML(z)}
         <div><div class="small">${esc(r?.jp||'')}${r?.en?` · ${esc(r.en)}`:''}</div><h1>${esc(z.name)}</h1><div class="en">${esc(z.en)}</div></div></div>
       ${myId?`<div>${wishBtn('z:'+z.id)}</div>`:''}
       <p class="z-desc">${esc(z.desc)}</p>
@@ -3174,11 +3270,12 @@ function openZukan(id){
 /* ---------- ブドウ品種（ワイン）／酒米（日本酒） ---------- */
 const GL = () => K.G ? K.G.list() : [];
 const grapeGlass = g => glassColor(K.G.glass(g));
+const glHTML = z => K.pic && !z.community ? `<span class="gl pic">${K.pic(z)}</span>` : `<span class="gl" style="background:${glassColor(z.color)}"></span>`;
 function grapeCards(){
   const q=norm(zk.q);
   const gs=GL().filter(g=>!q || norm([g.name,g.en,g.home,...g.tags].join(' ')).includes(q));
   const card=g=>{ const n=ZE.filter(z=>(z.grapes||[]).includes(g.id)).length;
-    return `<button class="zcard" data-grape="${g.id}"><span class="gl" style="background:${grapeGlass(g)}"></span>
+    return `<button class="zcard" data-grape="${g.id}">${K.G.pic?`<span class="gl pic">${K.G.pic(g)}</span>`:`<span class="gl" style="background:${grapeGlass(g)}"></span>`}
       <span class="info"><h3>${esc(g.name)}</h3><div class="en">${esc(g.en)}</div><div class="meta">${esc(g.home)}</div>
         <div class="tagline">${g.tags.slice(0,4).map(t=>`<span>${esc(t)}</span>`).join('')}</div></span>
       <span class="right"><b>${n}</b><i>${K.G.countUnit||'本'}</i></span></button>`; };
@@ -3197,7 +3294,7 @@ function openGrape(id){
   mount(`<div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(g.name)}">
     <div class="sheet-bar"><button class="btn ghost" data-act="back">‹ 戻る</button><h2>${esc(g.name)}</h2><span style="width:60px"></span></div>
     <div class="sheet-body">
-      <div class="z-hero"><span class="gl" style="background:${grapeGlass(g)}"></span>
+      <div class="z-hero">${K.G.pic?`<span class="gl pic">${K.G.pic(g)}</span>`:`<span class="gl" style="background:${grapeGlass(g)}"></span>`}
         <div><div class="small">${K.G.sub(g)} · ${K.G.en}</div><h1>${esc(g.name)}</h1><div class="en">${esc(g.en)}</div></div></div>
       <p class="z-desc">${esc(g.desc)}</p>
       <dl class="facts"><div><dt>主な産地</dt><dd>${esc(g.home)}</dd></div></dl>
@@ -4289,7 +4386,7 @@ const seg=(a,b,set)=>{ $(a).onclick=()=>{set(0);$(a).setAttribute('aria-pressed'
 seg('#f-all','#f-mine',v=>filter=v?'mine':'all');
 $('#sortbar').addEventListener('click',e=>{ const b=e.target.closest('[data-sort]'); if(!b) return; sort=b.dataset.sort;
   $('#sortbar').querySelectorAll('[data-sort]').forEach(x=>x.setAttribute('aria-pressed',x===b)); renderList(); });
-const tab=v=>{ if(view===v) return; view=v; ['bottles','feed','zukan','mine'].forEach(k=>$('#t-'+k).setAttribute('aria-selected',v===k)); renderList(); navCommit(); window.scrollTo(0,0); };
+const tab=v=>{ if(v==='feed') v='bottles'; if(view===v) return; view=v; ['bottles','feed','zukan','mine'].forEach(k=>$('#t-'+k).setAttribute('aria-selected',v===k)); renderList(); navCommit(); window.scrollTo(0,0); };
 $('#t-bottles').onclick=()=>tab('bottles'); $('#t-feed').onclick=()=>tab('feed'); $('#t-zukan').onclick=()=>tab('zukan'); $('#t-mine').onclick=()=>tab('mine');
 $('#add').onclick=()=> K.isFood ? openDishForm(null, null, null) : openPicker();
 $('#list').addEventListener('click',e=>{
